@@ -8,22 +8,9 @@ const app = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 5000;
 
-// Configuração do CORS dinâmica para permitir localhost e o domínio de produção
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  'http://localhost:3000',
-  'http://127.0.0.1:3000'
-].filter(Boolean);
-
+// Configuração básica do CORS (o proxy reverso compartilha a mesma origem em produção)
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    // Permite localhosts ou subdomínios dinâmicos do Qzz.io
-    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.qzz.io') || origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
-      return callback(null, true);
-    }
-    return callback(new Error('CORS não permitido para esta origem'), false);
-  },
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
   credentials: true
 }));
 

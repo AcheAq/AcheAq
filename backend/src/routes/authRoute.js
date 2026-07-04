@@ -4,7 +4,7 @@ const authRoute = express.Router();
 
 /**
  * @swagger
- * /register:
+ * /auth/register:
  *   post:
  *     summary: Cria um novo usuário
  *     tags:
@@ -39,7 +39,7 @@ authRoute.post("/register", register);
 
 /**
  * @swagger
- * /login:
+ * /auth/login:
  *   post:
  *     summary: Realiza login
  *     tags:

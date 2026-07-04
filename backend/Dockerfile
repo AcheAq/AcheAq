@@ -1,5 +1,8 @@
 FROM node:20-alpine
 
+# Instala o openssl para compatibilidade com o motor do Prisma no Alpine
+RUN apk add --no-cache openssl
+
 WORKDIR /app
 
 # Copia arquivos de dependência

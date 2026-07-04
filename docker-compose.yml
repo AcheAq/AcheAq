@@ -34,7 +34,7 @@ services:
       FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
       NODE_ENV: ${NODE_ENV:-development}
     ports:
-      - "5000:5000"
+      - "127.0.0.1:5000:5000"
     volumes:
       # Uploads persistentes de fotos dos objetos
       - uploads_data:/app/uploads

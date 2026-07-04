@@ -6,6 +6,7 @@ const swaggerSpec = require("./lib/swagger");
 
 const routes = require("./routes/route");
 const authRoutes = require("./routes/authRoute");
+const userRoute = require("./routes/userRoute");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 
 app.use(routes);
 app.use("/auth", authRoutes);
+app.use("/user", userRoute);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 module.exports = app;

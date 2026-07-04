@@ -1,0 +1,22 @@
+# TESTE DE ROTA DA API
+GET http://localhost:5000/api
+
+### CRIACAO DE USUARIO
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "name": "João Silva",
+    "email": "joao@email.com",
+    "password": "gabrielbento"
+}
+
+### LOGIN DE USUARIO
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email": "joao@email.com",
+    "password": "gabrielbento"
+}
+

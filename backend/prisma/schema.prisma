@@ -1,0 +1,35 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String // Senha criptografada (hash)
+  name      String
+  role      String   @default("USER") // USER ou ADMIN
+  items     Item[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Item {
+  id             String   @id @default(uuid())
+  title          String
+  description    String
+  photoUrl       String? // URL da foto enviada
+  category       String // Categoria (ex: Eletrônicos, Documentos, Chaves)
+  location       String // Local (ex: Bloco A, Estacionamento)
+  occurrenceDate DateTime // Data da ocorrência
+  status         String   @default("LOST") // LOST (Perdido), FOUND (Encontrado), RESOLVED (Resolvido)
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

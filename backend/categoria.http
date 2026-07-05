@@ -1,0 +1,45 @@
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@test.com",
+    "password": "123456"
+}
+
+###
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAxMmU2NmJhLTQ1OGItNDhlMy1hZjM0LTM5NDU5ODYwNTZlYyIsImVtYWlsIjoiYWRtaW5AdGVzdC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3ODMyNzc4MjYsImV4cCI6MTc4MzM2NDIyNn0.Frd7oLodb6wYFm59FXishwpid1p-_PhADezV5g7c2t8
+@categoryId = f09d7a4b-29d1-4093-a7e9-c99c9e476a49
+
+### Criar Categoria (ADMIN)
+POST http://localhost:5000/category
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "name": "Eletrônicos"
+}
+
+
+### Todas as Categorias
+GET http://localhost:5000/category
+Authorization: bearer {{token}}
+
+
+### Buscar Categoria por ID
+GET http://localhost:5000/category/{{categoryId}}
+Authorization: bearer {{token}}
+
+
+### Atualizar Categoria (ADMIN)
+PUT http://localhost:5000/category/{{categoryId}}
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "name": "Documentos Importantes"
+}
+
+
+### Deletar Categoria (ADMIN)
+DELETE http://localhost:5000/category/{{categoryId}}
+Authorization: bearer {{token}}

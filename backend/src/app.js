@@ -8,6 +8,7 @@ const routes = require("./routes/route");
 const authRoutes = require("./routes/authRoute");
 const userRoute = require("./routes/userRoute");
 const categoryRoute = require("./routes/categoryRoute");
+const itemRoute = require("./routes/itemRoute");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(routes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoute);
 app.use("/category", categoryRoute);
+app.use("/item", itemRoute);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 module.exports = app;

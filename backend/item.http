@@ -1,0 +1,59 @@
+### Login (pegar token)
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@test.com",
+  "password": "123456"
+}
+
+###
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjllYWM4ZDZlLTkwZWEtNDRjYS1hYWVkLTc4YjJiNGY1ZjA2NiIsImVtYWlsIjoiYWRtaW5AdGVzdC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3ODMzNjA2MTIsImV4cCI6MTc4MzQ0NzAxMn0.hq53rlAyL3920bh8dQB5PKrTnTp3B8jpGS-KcKXKAEE
+@categoryId = b2dcc890-eb24-4ae4-aeb1-a9a0ddf74a01
+@itemId = 877b62b9-fc98-467e-ad97-fcfd7e58296a
+
+
+### Criar Item (USER ou ADMIN)
+POST http://localhost:5000/item
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "title": "Mochila preta",
+  "description": "Mochila Adidas encontrada no pátio",
+  "categoryId": "{{categoryId}}",
+  "location": "Pátio central",
+  "occurrenceDate": "2026-07-06T12:00:00.000Z",
+  "type": "LOST"
+}
+
+
+### Listar todos os itens
+GET http://localhost:5000/item
+Authorization: bearer {{token}}
+
+
+### Buscar item por ID
+GET http://localhost:5000/item/{{itemId}}
+Authorization: bearer {{token}}
+
+
+### Atualizar item (USER dono ou ADMIN)
+PATCH http://localhost:5000/item/{{itemId}}
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "title": "Mochila preta atualizada",
+  "description": "Descrição atualizada do item"
+}
+
+
+### Marcar como resolvido
+PATCH http://localhost:5000/item/{{itemId}}/resolve
+Authorization: bearer {{token}}
+
+
+### Deletar item (ADMIN)
+DELETE http://localhost:5000/item/{{itemId}}
+Authorization: bearer {{token}}

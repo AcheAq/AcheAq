@@ -37,7 +37,8 @@ model Item {
   categoryId     String
   location       String // Local (ex: Bloco A, Estacionamento)
   occurrenceDate DateTime // Data da ocorrência
-  status         String   @default("LOST") // LOST (Perdido), FOUND (Encontrado), RESOLVED (Resolvido)
+  type           String @default("LOST") // Perdido ou Encontrado
+  status         String @default("OPEN") // Aberto ou Resolvido
   user           User     @relation(fields: [userId], references: [id])
   userId         String
   createdAt      DateTime @default(now())

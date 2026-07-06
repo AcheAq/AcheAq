@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Item" ADD COLUMN     "type" TEXT NOT NULL DEFAULT 'LOST',
+ALTER COLUMN "status" SET DEFAULT 'OPEN';

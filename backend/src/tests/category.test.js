@@ -22,6 +22,7 @@ describe("Category - RBAC CRUD", () => {
   };
 
   beforeAll(async () => {
+    await prisma.item.deleteMany();
     await prisma.category.deleteMany();
 
     await prisma.user.deleteMany({

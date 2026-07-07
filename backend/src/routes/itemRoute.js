@@ -2,6 +2,7 @@ const express = require("express");
 const itemController = require("../controllers/itemController");
 const authMiddleware = require("../middlewares/authMiddleware");
 const authorizeRoles = require("../middlewares/authorizeRoles");
+const upload = require("../middlewares/uploadMiddleware");
 
 const itemRoute = express.Router();
 
@@ -23,7 +24,7 @@ const itemRoute = express.Router();
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
@@ -40,10 +41,10 @@ const itemRoute = express.Router();
  *               description:
  *                 type: string
  *                 example: Mochila Adidas contendo um notebook e um caderno.
- *               photoUrl:
+ *               image:
  *                 type: string
- *                 nullable: true
- *                 example: https://meusite.com/uploads/mochila.jpg
+ *                 format: binary
+ *                 description: Foto do objeto perdido ou encontrado.
  *               categoryId:
  *                 type: string
  *                 example: 6c8f17cf-7f5c-4cf3-a7f0-6f0eec1d6e6d
@@ -74,6 +75,7 @@ itemRoute.post(
   "/",
   authMiddleware,
   authorizeRoles("USER", "ADMIN"),
+  upload.single("image"),
   itemController.create,
 );
 

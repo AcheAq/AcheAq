@@ -2,7 +2,10 @@ const itemService = require("../services/itemService");
 
 async function create(req, res) {
   try {
-    const item = await itemService.createItem(req.user, req.body);
+    const item = await itemService.createItem(req.user, {
+      ...req.body,
+      photoUrl: req.file?.path,
+    });
     return res.status(201).json(item);
   } catch (err) {
     return res.status(err.statusCode || 500).json({ message: err.message });

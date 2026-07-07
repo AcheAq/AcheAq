@@ -14,7 +14,7 @@ async function create(req, res) {
 
 async function getAll(req, res) {
   try {
-    const items = await itemService.getAllItems();
+    const items = await itemService.getAllItems(req.query);
     return res.json(items);
   } catch (err) {
     return res.status(err.statusCode || 500).json({ message: err.message });

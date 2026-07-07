@@ -110,6 +110,37 @@ itemRoute.post(
  *         schema:
  *           type: string
  *         description: Filtrar por categoria
+ *
+ *       - in: query
+ *         name: search
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: Pesquisa pelo título ou descrição do objeto
+ *
+ *       - in: query
+ *         name: location
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: Filtrar pelo local onde o objeto foi perdido ou encontrado
+ *
+ *       - in: query
+ *         name: sort
+ *         required: false
+ *         schema:
+ *           type: string
+ *           enum: [occurrenceDate]
+ *         description: Campo utilizado para ordenação
+ *
+ *       - in: query
+ *         name: order
+ *         required: false
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *         description: Ordem da listagem
+ *
  *     responses:
  *       200:
  *         description: Lista de objetos retornada com sucesso.

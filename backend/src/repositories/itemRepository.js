@@ -22,8 +22,49 @@ async function findItemById(id) {
   });
 }
 
-async function findItemAll() {
+async function findItemAll(filters = {}) {
+  const { search, categoryId, status, type, location, order } = filters;
+
+  const where = {};
+
+  if (search) {
+    where.OR = [
+      {
+        title: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      {
+        description: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+    ];
+  }
+
+  if (categoryId) {
+    where.categoryId = categoryId;
+  }
+
+  if (status) {
+    where.status = status;
+  }
+
+  if (type) {
+    where.type = type;
+  }
+
+  if (location) {
+    where.location = {
+      contains: location,
+      mode: "insensitive",
+    };
+  }
+
   return prisma.item.findMany({
+    where,
     include: {
       category: true,
       user: {
@@ -35,7 +76,7 @@ async function findItemAll() {
       },
     },
     orderBy: {
-      createdAt: "desc",
+      occurrenceDate: order === "asc" ? "asc" : "desc",
     },
   });
 }

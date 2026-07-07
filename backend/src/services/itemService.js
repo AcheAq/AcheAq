@@ -16,8 +16,8 @@ async function createItem(currentUser, data) {
   });
 }
 
-async function getAllItems() {
-  return await itemRepository.findItemAll();
+async function getAllItems(filters) {
+  return await itemRepository.findItemAll(filters);
 }
 
 async function getItemById(id) {

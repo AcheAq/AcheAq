@@ -205,6 +205,20 @@ describe("Item - RBAC CRUD", () => {
     expect(res.statusCode).toBe(400);
   });
 
+  it("todos podem filtrar itens por status", async () => {
+    const res = await request(app)
+      .get("/item?status=RESOLVED")
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(200);
+
+    expect(Array.isArray(res.body)).toBe(true);
+
+    res.body.forEach((item) => {
+      expect(item.status).toBe("RESOLVED");
+    });
+  });
+
   it("admin pode deletar item", async () => {
     const res = await request(app)
       .delete(`/item/${itemId}`)

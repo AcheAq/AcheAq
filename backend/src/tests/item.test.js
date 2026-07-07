@@ -219,6 +219,73 @@ describe("Item - RBAC CRUD", () => {
     });
   });
 
+  it("todos podem filtrar itens por tipo", async () => {
+    const res = await request(app)
+      .get("/item?type=LOST")
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(200);
+
+    res.body.forEach((item) => {
+      expect(item.type).toBe("LOST");
+    });
+  });
+
+  it("todos podem filtrar itens por categoria", async () => {
+    const res = await request(app)
+      .get(`/item?categoryId=${categoryId}`)
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(200);
+
+    res.body.forEach((item) => {
+      expect(item.categoryId).toBe(categoryId);
+    });
+  });
+
+  it("todos podem pesquisar itens por título ou descrição", async () => {
+    const res = await request(app)
+      .get("/item?search=Mochila")
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(200);
+
+    expect(res.body.length).toBeGreaterThan(0);
+
+    const item = res.body[0];
+
+    expect(
+      item.title.includes("Mochila") || item.description.includes("Mochila"),
+    ).toBe(true);
+  });
+
+  it("todos podem filtrar itens por localização", async () => {
+    const res = await request(app)
+      .get("/item?location=Pátio")
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(200);
+
+    res.body.forEach((item) => {
+      expect(item.location).toContain("Pátio");
+    });
+  });
+
+  it("deve ordenar itens por data de ocorrência crescente", async () => {
+    const res = await request(app)
+      .get("/item?order=asc")
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(200);
+
+    for (let i = 0; i < res.body.length - 1; i++) {
+      const atual = new Date(res.body[i].occurrenceDate);
+      const proximo = new Date(res.body[i + 1].occurrenceDate);
+
+      expect(atual <= proximo).toBe(true);
+    }
+  });
+
   it("admin pode deletar item", async () => {
     const res = await request(app)
       .delete(`/item/${itemId}`)

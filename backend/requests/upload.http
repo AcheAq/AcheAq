@@ -1,0 +1,58 @@
+###
+@token = {{login.response.body.token}}
+@categoryID = {{category.response.body.$.[0].id}}
+
+### Login (pegar token)
+# @name login
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@test.com",
+  "password": "123456"
+}
+
+### Todas as Categorias
+# @name category
+GET http://localhost:5000/category
+Authorization: bearer {{token}}
+
+### Buscar Categoria por ID
+GET http://localhost:5000/category/{{categoryID}}
+Authorization: bearer {{token}}
+
+### Criar item com imagem
+POST http://localhost:5000/item
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="title"
+
+Celular perdido
+--boundary
+Content-Disposition: form-data; name="description"
+
+Celular preto perdido próximo ao estacionamento
+--boundary
+Content-Disposition: form-data; name="categoryId"
+
+{{categoryID}}
+--boundary
+Content-Disposition: form-data; name="location"
+
+Estacionamento
+--boundary
+Content-Disposition: form-data; name="occurrenceDate"
+
+2026-07-07T14:30:00.000Z
+--boundary
+Content-Disposition: form-data; name="type"
+
+LOST
+--boundary
+Content-Disposition: form-data; name="image"; filename="celular.jpg"
+Content-Type: image/jpeg
+
+< ./images/celular.jpg
+--boundary--

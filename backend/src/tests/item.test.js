@@ -171,4 +171,21 @@ describe("Item - RBAC CRUD", () => {
 
     expect(res.statusCode).toBe(403);
   });
+
+  it("não deve criar item com categoria inexistente", async () => {
+    const res = await request(app)
+      .post("/item")
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({
+        title: "Item inválido",
+        description: "Teste de categoria inexistente",
+        categoryId: "999999",
+        location: "Bloco B",
+        occurrenceDate: new Date().toISOString(),
+        type: "LOST",
+      });
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toBe("Categoria não encontrada");
+  });
 });

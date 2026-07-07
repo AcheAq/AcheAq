@@ -1,6 +1,15 @@
 const itemRepository = require("../repositories/itemRepository");
+const categoryRepository = require("../repositories/categoryRepository");
 
 async function createItem(currentUser, data) {
+  const category = await categoryRepository.findCategoryById(data.categoryId);
+
+  if (!category) {
+    const error = new Error("Categoria não encontrada");
+    error.statusCode = 404;
+    throw error;
+  }
+
   return await itemRepository.createItem({
     ...data,
     userId: currentUser.id,

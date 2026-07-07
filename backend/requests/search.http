@@ -1,0 +1,62 @@
+###
+@token = {{login.response.body.token}}
+@categoryId = {{category.response.body.$.[0].id}}
+
+### Login
+# @name login
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@test.com",
+    "password": "123456"
+}
+
+### Todas as Categorias
+# @name category
+GET http://localhost:5000/category
+Authorization: bearer {{token}}
+
+### Buscar todos os objetos
+GET http://localhost:5000/item
+Authorization: Bearer {{token}}
+
+
+### Buscar por texto (título ou descrição)
+GET http://localhost:5000/item?search=mochila
+Authorization: Bearer {{token}}
+
+
+### Filtrar por categoria
+GET http://localhost:5000/item?categoryId={{categoryId}}
+Authorization: Bearer {{token}}
+
+
+### Filtrar por status OPEN
+GET http://localhost:5000/item?status=OPEN
+Authorization: Bearer {{token}}
+
+
+### Filtrar por tipo LOST
+GET http://localhost:5000/item?type=LOST
+Authorization: Bearer {{token}}
+
+
+### Filtrar por localização
+GET http://localhost:5000/item?location=central
+Authorization: Bearer {{token}}
+
+
+### Combinar filtros
+GET http://localhost:5000/item?search=mochila&status=OPEN&type=LOST&categoryId={{categoryId}}
+Authorization: Bearer {{token}}
+
+
+### Ordenar por data mais antiga
+GET http://localhost:5000/item?order=asc
+Authorization: Bearer {{token}}
+
+
+### Ordenar por data mais recente
+GET http://localhost:5000/item?order=desc
+Authorization: Bearer {{token}}

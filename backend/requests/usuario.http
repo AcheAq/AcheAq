@@ -1,3 +1,7 @@
+###
+@token = {{login.response.body.token}}
+@id = {{login.response.body.user.id}}
+
 # TESTE DE ROTA DA API
 GET http://localhost:5000/api
 
@@ -12,6 +16,7 @@ Content-Type: application/json
 }
 
 ### LOGIN DE USUARIO
+# @name login
 POST http://localhost:5000/auth/login
 Content-Type: application/json
 
@@ -20,27 +25,28 @@ Content-Type: application/json
     "password": "gabrielbento"
 }
 
+
 ### MEU PERFIL
 GET http://localhost:5000/user/me
-Authorization: bearer 
+Authorization: bearer {{token}}
 
 ### ATUALIZAR PERFIL
 PATCH  http://localhost:5000/user/me
-Authorization: bearer 
+Authorization: bearer {{token}}
 Content-Type: application/json
 
 {
-    "name": "João Silva II"
+    "name": "João Silva"
 }
 
 ### TODOS USUARIOS - ADMIN
 GET http://localhost:5000/user
-Authorization: bearer 
+Authorization: bearer {{token}}
 
 ### USUARIO BY ID - ADMIN
-GET http://localhost:5000/user/1008f98f-ed5b-43dd-a806-818ab2058773
-Authorization: bearer 
+GET http://localhost:5000/user/{{id}}
+Authorization: bearer {{token}}
 
 ### DELETE BY ID - ADMIN
-DELETE  http://localhost:5000/user/23c1f719-2baa-40d8-a104-deadf160253c
-Authorization: bearer 
+DELETE  http://localhost:5000/user/{{id}}
+Authorization: bearer {{token}}

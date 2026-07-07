@@ -1,6 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const { PrismaClient } = require("@prisma/client");
+const path = require("path");
 
 const prisma = new PrismaClient();
 
@@ -156,22 +157,6 @@ describe("Item - RBAC CRUD", () => {
     expect(res.body.status).toBe("RESOLVED");
   });
 
-  it("admin pode deletar item", async () => {
-    const res = await request(app)
-      .delete(`/item/${itemId}`)
-      .set("Authorization", `Bearer ${adminToken}`);
-
-    expect(res.statusCode).toBe(200);
-  });
-
-  it("user não pode deletar item", async () => {
-    const res = await request(app)
-      .delete(`/item/${itemId}`)
-      .set("Authorization", `Bearer ${userToken}`);
-
-    expect(res.statusCode).toBe(403);
-  });
-
   it("não deve criar item com categoria inexistente", async () => {
     const res = await request(app)
       .post("/item")
@@ -187,5 +172,52 @@ describe("Item - RBAC CRUD", () => {
 
     expect(res.statusCode).toBe(404);
     expect(res.body.message).toBe("Categoria não encontrada");
+  });
+
+  it("user pode criar item com imagem", async () => {
+    const res = await request(app)
+      .post("/item")
+      .set("Authorization", `Bearer ${userToken}`)
+      .field("title", "Mochila com foto")
+      .field("description", "Mochila Adidas encontrada")
+      .field("categoryId", categoryId)
+      .field("location", "Pátio central")
+      .field("occurrenceDate", new Date().toISOString())
+      .field("type", "LOST")
+      .attach("image", path.join(__dirname, "files", "celular.jpg"));
+
+    expect(res.statusCode).toBe(201);
+    expect(res.body.photoUrl).toBeDefined();
+  });
+
+  it("não deve aceitar arquivo que não seja imagem", async () => {
+    const res = await request(app)
+      .post("/item")
+      .set("Authorization", `Bearer ${userToken}`)
+      .field("title", "Arquivo inválido")
+      .field("description", "Teste enviando arquivo que não é imagem")
+      .field("categoryId", categoryId)
+      .field("location", "Bloco B")
+      .field("occurrenceDate", new Date().toISOString())
+      .field("type", "LOST")
+      .attach("image", path.join(__dirname, "files", "arquivo.txt"));
+
+    expect(res.statusCode).toBe(400);
+  });
+
+  it("admin pode deletar item", async () => {
+    const res = await request(app)
+      .delete(`/item/${itemId}`)
+      .set("Authorization", `Bearer ${adminToken}`);
+
+    expect(res.statusCode).toBe(200);
+  });
+
+  it("user não pode deletar item", async () => {
+    const res = await request(app)
+      .delete(`/item/${itemId}`)
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(403);
   });
 });

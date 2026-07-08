@@ -124,6 +124,46 @@ describe("Item - RBAC CRUD", () => {
     expect(resAdmin.statusCode).toBe(200);
   });
 
+  it("user pode listar seus próprios itens", async () => {
+    const res = await request(app)
+      .get("/item/me")
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(200);
+
+    expect(Array.isArray(res.body)).toBe(true);
+
+    res.body.forEach((item) => {
+      expect(item.user.email).toBe(user.email);
+    });
+  });
+
+  it("admin pode listar seus próprios itens", async () => {
+    const res = await request(app)
+      .get("/item/me")
+      .set("Authorization", `Bearer ${adminToken}`);
+
+    expect(res.statusCode).toBe(200);
+
+    expect(Array.isArray(res.body)).toBe(true);
+
+    res.body.forEach((item) => {
+      expect(item.user.email).toBe(admin.email);
+    });
+  });
+
+  it("não deve retornar itens de outros usuários em meus anúncios", async () => {
+    const res = await request(app)
+      .get("/item/me")
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(200);
+
+    res.body.forEach((item) => {
+      expect(item.user.email).not.toBe(admin.email);
+    });
+  });
+
   it("user pode buscar item por id", async () => {
     const res = await request(app)
       .get(`/item/${itemId}`)

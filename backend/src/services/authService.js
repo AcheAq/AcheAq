@@ -1,6 +1,8 @@
 const {
   findUserByEmail,
   createUser,
+  findUserWithPasswordById,
+  updatePassword,
 } = require("../repositories/userRepository.js");
 const { hashPassword, comparePassword } = require("../utils/hash.js");
 const { generateToken } = require("../utils/jwt.js");
@@ -77,4 +79,22 @@ async function loginUser({ email, password }) {
   };
 }
 
-module.exports = { registerUser, loginUser };
+async function changePasswordUser(id, currentPassword, newPassword) {
+  const user = await findUserWithPasswordById(id);
+
+  if (!user) {
+    throw new Error("Usuário não encontrado");
+  }
+
+  const passwordMatch = await comparePassword(currentPassword, user.password);
+
+  if (!passwordMatch) {
+    throw new Error("Senha atual inválida");
+  }
+
+  const newPasswordHash = await hashPassword(newPassword);
+
+  await updatePassword(id, newPasswordHash);
+}
+
+module.exports = { registerUser, loginUser, changePasswordUser };

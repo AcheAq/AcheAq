@@ -31,6 +31,13 @@ async function findUserById(id) {
   });
 }
 
+async function findUserWithPasswordById(id) {
+  return await prisma.user.findUnique({
+    where: { id },
+    select: { id: true, password: true },
+  });
+}
+
 async function findUserAll() {
   return prisma.user.findMany({
     select: userSelect,
@@ -66,6 +73,7 @@ module.exports = {
   findUserByEmail,
   createUser,
   findUserById,
+  findUserWithPasswordById,
   findUserAll,
   updateUser,
   deleteUser,

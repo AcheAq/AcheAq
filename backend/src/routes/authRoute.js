@@ -201,6 +201,47 @@ authRoute.post("/forgot-password", forgotPassword);
  */
 authRoute.post("/reset-password", resetPassword);
 
+/**
+ * @swagger
+ * /auth/change-password:
+ *   patch:
+ *     summary: Altera a senha do usuário autenticado
+ *     tags:
+ *       - Autenticação
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - currentPassword
+ *               - newPassword
+ *             properties:
+ *               currentPassword:
+ *                 type: string
+ *                 example: senhaAtual123
+ *               newPassword:
+ *                 type: string
+ *                 example: novaSenha123
+ *     responses:
+ *       200:
+ *         description: Senha alterada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Senha alterada com sucesso.
+ *       400:
+ *         description: Senha atual inválida ou dados inválidos
+ *       401:
+ *         description: Usuário não autenticado
+ */
 authRoute.patch(
   "/change-password",
   authMiddleware,

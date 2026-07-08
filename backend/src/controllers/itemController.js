@@ -61,6 +61,16 @@ async function resolve(req, res) {
   }
 }
 
+async function getMyItems(req, res) {
+  try {
+    const items = await itemService.getMyItems(req.user);
+    return res.json(items);
+  } catch (err) {
+    return res.status(err.statusCode || 500).json({
+      message: err.message,
+    });
+  }
+}
 module.exports = {
   create,
   getAll,
@@ -68,4 +78,5 @@ module.exports = {
   update,
   remove,
   resolve,
+  getMyItems,
 };

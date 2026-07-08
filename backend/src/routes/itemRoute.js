@@ -199,6 +199,60 @@ itemRoute.get(
 
 /**
  * @swagger
+ * /item/me:
+ *   get:
+ *     summary: Lista todos os anúncios do usuário autenticado
+ *     tags: [Items]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de anúncios do usuário retornada com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   description:
+ *                     type: string
+ *                   photoUrl:
+ *                     type: string
+ *                     nullable: true
+ *                   location:
+ *                     type: string
+ *                   occurrenceDate:
+ *                     type: string
+ *                     format: date-time
+ *                   type:
+ *                     type: string
+ *                     enum: [LOST, FOUND]
+ *                   status:
+ *                     type: string
+ *                     enum: [OPEN, RESOLVED]
+ *                   category:
+ *                     type: object
+ *                   user:
+ *                     type: object
+ *       401:
+ *         description: Token inválido ou não informado.
+ *       500:
+ *         description: Erro interno do servidor.
+ */
+itemRoute.get(
+  "/me",
+  authMiddleware,
+  authorizeRoles("USER", "ADMIN"),
+  itemController.getMyItems,
+);
+
+/**
+ * @swagger
  * /item/{id}:
  *   get:
  *     summary: Busca um objeto pelo ID

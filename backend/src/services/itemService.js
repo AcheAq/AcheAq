@@ -92,6 +92,10 @@ async function resolveItem(currentUser, id) {
   });
 }
 
+async function getMyItems(currentUser) {
+  return await itemRepository.findItemsByUserId(currentUser.id);
+}
+
 module.exports = {
   createItem,
   getAllItems,
@@ -99,4 +103,5 @@ module.exports = {
   updateItem,
   deleteItem,
   resolveItem,
+  getMyItems,
 };

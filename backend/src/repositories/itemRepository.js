@@ -81,6 +81,27 @@ async function findItemAll(filters = {}) {
   });
 }
 
+async function findItemsByUserId(userId) {
+  return prisma.item.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      category: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+    },
+    orderBy: {
+      occurrenceDate: "desc",
+    },
+  });
+}
+
 async function updateItem(id, data) {
   return prisma.item.update({
     where: { id },
@@ -100,4 +121,5 @@ module.exports = {
   findItemAll,
   updateItem,
   deleteItem,
+  findItemsByUserId,
 };

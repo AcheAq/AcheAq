@@ -13,6 +13,10 @@ async function getMe(userId) {
     id: user.id,
     name: user.name,
     email: user.email,
+    phone: user.phone,
+    registration: user.registration,
+    course: user.course,
+    institution: user.institution,
     role: user.role,
   };
 }
@@ -21,12 +25,20 @@ async function updateMe(userId, data) {
   const user = await userRepository.updateUser(userId, {
     name: data.name,
     email: data.email,
+    phone: data.phone,
+    registration: data.registration,
+    course: data.course,
+    institution: data.institution,
   });
 
   return {
     id: user.id,
     name: user.name,
     email: user.email,
+    phone: user.phone,
+    registration: user.registration,
+    course: user.course,
+    institution: user.institution,
     role: user.role,
   };
 }

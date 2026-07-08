@@ -5,7 +5,15 @@ const {
 const { hashPassword, comparePassword } = require("../utils/hash.js");
 const { generateToken } = require("../utils/jwt.js");
 
-async function registerUser({ name, email, password }) {
+async function registerUser({
+  name,
+  email,
+  password,
+  phone,
+  registration,
+  course,
+  institution,
+}) {
   const userExists = await findUserByEmail(email);
 
   if (userExists) {
@@ -18,12 +26,20 @@ async function registerUser({ name, email, password }) {
     name,
     email,
     password: hashedPassword,
+    phone,
+    registration,
+    course,
+    institution,
   });
 
   return {
     id: user.id,
     name: user.name,
     email: user.email,
+    phone: user.phone,
+    registration: user.registration,
+    course: user.course,
+    institution: user.institution,
   };
 }
 
@@ -52,6 +68,10 @@ async function loginUser({ email, password }) {
       id: user.id,
       name: user.name,
       email: user.email,
+      phone: user.phone,
+      registration: user.registration,
+      course: user.course,
+      institution: user.institution,
       role: user.role,
     },
   };

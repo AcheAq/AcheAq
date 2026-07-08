@@ -9,7 +9,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-acheaq}
     ports:
       # Apenas expõe na interface de loopback local para segurança no ambiente local
-      - "127.0.0.1:5432:5432"
+      - "${DB_PORT_BINDING:-127.0.0.1:5432:5432}"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -34,7 +34,7 @@ services:
       FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
       NODE_ENV: ${NODE_ENV:-development}
     ports:
-      - "127.0.0.1:5000:5000"
+      - "${BACKEND_PORT_BINDING:-127.0.0.1:5000:5000}"
     volumes:
       # Uploads persistentes de fotos dos objetos
       - uploads_data:/app/uploads
@@ -46,7 +46,7 @@ services:
     container_name: acheaq-frontend
     restart: always
     ports:
-      - "3000:80"
+      - "${FRONTEND_PORT_BINDING:-3000:80}"
     depends_on:
       - backend
 

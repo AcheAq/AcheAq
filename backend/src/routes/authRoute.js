@@ -124,8 +124,78 @@ authRoute.post("/register", register);
  */
 authRoute.post("/login", login);
 
+/**
+ * @swagger
+ * /auth/forgot-password:
+ *   post:
+ *     summary: Solicita recuperação de senha
+ *     tags:
+ *       - Autenticação
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: joao@email.com
+ *     responses:
+ *       200:
+ *         description: Solicitação processada. Caso o e-mail exista, um link de recuperação será enviado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Se o e-mail estiver cadastrado, você receberá um link de recuperação.
+ *       400:
+ *         description: Dados inválidos
+ */
 authRoute.post("/forgot-password", forgotPassword);
 
+/**
+ * @swagger
+ * /auth/reset-password:
+ *   post:
+ *     summary: Redefine a senha do usuário
+ *     tags:
+ *       - Autenticação
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - token
+ *               - password
+ *             properties:
+ *               token:
+ *                 type: string
+ *                 example: 8c5b82876b601b5303fe4fe4ddadfb87f36a8814820ee9f97e5626fea2f64c67
+ *               password:
+ *                 type: string
+ *                 example: novaSenha123
+ *     responses:
+ *       200:
+ *         description: Senha atualizada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Senha atualizada com sucesso.
+ *       400:
+ *         description: Token inválido, expirado ou dados inválidos
+ */
 authRoute.post("/reset-password", resetPassword);
 
 module.exports = authRoute;

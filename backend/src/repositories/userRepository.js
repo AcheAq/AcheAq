@@ -1,5 +1,17 @@
 const prisma = require("../lib/prisma.js");
 
+const userSelect = {
+  id: true,
+  name: true,
+  email: true,
+  phone: true,
+  registration: true,
+  course: true,
+  institution: true,
+  role: true,
+  createdAt: true,
+};
+
 async function findUserByEmail(email) {
   return await prisma.user.findUnique({
     where: { email },
@@ -15,25 +27,13 @@ async function createUser(data) {
 async function findUserById(id) {
   return await prisma.user.findUnique({
     where: { id },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      role: true,
-      createdAt: true,
-    },
+    select: userSelect,
   });
 }
 
 async function findUserAll() {
   return prisma.user.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      role: true,
-      createdAt: true,
-    },
+    select: userSelect,
   });
 }
 
@@ -47,6 +47,7 @@ async function updateUser(id, data) {
   return prisma.user.update({
     where: { id },
     data,
+    select: userSelect,
   });
 }
 

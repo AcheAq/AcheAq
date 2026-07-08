@@ -51,6 +51,17 @@ async function updateUser(id, data) {
   });
 }
 
+async function updatePassword(id, password) {
+  return await prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      password,
+    },
+  });
+}
+
 module.exports = {
   findUserByEmail,
   createUser,
@@ -58,4 +69,5 @@ module.exports = {
   findUserAll,
   updateUser,
   deleteUser,
+  updatePassword,
 };

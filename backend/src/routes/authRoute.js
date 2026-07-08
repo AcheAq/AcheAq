@@ -1,5 +1,10 @@
 const express = require("express");
-const { register, login } = require("../controllers/authController.js");
+const {
+  register,
+  login,
+  forgotPassword,
+  resetPassword,
+} = require("../controllers/authController.js");
 const authRoute = express.Router();
 
 /**
@@ -118,5 +123,9 @@ authRoute.post("/register", register);
  *         description: Credenciais inválidas
  */
 authRoute.post("/login", login);
+
+authRoute.post("/forgot-password", forgotPassword);
+
+authRoute.post("/reset-password", resetPassword);
 
 module.exports = authRoute;

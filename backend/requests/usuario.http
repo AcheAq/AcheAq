@@ -62,6 +62,16 @@ Content-Type: application/json
     "password": "12345"
 }
 
+### MUDAR SENHA
+PATCH http://localhost:5000/auth/change-password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "currentPassword": "gabrielbento",
+    "newPassword":"123456"
+}
+
 ### TODOS OS USUÁRIOS (ADMIN)
 GET http://localhost:5000/user
 Authorization: Bearer {{token}}

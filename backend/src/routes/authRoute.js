@@ -4,8 +4,11 @@ const {
   login,
   forgotPassword,
   resetPassword,
+  changePassword,
 } = require("../controllers/authController.js");
 const authRoute = express.Router();
+const authMiddleware = require("../middlewares/authMiddleware");
+const authorizeRoles = require("../middlewares/authorizeRoles");
 
 /**
  * @swagger
@@ -197,5 +200,12 @@ authRoute.post("/forgot-password", forgotPassword);
  *         description: Token inválido, expirado ou dados inválidos
  */
 authRoute.post("/reset-password", resetPassword);
+
+authRoute.patch(
+  "/change-password",
+  authMiddleware,
+  authorizeRoles("USER", "ADMIN"),
+  changePassword,
+);
 
 module.exports = authRoute;

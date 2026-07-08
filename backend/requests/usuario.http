@@ -2,20 +2,24 @@
 @token = {{login.response.body.token}}
 @id = {{login.response.body.user.id}}
 
-# TESTE DE ROTA DA API
+### TESTE DE ROTA DA API
 GET http://localhost:5000/api
 
-### CRIACAO DE USUARIO
+### CRIAÇÃO DE USUÁRIO
 POST http://localhost:5000/auth/register
 Content-Type: application/json
 
 {
     "name": "João Silva",
     "email": "joao@email.com",
-    "password": "gabrielbento"
+    "password": "gabrielbento",
+    "phone": "(82) 99999-9999",
+    "registration": "2023001234",
+    "course": "Ciência da Computação",
+    "institution": "IFAL"
 }
 
-### LOGIN DE USUARIO
+### LOGIN
 # @name login
 POST http://localhost:5000/auth/login
 Content-Type: application/json
@@ -25,28 +29,30 @@ Content-Type: application/json
     "password": "gabrielbento"
 }
 
-
 ### MEU PERFIL
 GET http://localhost:5000/user/me
-Authorization: bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### ATUALIZAR PERFIL
-PATCH  http://localhost:5000/user/me
-Authorization: bearer {{token}}
+PATCH http://localhost:5000/user/me
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "name": "João Silva"
+    "name": "João da Silva",
+    "phone": "(82) 98888-8888",
+    "course": "Sistemas de Informação",
+    "institution": "UFAL"
 }
 
-### TODOS USUARIOS - ADMIN
+### TODOS OS USUÁRIOS (ADMIN)
 GET http://localhost:5000/user
-Authorization: bearer {{token}}
+Authorization: Bearer {{token}}
 
-### USUARIO BY ID - ADMIN
+### USUÁRIO POR ID (ADMIN)
 GET http://localhost:5000/user/{{id}}
-Authorization: bearer {{token}}
+Authorization: Bearer {{token}}
 
-### DELETE BY ID - ADMIN
-DELETE  http://localhost:5000/user/{{id}}
-Authorization: bearer {{token}}
+### EXCLUIR USUÁRIO (ADMIN)
+DELETE http://localhost:5000/user/{{id}}
+Authorization: Bearer {{token}}

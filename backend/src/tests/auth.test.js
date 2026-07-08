@@ -9,6 +9,10 @@ describe("Auth - Register e Login", () => {
     name: "João Silva",
     email: "joao@email.com",
     password: "gabrielbento",
+    phone: "(82) 99999-9999",
+    registration: "2023001234",
+    course: "Ciência da Computação",
+    institution: "IFAL",
   };
 
   beforeAll(async () => {
@@ -27,6 +31,8 @@ describe("Auth - Register e Login", () => {
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty("id");
     expect(res.body.email).toBe(user.email);
+    expect(res.body.name).toBe(user.name);
+    expect(res.body.phone).toBe(user.phone);
   });
 
   it("deve fazer login do usuário", async () => {
@@ -37,5 +43,6 @@ describe("Auth - Register e Login", () => {
 
     expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty("token");
+    expect(res.body.user.email).toBe(user.email);
   });
 });

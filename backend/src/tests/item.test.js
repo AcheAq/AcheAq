@@ -15,12 +15,20 @@ describe("Item - RBAC CRUD", () => {
     name: "Admin",
     email: "admin@test.com",
     password: "123456",
+    phone: "(82) 99999-9999",
+    registration: "2023001234",
+    course: "Ciência da Computação",
+    institution: "IFAL",
   };
 
   const user = {
     name: "User",
     email: "user@test.com",
     password: "123456",
+    phone: "(82) 99999-9999",
+    registration: "2023001234",
+    course: "Ciência da Computação",
+    institution: "IFAL",
   };
 
   beforeAll(async () => {

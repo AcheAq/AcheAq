@@ -12,12 +12,20 @@ describe("User - RBAC CRUD", () => {
     name: "Admin",
     email: "admin@test.com",
     password: "123456",
+    phone: "(82) 99999-9999",
+    registration: "2023001234",
+    course: "Ciência da Computação",
+    institution: "IFAL",
   };
 
   const user = {
     name: "User",
     email: "user@test.com",
     password: "123456",
+    phone: "(82) 99999-9999",
+    registration: "2023001234",
+    course: "Ciência da Computação",
+    institution: "IFAL",
   };
 
   beforeAll(async () => {
@@ -77,6 +85,10 @@ describe("User - RBAC CRUD", () => {
       .set("Authorization", `Bearer ${userToken}`);
 
     expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("phone");
+    expect(res.body).toHaveProperty("registration");
+    expect(res.body).toHaveProperty("course");
+    expect(res.body).toHaveProperty("institution");
   });
 
   it("user pode atualizar o proprio perfil", async () => {

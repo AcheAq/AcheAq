@@ -45,6 +45,23 @@ Content-Type: application/json
     "institution": "UFAL"
 }
 
+### SOLICITAR RECUPERAÇÃO DE SENHA
+POST http://localhost:5000/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "joao@email.com"
+}
+
+### RESETAR SENHA
+POST http://localhost:5000/auth/reset-password
+Content-Type: application/json
+
+{
+    "token": "ca094194a1aed98ad19617dd36623c7126b2d91e9b4231f76ee2d65dfd144aeb",
+    "password": "12345"
+}
+
 ### TODOS OS USUÁRIOS (ADMIN)
 GET http://localhost:5000/user
 Authorization: Bearer {{token}}

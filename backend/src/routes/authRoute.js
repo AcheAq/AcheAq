@@ -19,6 +19,10 @@ const authRoute = express.Router();
  *               - name
  *               - email
  *               - password
+ *               - phone
+ *               - registration
+ *               - course
+ *               - institution
  *             properties:
  *               name:
  *                 type: string
@@ -29,6 +33,18 @@ const authRoute = express.Router();
  *               password:
  *                 type: string
  *                 example: 123456
+ *               phone:
+ *                 type: string
+ *                 example: "(82) 99999-9999"
+ *               registration:
+ *                 type: string
+ *                 example: "2023001234"
+ *               course:
+ *                 type: string
+ *                 example: "Ciência da Computação"
+ *               institution:
+ *                 type: string
+ *                 example: "IFAL"
  *     responses:
  *       201:
  *         description: Usuário criado com sucesso
@@ -62,7 +78,42 @@ authRoute.post("/register", register);
  *                 example: 123456
  *     responses:
  *       200:
- *         description: Login realizado
+ *         description: Login realizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: 550e8400-e29b-41d4-a716
+ *                     name:
+ *                       type: string
+ *                       example: João Silva
+ *                     email:
+ *                       type: string
+ *                       example: joao@email.com
+ *                     phone:
+ *                       type: string
+ *                       example: "(82) 99999-9999"
+ *                     studentRegistration:
+ *                       type: string
+ *                       example: "2023001234"
+ *                     course:
+ *                       type: string
+ *                       example: "Ciência da Computação"
+ *                     institution:
+ *                       type: string
+ *                       example: "IFAL"
+ *                     role:
+ *                       type: string
+ *                       example: USER
  *       401:
  *         description: Credenciais inválidas
  */

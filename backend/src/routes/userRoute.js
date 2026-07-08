@@ -23,6 +23,38 @@ const userRoute = express.Router();
  *     responses:
  *       200:
  *         description: Dados do usuário retornados com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: 550e8400-e29b-41d4-a716
+ *                 name:
+ *                   type: string
+ *                   example: João Silva
+ *                 email:
+ *                   type: string
+ *                   example: joao@email.com
+ *                 phone:
+ *                   type: string
+ *                   example: "(82) 99999-9999"
+ *                 registration:
+ *                   type: string
+ *                   example: "2023001234"
+ *                 course:
+ *                   type: string
+ *                   example: "Ciência da Computação"
+ *                 institution:
+ *                   type: string
+ *                   example: "IFAL"
+ *                 role:
+ *                   type: string
+ *                   example: USER
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
  *       401:
  *         description: Token inválido ou não informado.
  *       403:
@@ -56,9 +88,23 @@ userRoute.get(
  *             properties:
  *               name:
  *                 type: string
+ *                 example: João Silva
  *               email:
  *                 type: string
  *                 format: email
+ *                 example: joao@email.com
+ *               phone:
+ *                 type: string
+ *                 example: "(82) 99999-9999"
+ *               registration:
+ *                 type: string
+ *                 example: "2023001234"
+ *               course:
+ *                 type: string
+ *                 example: "Ciência da Computação"
+ *               institution:
+ *                 type: string
+ *                 example: "IFAL"
  *     responses:
  *       200:
  *         description: Usuário atualizado com sucesso.

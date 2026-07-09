@@ -131,9 +131,9 @@ describe("Item - RBAC CRUD", () => {
 
     expect(res.statusCode).toBe(200);
 
-    expect(Array.isArray(res.body)).toBe(true);
+    expect(Array.isArray(res.body.data)).toBe(true);
 
-    res.body.forEach((item) => {
+    res.body.data.forEach((item) => {
       expect(item.user.email).toBe(user.email);
     });
   });
@@ -145,9 +145,9 @@ describe("Item - RBAC CRUD", () => {
 
     expect(res.statusCode).toBe(200);
 
-    expect(Array.isArray(res.body)).toBe(true);
+    expect(Array.isArray(res.body.data)).toBe(true);
 
-    res.body.forEach((item) => {
+    res.body.data.forEach((item) => {
       expect(item.user.email).toBe(admin.email);
     });
   });
@@ -159,7 +159,7 @@ describe("Item - RBAC CRUD", () => {
 
     expect(res.statusCode).toBe(200);
 
-    res.body.forEach((item) => {
+    res.body.data.forEach((item) => {
       expect(item.user.email).not.toBe(admin.email);
     });
   });
@@ -260,9 +260,9 @@ describe("Item - RBAC CRUD", () => {
 
     expect(res.statusCode).toBe(200);
 
-    expect(Array.isArray(res.body)).toBe(true);
+    expect(Array.isArray(res.body.data)).toBe(true);
 
-    res.body.forEach((item) => {
+    res.body.data.forEach((item) => {
       expect(item.status).toBe("RESOLVED");
     });
   });
@@ -274,7 +274,7 @@ describe("Item - RBAC CRUD", () => {
 
     expect(res.statusCode).toBe(200);
 
-    res.body.forEach((item) => {
+    res.body.data.forEach((item) => {
       expect(item.type).toBe("LOST");
     });
   });
@@ -286,7 +286,7 @@ describe("Item - RBAC CRUD", () => {
 
     expect(res.statusCode).toBe(200);
 
-    res.body.forEach((item) => {
+    res.body.data.forEach((item) => {
       expect(item.categoryId).toBe(categoryId);
     });
   });
@@ -298,9 +298,9 @@ describe("Item - RBAC CRUD", () => {
 
     expect(res.statusCode).toBe(200);
 
-    expect(res.body.length).toBeGreaterThan(0);
+    expect(res.body.data.length).toBeGreaterThan(0);
 
-    const item = res.body[0];
+    const item = res.body.data[0];
 
     expect(
       item.title.includes("Mochila") || item.description.includes("Mochila"),
@@ -314,7 +314,7 @@ describe("Item - RBAC CRUD", () => {
 
     expect(res.statusCode).toBe(200);
 
-    res.body.forEach((item) => {
+    res.body.data.forEach((item) => {
       expect(item.location).toContain("Pátio");
     });
   });

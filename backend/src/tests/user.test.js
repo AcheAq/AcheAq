@@ -29,6 +29,8 @@ describe("User - RBAC CRUD", () => {
   };
 
   beforeAll(async () => {
+    await prisma.item.deleteMany();
+    await prisma.category.deleteMany();
     await prisma.user.deleteMany({
       where: {
         email: { in: [admin.email, user.email] },

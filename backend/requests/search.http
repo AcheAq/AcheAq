@@ -21,6 +21,10 @@ Authorization: bearer {{token}}
 GET http://localhost:5000/item
 Authorization: Bearer {{token}}
 
+### Buscar todos os meus objetos
+GET http://localhost:5000/item/me
+Authorization: Bearer {{token}}
+
 
 ### Buscar por texto (título ou descrição)
 GET http://localhost:5000/item?search=mochila

@@ -63,7 +63,7 @@ async function resolve(req, res) {
 
 async function getMyItems(req, res) {
   try {
-    const items = await itemService.getMyItems(req.user);
+    const items = await itemService.getMyItems(req.user, req.query);
     return res.json(items);
   } catch (err) {
     return res.status(err.statusCode || 500).json({

@@ -23,7 +23,17 @@ async function findItemById(id) {
 }
 
 async function findItemAll(filters = {}) {
-  const { search, categoryId, status, type, location, order } = filters;
+  const {
+    search,
+    categoryId,
+    status,
+    type,
+    location,
+    order,
+    page,
+    limit,
+    skip,
+  } = filters;
 
   const where = {};
 
@@ -63,43 +73,99 @@ async function findItemAll(filters = {}) {
     };
   }
 
-  return prisma.item.findMany({
-    where,
-    include: {
-      category: true,
-      user: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
+  const [items, total] = await prisma.$transaction([
+    prisma.item.findMany({
+      where,
+      skip,
+      take: limit,
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
         },
       },
+      orderBy: {
+        occurrenceDate: order === "asc" ? "asc" : "desc",
+      },
+    }),
+    prisma.item.count({
+      where,
+    }),
+  ]);
+
+  const totalPages = Math.ceil(total / limit);
+
+  return {
+    data: items,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: totalPages,
+      hasNext: page < totalPages,
+      hasPrevious: page > 1,
     },
-    orderBy: {
-      occurrenceDate: order === "asc" ? "asc" : "desc",
-    },
-  });
+  };
 }
 
-async function findItemsByUserId(userId) {
-  return prisma.item.findMany({
-    where: {
-      userId,
-    },
-    include: {
-      category: true,
-      user: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
+async function findItemsByUserId(userId, pagination) {
+  const { page, limit, skip } = pagination;
+
+  const [items, total] = await prisma.$transaction([
+    prisma.item.findMany({
+      where: {
+        userId,
+      },
+      skip,
+      take: limit,
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
         },
       },
+      orderBy: {
+        occurrenceDate: "desc",
+      },
+    }),
+    prisma.item.count({
+      where: {
+        userId,
+      },
+    }),
+  ]);
+
+  const totalPages = Math.ceil(total / limit);
+
+  return {
+    data: items,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: totalPages,
+      hasNext: page < totalPages,
+      hasPrevious: page > 1,
     },
-    orderBy: {
-      occurrenceDate: "desc",
-    },
-  });
+  };
 }
 
 async function updateItem(id, data) {

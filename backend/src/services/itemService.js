@@ -1,6 +1,6 @@
 const itemRepository = require("../repositories/itemRepository");
 const categoryRepository = require("../repositories/categoryRepository");
-
+const { getPagination } = require("../utils/pagination");
 async function createItem(currentUser, data) {
   const category = await categoryRepository.findCategoryById(data.categoryId);
 
@@ -17,7 +17,14 @@ async function createItem(currentUser, data) {
 }
 
 async function getAllItems(filters) {
-  return await itemRepository.findItemAll(filters);
+  const { page, limit, skip } = getPagination(filters.page, filters.limit);
+
+  return itemRepository.findItemAll({
+    ...filters,
+    page,
+    limit,
+    skip,
+  });
 }
 
 async function getItemById(id) {
@@ -92,8 +99,10 @@ async function resolveItem(currentUser, id) {
   });
 }
 
-async function getMyItems(currentUser) {
-  return await itemRepository.findItemsByUserId(currentUser.id);
+async function getMyItems(currentUser, query) {
+  const pagination = getPagination(query.page, query.limit);
+
+  return await itemRepository.findItemsByUserId(currentUser.id, pagination);
 }
 
 module.exports = {

@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 describe("Auth - Register, Login e Change Password", () => {
   const user = {
     name: "João Silva",
-    email: "[joao@email.com](mailto:joao@email.com)",
+    email: "joao@email.com",
     password: "gabrielbento",
     phone: "(82) 99999-9999",
     registration: "2023001234",

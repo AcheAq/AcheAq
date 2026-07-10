@@ -27,6 +27,9 @@ model User {
   passwordResetTokens PasswordResetToken[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  ownedConversations Conversation[] @relation("OwnerConversations")
+  participantConversations Conversation[] @relation("ParticipantConversations")
+  sentMessages Message[]
 }
 
 model Category {
@@ -53,6 +56,7 @@ model Item {
   userId         String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  conversations Conversation[]
 }
 
 model PasswordResetToken {
@@ -69,4 +73,33 @@ model PasswordResetToken {
 
   @@index([userId])
   @@map("password_reset_tokens")
+}
+
+model Conversation {
+  id String @id @default(uuid())
+  itemId String
+  item Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  ownerId String
+  owner User @relation("OwnerConversations", fields: [ownerId], references: [id])
+  participantId String
+  participant User @relation("ParticipantConversations", fields: [participantId], references: [id])
+  messages Message[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([itemId, participantId])
+  @@index([ownerId])
+  @@index([participantId])
+}
+
+model Message {
+  id String @id @default(uuid())
+  conversationId String
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId String
+  sender User @relation(fields: [senderId], references: [id])
+  content String
+  isRead Boolean @default(false)
+  createdAt DateTime @default(now())
+  @@index([conversationId])
 }

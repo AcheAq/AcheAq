@@ -24,3 +24,38 @@ export const sortOptions = [
   { value: 'antigos', label: 'Mais antigos' },
   { value: 'alfabetica', label: 'Ordem alfabética' }
 ];
+
+export const statusOptions = [
+  {
+    value: 'todos',
+    label: 'Status: Todos'
+  },
+  {
+    value: 'perdidos',
+    label: 'Perdidos'
+  },
+  {
+    value: 'encontrados',
+    label: 'Encontrados'
+  },
+  {
+    value: 'devolvidos',
+    label: 'Devolvidos'
+  }
+];
+
+
+export const dateOptions = [
+  {
+    value: 'todos',
+    label: 'Data: Todas'
+  },
+  {
+    value: 'recente',
+    label: 'Mais recentes'
+  },
+  {
+    value: 'antigo',
+    label: 'Mais antigos'
+  }
+];

@@ -1,0 +1,423 @@
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* Lado Esquerdo - Banner Decorativo (Rectangle 118) */
+.login-banner {
+  flex: 1.1;
+  background: linear-gradient(146.13deg, rgba(66, 106, 188, 0.3036) 57.07%, rgba(234, 124, 63, 0.5148) 105.05%, rgba(30, 48, 86, 0.66) 105.06%), #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pontinhos Decorativos (Grid de Pontos) */
+.login-banner::before {
+  content: '';
+  position: absolute;
+  top: 21px;
+  left: 24px;
+  width: 83px;
+  height: 61px;
+  background-image: radial-gradient(#426ABC 1.5px, transparent 1.5px);
+  background-size: 13px 13px;
+  opacity: 0.54;
+}
+
+.login-banner::after {
+  content: '';
+  position: absolute;
+  bottom: 21px;
+  right: 24px;
+  width: 83px;
+  height: 61px;
+  background-image: radial-gradient(#EA7C3F 1.5px, transparent 1.5px);
+  background-size: 13px 13px;
+  opacity: 0.54;
+}
+
+.decor-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Bolas azuis (left) reposicionadas de forma totalmente responsiva com base no wrapper */
+.decor-1 { width: 33px; height: 30px; left: -16px; top: 21px; background: #426ABC; opacity: 0.2; }
+.decor-2 { width: 33px; height: 30px; left: -16px; top: -30px; background: #426ABC; opacity: 0.2; }
+.decor-3 { width: 33px; height: 30px; left: -16px; top: -71px; background: #426ABC; opacity: 0.2; }
+
+/* Bolas laranjas (right) reposicionadas de forma totalmente responsiva com base no wrapper */
+.decor-4 { width: 33px; height: 30px; left: 278px; top: 225px; background: #EA7C3F; opacity: 0.2; }
+.decor-5 { width: 33px; height: 30px; left: 278px; top: 279px; background: #EA7C3F; opacity: 0.2; }
+.decor-6 { width: 33px; height: 30px; left: 278px; top: 325px; background: #EA7C3F; opacity: 0.2; }
+
+/* Círculo central com o logo (Ellipse 101) */
+.banner-logo-wrapper {
+  width: 294px;
+  height: 284px;
+  border-radius: 50%;
+  background: rgba(66, 106, 188, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.banner-logo {
+  width: 225px;
+  height: 225px;
+  border-radius: 100px;
+  object-fit: cover;
+}
+
+.banner-text {
+  text-align: center;
+  max-width: 480px;
+  z-index: 2;
+}
+
+.banner-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  color: #000000;
+  line-height: 48px;
+  margin-bottom: 24px;
+}
+
+.banner-title span {
+  display: block;
+  color: #426ABC;
+}
+
+.banner-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #7A8FA6;
+  font-weight: 600;
+  line-height: 19px;
+  text-align: center;
+}
+
+/* Lado Direito - Formulário (Rectangle 116) */
+.login-form-area {
+  flex: 0.9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #F8FAFC;
+  border: 1px solid #E2EAF0;
+}
+
+/* Card (Rectangle 117) */
+.login-card {
+  width: 478px;
+  min-height: 648px;
+  background: #FFFFFF;
+  border-radius: 15px;
+  padding: 48px 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* WhatsApp Image */
+.card-logo-mini {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  width: 81px;
+  height: 81px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.login-header {
+  margin-bottom: 32px;
+  margin-top: 40px;
+}
+
+.login-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #1A2332;
+  line-height: 36px;
+  margin-bottom: 12px;
+}
+
+.login-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: #7A8FA6;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.form-group-login {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label-login {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1A2236;
+  line-height: 17px;
+}
+
+.label-login span {
+  color: #ef4444;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Inputs (Rectangle 95/96) */
+.input-login {
+  width: 100%;
+  height: 43px;
+  background: #F1F5F9;
+  border: 1px solid #E2EAF0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #1e293b;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.input-login:focus {
+  background: #ffffff;
+  border-color: #3b66f6;
+  box-shadow: 0 0 0 3px rgba(59, 102, 246, 0.1);
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.password-toggle-btn:hover {
+  color: #3b66f6;
+}
+
+/* Opções (Lembrar-me / Esqueci Senha) */
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  font-size: 13px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #7A8FA6;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Checkbox (Rectangle 113) */
+.remember-me input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 19px;
+  background: #FFFFFF;
+  border: 1px solid #E2EAF0;
+  border-radius: 20px;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.remember-me input:checked {
+  background-color: #426ABC;
+  border-color: #E2EAF0;
+}
+
+.remember-me input:checked::after {
+  content: '✓';
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.forgot-password-link {
+  color: #426ABC;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+/* Botão Entrar (Frame 139) */
+.btn-login-submit {
+  width: 100%;
+  height: 50px;
+  background: #426ABC;
+  color: #FFFFFF;
+  border: 1px solid #858585;
+  border-radius: 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-login-submit:hover {
+  background: #35569c;
+  box-shadow: 0 4px 12px rgba(66, 106, 188, 0.2);
+}
+
+.btn-login-submit:active {
+  transform: translateY(1px);
+}
+
+/* Divisor "ou" (Line 11 / Line 12) */
+.login-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #7A8FA6;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+  margin-bottom: 24px;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #7A8AAA;
+}
+
+.login-divider:not(:empty)::before {
+  margin-right: 12px;
+}
+
+.login-divider:not(:empty)::after {
+  margin-left: 12px;
+}
+
+.no-account-text {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+  color: #7A8FA6;
+  margin-bottom: 16px;
+}
+
+/* Botão Criar Conta (Frame 140) */
+.btn-login-register {
+  width: 100%;
+  height: 50px;
+  background: #FFFFFF;
+  color: #426ABC;
+  border: 1px solid #426ABC;
+  border-radius: 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-login-register:hover {
+  background: rgba(66, 106, 188, 0.05);
+}
+
+/* Mensagens de feedback */
+.auth-alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.auth-alert-error {
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #ef4444;
+}
+
+.auth-alert-success {
+  background-color: #dcfce7;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+/* Responsivo */
+@media (max-width: 968px) {
+  .login-banner {
+    display: none;
+  }
+  .login-form-area {
+    flex: 1;
+    padding: 20px;
+  }
+  .login-card {
+    padding: 32px 24px;
+    width: 100%;
+    max-width: 478px;
+  }
+}

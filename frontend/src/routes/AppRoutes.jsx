@@ -5,15 +5,21 @@ import Login from "../pages/Login/Login";
 import Cadastro from "../pages/Cadastro/Cadastro";
 import ProtectedRoute from "./ProtectedRoute";
 import Perfil from "../pages/Perfil/Perfil";
+import MainLayout from "../layouts/MainLayout";
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* Rotas com o Cabeçalho principal */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>}/>
+        </Route>
+        
+        {/* Rotas sem Cabeçalho (Full screen) */}
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/perfil" element={ <ProtectedRoute><Perfil /></ProtectedRoute>}/>
       </Routes>
     </BrowserRouter>
   );

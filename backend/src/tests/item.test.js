@@ -219,7 +219,9 @@ describe("Item - RBAC CRUD", () => {
       });
 
     expect(res.statusCode).toBe(404);
-    expect(res.body.message).toBe("Categoria não encontrada");
+    expect(res.body.errors.fieldErrors.categoryId[0]).toBe(
+      "Categoria não encontrada",
+    );
   });
 
   it("user pode criar item com imagem", async () => {

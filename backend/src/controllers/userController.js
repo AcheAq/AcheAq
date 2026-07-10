@@ -1,4 +1,5 @@
 const userService = require("../services/userService");
+const { updateUserSchema, userIdSchema } = require("../schemas/user.schema");
 
 async function getMe(req, res) {
   try {
@@ -11,6 +12,19 @@ async function getMe(req, res) {
 
 async function updateMe(req, res) {
   try {
+    const updateUserValidate = updateUserSchema.safeParse(req.body);
+
+    if (!updateUserValidate.success) {
+      const errors = updateUserValidate.error.flatten();
+
+      return res.status(400).json({
+        message: "Dados inválidos",
+        errors: {
+          ...errors.fieldErrors,
+          general: errors.formErrors,
+        },
+      });
+    }
     const user = await userService.updateMe(req.user.id, req.body);
     return res.json(user);
   } catch (err) {
@@ -29,6 +43,13 @@ async function getAll(req, res) {
 
 async function getById(req, res) {
   try {
+    const getUserValidate = userIdSchema.safeParse(req.params);
+
+    if (!getUserValidate.success) {
+      return res.status(400).json({
+        errors: getUserValidate.error.flatten().fieldErrors,
+      });
+    }
     const user = await userService.getById(req.user, req.params.id);
     return res.json(user);
   } catch (err) {
@@ -38,6 +59,13 @@ async function getById(req, res) {
 
 async function remove(req, res) {
   try {
+    const removeUserValidate = userIdSchema.safeParse(req.params);
+
+    if (!removeUserValidate.success) {
+      return res.status(400).json({
+        errors: removeUserValidate.error.flatten().fieldErrors,
+      });
+    }
     const result = await userService.deleteUser(req.user, req.params.id);
     return res.json(result);
   } catch (err) {

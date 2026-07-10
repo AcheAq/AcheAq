@@ -1,228 +1,230 @@
 .filter-sidebar-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
 }
 
 .filter-card {
-  background-color: #ffffff;
-  border: 1px solid #E2EAF0;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    background-color: #ffffff;
+    border: 1px solid #E2EAF0;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .filter-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .filter-card-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
 }
 
 .btn-clear-filters {
-  background: transparent;
-  border: none;
-  color: #EA7C3F; 
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 4px;
-  transition: opacity 0.2s;
+    background: transparent;
+    border: none;
+    color: #EA7C3F;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px;
+    transition: opacity 0.2s;
 }
 
 .btn-clear-filters:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 .filter-field-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .filter-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
 }
 
-.filter-select, .filter-input-date {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #E2EAF0;
-  background-color: #ffffff;
-  font-size: 14px;
-  color: #1e293b;
-  font-family: inherit;
-  outline: none;
-  cursor: pointer;
-  transition: border-color 0.2s;
+.filter-select,
+.filter-input-date {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #E2EAF0;
+    background-color: #ffffff;
+    font-size: 14px;
+    color: #1e293b;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
 }
 
-.filter-select:focus, .filter-input-date:focus {
-  border-color: #426ABC;
+.filter-select:focus,
+.filter-input-date:focus {
+    border-color: #426ABC;
 }
 
 .filter-sort-fieldset {
-  border: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .filter-sort-legend {
-  font-size: 13px;
-  font-weight: 600;
-  color: #475569;
-  margin-bottom: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 4px;
 }
 
 .sort-option-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-size: 14px;
-  color: #64748b;
-  cursor: pointer;
-  transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .sort-option-input {
-  accent-color: #426ABC;
-  cursor: pointer;
+    accent-color: #426ABC;
+    cursor: pointer;
 }
 
 .sort-option-label.active {
-  background-color: #EEF4FF; 
-  color: #426ABC;
-  font-weight: 600;
+    background-color: #EEF4FF;
+    color: #426ABC;
+    font-weight: 600;
 }
 
 .btn-apply-filters {
-  background-color: #EA7C3F;
-  border: 1.5px solid #ea580c;
-  color: #ffffff;
-  padding: 12px;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
-  box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.2);
-  transition: background-color 0.2s;
-  margin-top: 4px;
+    background-color: #EA7C3F;
+    border: 1.5px solid #ea580c;
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.2);
+    transition: background-color 0.2s;
+    margin-top: 4px;
 }
 
 .btn-apply-filters:hover {
-  background-color: #D96B2D;
+    background-color: #D96B2D;
 }
 
 .filter-tip-card {
-  background-color: #fffbeb;
-  border: 1px solid #fef08a;
-  border-radius: 14px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    background-color: #fffbeb;
+    border: 1px solid #fef08a;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .filter-tip-card.lost .filter-tip-header {
-  color: #EA7C3F;
+    color: #EA7C3F;
 }
 
 .filter-tip-card.lost .filter-tip-text {
-  color: #D96B2D;
+    color: #D96B2D;
 }
 
 .filter-tip-card.found {
-  background-color: #eff6ff;
-  border-color: #bfdbfe;
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
 }
 
 .filter-tip-card.found .filter-tip-header {
-  color: #426ABC; 
+    color: #426ABC;
 }
 
 .filter-tip-card.found .filter-tip-text {
-  color: #3557A1; 
+    color: #3557A1;
 }
 
 .filter-tip-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .filter-tip-text {
-  font-size: 13px;
-  margin: 0;
-  line-height: 1.5;
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.5;
 }
 
 @media (max-width: 768px) {
-  .filter-card {
-    padding: 20px;
-    gap: 18px;
-  }
+    .filter-card {
+        padding: 20px;
+        gap: 18px;
+    }
 
-  .filter-card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
+    .filter-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
 
-  .btn-clear-filters {
-    align-self: flex-end;
-  }
+    .btn-clear-filters {
+        align-self: flex-end;
+    }
 
-  .btn-apply-filters {
-    width: 100%;
-  }
+    .btn-apply-filters {
+        width: 100%;
+    }
 
-  .sort-option-label {
-    padding: 12px;
-  }
+    .sort-option-label {
+        padding: 12px;
+    }
 }
 
 @media (max-width: 480px) {
-  .filter-card {
-    padding: 16px;
-    border-radius: 12px;
-  }
+    .filter-card {
+        padding: 16px;
+        border-radius: 12px;
+    }
 
-  .filter-card-title {
-    font-size: 16px;
-  }
+    .filter-card-title {
+        font-size: 16px;
+    }
 
-  .filter-select,
-  .filter-input-date {
-    font-size: 13px;
-    padding: 10px;
-  }
+    .filter-select,
+    .filter-input-date {
+        font-size: 13px;
+        padding: 10px;
+    }
 
-  .filter-tip-card {
-    padding: 14px;
-  }
+    .filter-tip-card {
+        padding: 14px;
+    }
 
-  .filter-tip-text {
-    font-size: 12px;
-  }
+    .filter-tip-text {
+        font-size: 12px;
+    }
 }

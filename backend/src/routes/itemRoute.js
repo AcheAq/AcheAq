@@ -387,6 +387,7 @@ itemRoute.patch(
   "/:id",
   authMiddleware,
   authorizeRoles("USER", "ADMIN"),
+  upload.single("image"),
   itemController.update,
 );
 
@@ -478,7 +479,7 @@ itemRoute.patch(
 itemRoute.delete(
   "/:id",
   authMiddleware,
-  authorizeRoles("ADMIN"),
+  authorizeRoles("USER", "ADMIN"),
   itemController.remove,
 );
 

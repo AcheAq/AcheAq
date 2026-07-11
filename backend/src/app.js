@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./lib/swagger");
@@ -21,6 +22,9 @@ app.use(
 );
 
 app.use(express.json());
+
+// Serve as imagens enviadas (multer salva em backend/uploads/).
+app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
 app.use(routes);
 app.use("/auth", authRoutes);

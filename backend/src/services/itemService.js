@@ -66,7 +66,7 @@ async function deleteItem(currentUser, id) {
     throw error;
   }
 
-  if (currentUser.role !== "ADMIN") {
+  if (currentUser.role !== "ADMIN" && item.userId !== currentUser.id) {
     const error = new Error("Acesso negado");
     error.statusCode = 403;
     throw error;
@@ -79,7 +79,7 @@ async function deleteItem(currentUser, id) {
   };
 }
 
-async function resolveItem(currentUser, id) {
+async function resolveItem(currentUser, id, data = {}) {
   const item = await itemRepository.findItemById(id);
 
   if (!item) {
@@ -96,6 +96,8 @@ async function resolveItem(currentUser, id) {
 
   return await itemRepository.updateItem(id, {
     status: "RESOLVED",
+    returnedAt: data.returnedAt ? new Date(data.returnedAt) : new Date(),
+    returnNote: data.returnNote ?? null,
   });
 }
 

@@ -1,0 +1,41 @@
+.active-filters-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.active-filters-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background-color: #e0f2fe;
+  border: 1px solid #bae6fd;
+  color: #426ABC;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.filter-pill-close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  color: #426ABC;
+  padding: 0;
+}
+
+.filter-pill-close:hover {
+  opacity: 0.7;
+}

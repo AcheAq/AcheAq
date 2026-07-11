@@ -81,7 +81,7 @@ export default function Login() {
       <div className="login-banner">
         <div className="banner-logo-wrapper">
           <img src={logoBranca} alt="AcheAq Logo" className="banner-logo" />
-          
+
           {/* Bolas decorativas acopladas ao círculo central (responsivo) */}
           <div className="decor-circle decor-1"></div>
           <div className="decor-circle decor-2"></div>
@@ -105,7 +105,7 @@ export default function Login() {
       {/* Lado Direito - Formulário */}
       <div className="login-form-area">
         <div className="login-card">
-          <img src={logoAzul} alt="Logo" className="card-logo-mini" />
+          <img src={logoAzul} alt="" className="card-logo-mini" />
 
           <div className="login-header">
             <h2 className="login-title">Entrar</h2>
@@ -114,37 +114,49 @@ export default function Login() {
             </p>
           </div>
 
-          {error && <div className="auth-alert auth-alert-error">{error}</div>}
-          {success && <div className="auth-alert auth-alert-success">{success}</div>}
+          {error && (
+            <div className="auth-alert auth-alert-error" role="alert">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="auth-alert auth-alert-success" role="status">
+              {success}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit}>
             <div className="form-group-login">
-              <label className="label-login">
-                Email <span>*</span>
+              <label className="label-login" htmlFor="login-email">
+                Email <span aria-hidden="true">*</span>
               </label>
               <input
+                id="login-email"
                 type="email"
                 placeholder="seuemail@exemplo.com"
                 className="input-login"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
+                autoComplete="email"
                 required
               />
             </div>
 
             <div className="form-group-login">
-              <label className="label-login">
-                Senha <span>*</span>
+              <label className="label-login" htmlFor="login-password">
+                Senha <span aria-hidden="true">*</span>
               </label>
               <div className="input-wrapper">
                 <input
+                  id="login-password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Sua senha"
                   className="input-login"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={loading}
+                  autoComplete="current-password"
                   required
                 />
                 <button
@@ -152,6 +164,8 @@ export default function Login() {
                   className="password-toggle-btn"
                   onClick={() => setShowPassword(!showPassword)}
                   disabled={loading}
+                  aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                  aria-pressed={showPassword}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -177,6 +191,7 @@ export default function Login() {
               type="submit"
               className="btn-login-submit"
               disabled={loading}
+              aria-busy={loading}
             >
               {loading ? "Entrando..." : "Entrar"}
             </button>

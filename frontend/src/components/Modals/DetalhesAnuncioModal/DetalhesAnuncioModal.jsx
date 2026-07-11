@@ -1,8 +1,19 @@
 import Modal from "../../Modal/Modal";
 import { Tag, MapPin, Calendar, Clock, User } from "lucide-react";
+import ActionButton from "../../ActionButton/ActionButton";
 import "./DetalhesAnuncioModal.css";
 
-function DetalhesAnuncioModal({ isOpen, onClose, item, onContact }) {
+function DetalhesAnuncioModal({
+  isOpen,
+  onClose,
+  item,
+  onContact,
+  isOwner = false,
+  isResolved = false,
+  onEdit,
+  onResolve,
+  onDelete,
+}) {
   if (!item && isOpen) return null;
 
   const anunciante = {
@@ -140,6 +151,42 @@ function DetalhesAnuncioModal({ isOpen, onClose, item, onContact }) {
               {item?.descricao || item?.description || "Sem descrição cadastrada."}
             </p>
           </section>
+
+          {isOwner && (
+            <div
+              style={{
+                marginTop: 20,
+                borderTop: "1px solid #e2e8f0",
+                paddingTop: 16,
+              }}
+            >
+              <p
+                style={{
+                  margin: "0 0 10px",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  color: "#94a3b8",
+                }}
+              >
+                Ações do Anunciante
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <ActionButton variant="outline" type="button" onClick={onEdit}>
+                  Editar Anúncio
+                </ActionButton>
+                {!isResolved && (
+                  <ActionButton variant="primary" type="button" onClick={onResolve}>
+                    Marcar como Devolvido
+                  </ActionButton>
+                )}
+                <ActionButton variant="danger" type="button" onClick={onDelete}>
+                  Excluir
+                </ActionButton>
+              </div>
+            </div>
+          )}
         </section>
       </section>
     </Modal>

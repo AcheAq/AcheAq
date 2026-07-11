@@ -1,0 +1,3 @@
+# Garante que scripts shell mantenham quebras de linha LF em qualquer SO
+# (evita "start.sh: not found" no container quando o checkout é feito no Windows).
+*.sh text eol=lf

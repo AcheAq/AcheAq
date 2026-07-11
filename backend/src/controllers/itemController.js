@@ -32,11 +32,13 @@ async function getById(req, res) {
 
 async function update(req, res) {
   try {
-    const item = await itemService.updateItem(
-      req.user,
-      req.params.id,
-      req.body,
-    );
+    const data = {
+      ...req.body,
+      // Só sobrescreve a foto quando um novo arquivo é enviado.
+      ...(req.file ? { photoUrl: req.file.path } : {}),
+    };
+
+    const item = await itemService.updateItem(req.user, req.params.id, data);
     return res.json(item);
   } catch (err) {
     return res.status(err.statusCode || 500).json({ message: err.message });
@@ -54,7 +56,11 @@ async function remove(req, res) {
 
 async function resolve(req, res) {
   try {
-    const item = await itemService.resolveItem(req.user, req.params.id);
+    const item = await itemService.resolveItem(
+      req.user,
+      req.params.id,
+      req.body,
+    );
     return res.json(item);
   } catch (err) {
     return res.status(err.statusCode || 500).json({ message: err.message });

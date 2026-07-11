@@ -1,0 +1,97 @@
+@import "../../styles/aq-tokens.css";
+
+.fi {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  font-family: var(--aq-font);
+}
+
+.fi-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--aq-text);
+}
+
+.fi-req {
+  color: var(--aq-danger);
+}
+
+.fi-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.fi-field {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 16px;
+  border-radius: var(--aq-radius);
+  border: 1px solid var(--aq-border);
+  background: var(--aq-field);
+  color: var(--aq-text);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.fi-field::placeholder {
+  color: var(--aq-text-muted);
+}
+
+.fi-field:focus-visible {
+  background: #fff;
+  border-color: var(--aq-blue);
+  box-shadow: 0 0 0 3px rgba(66, 106, 188, 0.15);
+}
+
+.fi-field:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fi-wrap:has(.fi-toggle) .fi-field {
+  padding-right: 46px;
+}
+
+.fi-wrap--error .fi-field {
+  border-color: var(--aq-danger);
+}
+
+.fi-wrap--error .fi-field:focus-visible {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.fi-toggle {
+  position: absolute;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  color: var(--aq-text-muted);
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.fi-toggle:hover {
+  color: var(--aq-blue);
+}
+
+.fi-helper {
+  margin: 0;
+  font-size: 13px;
+  color: var(--aq-text-muted);
+}
+
+.fi-error {
+  margin: 0;
+  font-size: 13px;
+  color: var(--aq-danger);
+}

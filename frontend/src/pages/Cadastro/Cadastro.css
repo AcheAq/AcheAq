@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   padding: 40px 20px;
   background: linear-gradient(146.13deg, rgba(66, 106, 188, 0.3036) 57.07%, rgba(234, 124, 63, 0.5148) 105.05%, rgba(30, 48, 86, 0.66) 105.06%), #ffffff;
   font-family: 'Inter', sans-serif;

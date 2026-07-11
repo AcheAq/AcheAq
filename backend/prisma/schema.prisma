@@ -49,6 +49,9 @@ model Item {
   occurrenceDate DateTime // Data da ocorrência
   type           String @default("LOST") // Perdido ou Encontrado
   status         String @default("OPEN") // Aberto ou Resolvido
+  observations   String? // Observações adicionais do objeto
+  returnedAt     DateTime? // Data em que o objeto foi devolvido ao dono
+  returnNote     String? // Nota/observação sobre a devolução
   user           User     @relation(fields: [userId], references: [id])
   userId         String
   createdAt      DateTime @default(now())

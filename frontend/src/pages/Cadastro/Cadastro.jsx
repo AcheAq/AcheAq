@@ -79,13 +79,9 @@ export default function Cadastro() {
       return;
     }
 
-    setLoading(false);
-
     try {
       setLoading(true);
 
-      // Limpa a máscara do telefone para enviar apenas números para a API (opcional, ou envia formatado conforme a API aceite)
-      // Como o swagger mostra "(82) 99999-9999", enviaremos formatado mesmo.
       await authService.register({
         name,
         email,
@@ -116,7 +112,7 @@ export default function Cadastro() {
   return (
     <div className="cadastro-container">
       <div className="cadastro-card">
-        <img src={logoImg} alt="Logo" className="card-logo-cadastro" />
+        <img src={logoImg} alt="" className="card-logo-cadastro" />
 
         <div className="cadastro-header">
           <h2 className="cadastro-title">Criar Conta</h2>
@@ -125,61 +121,68 @@ export default function Cadastro() {
           </p>
         </div>
 
-        {error && <div className="auth-alert auth-alert-error">{error}</div>}
+        {error && (
+          <div className="auth-alert auth-alert-error" role="alert">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
-
           {/* SEÇÃO 1: Informações Pessoais */}
           <div className="cadastro-section">
             <h3 className="section-header section-blue">Informações Pessoais</h3>
             <div className="form-grid">
-
               <div className="form-group-cadastro grid-col-full">
-                <label className="label-cadastro">
-                  Nome Completo <span>*</span>
+                <label className="label-cadastro" htmlFor="cad-name">
+                  Nome Completo <span aria-hidden="true">*</span>
                 </label>
                 <input
+                  id="cad-name"
                   type="text"
                   placeholder="Seu nome completo"
                   className="input-cadastro"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   disabled={loading}
+                  autoComplete="name"
                   required
                 />
               </div>
 
               <div className="form-group-cadastro">
-                <label className="label-cadastro">
-                  Email <span>*</span>
+                <label className="label-cadastro" htmlFor="cad-email">
+                  Email <span aria-hidden="true">*</span>
                 </label>
                 <input
+                  id="cad-email"
                   type="email"
                   placeholder="seu@email.com"
                   className="input-cadastro"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
+                  autoComplete="email"
                   required
                 />
               </div>
 
               <div className="form-group-cadastro">
-                <label className="label-cadastro">
-                  Telefone <span>*</span>
+                <label className="label-cadastro" htmlFor="cad-phone">
+                  Telefone <span aria-hidden="true">*</span>
                 </label>
                 <input
-                  type="text"
+                  id="cad-phone"
+                  type="tel"
                   placeholder="(00) 00000-0000"
                   className="input-cadastro"
                   value={phone}
                   onChange={handlePhoneChange}
                   disabled={loading}
+                  autoComplete="tel"
                   maxLength={15}
                   required
                 />
               </div>
-
             </div>
           </div>
 
@@ -187,27 +190,29 @@ export default function Cadastro() {
           <div className="cadastro-section">
             <h3 className="section-header section-orange">Informações Acadêmicas</h3>
             <div className="form-grid">
-
               <div className="form-group-cadastro">
-                <label className="label-cadastro">
-                  Instituição de Ensino <span>*</span>
+                <label className="label-cadastro" htmlFor="cad-institution">
+                  Instituição de Ensino <span aria-hidden="true">*</span>
                 </label>
                 <input
+                  id="cad-institution"
                   type="text"
                   placeholder="Ex: UFMG, UFAL, IFAL..."
                   className="input-cadastro"
                   value={institution}
                   onChange={(e) => setInstitution(e.target.value)}
                   disabled={loading}
+                  autoComplete="organization"
                   required
                 />
               </div>
 
               <div className="form-group-cadastro">
-                <label className="label-cadastro">
-                  Curso <span>*</span>
+                <label className="label-cadastro" htmlFor="cad-course">
+                  Curso <span aria-hidden="true">*</span>
                 </label>
                 <input
+                  id="cad-course"
                   type="text"
                   placeholder="Ex: Engenharia de Software"
                   className="input-cadastro"
@@ -219,10 +224,11 @@ export default function Cadastro() {
               </div>
 
               <div className="form-group-cadastro grid-col-full">
-                <label className="label-cadastro">
-                  Matrícula <span>*</span>
+                <label className="label-cadastro" htmlFor="cad-registration">
+                  Matrícula <span aria-hidden="true">*</span>
                 </label>
                 <input
+                  id="cad-registration"
                   type="text"
                   placeholder="Número de Matrícula"
                   className="input-cadastro"
@@ -232,7 +238,6 @@ export default function Cadastro() {
                   required
                 />
               </div>
-
             </div>
           </div>
 
@@ -240,19 +245,20 @@ export default function Cadastro() {
           <div className="cadastro-section">
             <h3 className="section-header section-blue">Segurança</h3>
             <div className="form-grid">
-
               <div className="form-group-cadastro">
-                <label className="label-cadastro">
-                  Senha <span>*</span>
+                <label className="label-cadastro" htmlFor="cad-password">
+                  Senha <span aria-hidden="true">*</span>
                 </label>
                 <div className="input-wrapper">
                   <input
+                    id="cad-password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Mínimo 6 caracteres"
                     className="input-cadastro"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={loading}
+                    autoComplete="new-password"
                     required
                   />
                   <button
@@ -260,6 +266,8 @@ export default function Cadastro() {
                     className="password-toggle-btn"
                     onClick={() => setShowPassword(!showPassword)}
                     disabled={loading}
+                    aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                    aria-pressed={showPassword}
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
@@ -267,17 +275,19 @@ export default function Cadastro() {
               </div>
 
               <div className="form-group-cadastro">
-                <label className="label-cadastro">
-                  Confirmar Senha <span>*</span>
+                <label className="label-cadastro" htmlFor="cad-confirm">
+                  Confirmar Senha <span aria-hidden="true">*</span>
                 </label>
                 <div className="input-wrapper">
                   <input
+                    id="cad-confirm"
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Repita sua senha"
                     className="input-cadastro"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     disabled={loading}
+                    autoComplete="new-password"
                     required
                   />
                   <button
@@ -285,12 +295,15 @@ export default function Cadastro() {
                     className="password-toggle-btn"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     disabled={loading}
+                    aria-label={
+                      showConfirmPassword ? "Ocultar senha" : "Mostrar senha"
+                    }
+                    aria-pressed={showConfirmPassword}
                   >
                     {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
               </div>
-
             </div>
           </div>
 
@@ -312,6 +325,7 @@ export default function Cadastro() {
             type="submit"
             className="btn-cadastro-submit"
             disabled={loading}
+            aria-busy={loading}
           >
             {loading ? "Cadastrando..." : "Criar Conta"}
           </button>

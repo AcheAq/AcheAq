@@ -334,19 +334,51 @@ describe("Item - RBAC CRUD", () => {
     }
   });
 
-  it("admin pode deletar item", async () => {
+  it("user não pode deletar item de outro usuário", async () => {
+    const alheio = await request(app)
+      .post("/item")
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        title: "Item do admin",
+        description: "Pertence ao admin",
+        categoryId,
+        location: "Bloco A",
+        occurrenceDate: new Date().toISOString(),
+        type: "FOUND",
+      });
+
+    const res = await request(app)
+      .delete(`/item/${alheio.body.id}`)
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(403);
+  });
+
+  it("dono pode deletar seu próprio item", async () => {
+    const proprio = await request(app)
+      .post("/item")
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({
+        title: "Item do próprio user",
+        description: "Para ser deletado pelo dono",
+        categoryId,
+        location: "Pátio",
+        occurrenceDate: new Date().toISOString(),
+        type: "LOST",
+      });
+
+    const res = await request(app)
+      .delete(`/item/${proprio.body.id}`)
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(res.statusCode).toBe(200);
+  });
+
+  it("admin pode deletar item de qualquer usuário", async () => {
     const res = await request(app)
       .delete(`/item/${itemId}`)
       .set("Authorization", `Bearer ${adminToken}`);
 
     expect(res.statusCode).toBe(200);
-  });
-
-  it("user não pode deletar item", async () => {
-    const res = await request(app)
-      .delete(`/item/${itemId}`)
-      .set("Authorization", `Bearer ${userToken}`);
-
-    expect(res.statusCode).toBe(403);
   });
 });

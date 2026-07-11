@@ -127,6 +127,21 @@ async function findMessagesByConversation(conversationId) {
   });
 }
 
+async function markMessagesAsRead(conversationId, userId) {
+  return prisma.message.updateMany({
+    where: {
+      conversationId,
+      senderId: {
+        not: userId,
+      },
+      isRead: false,
+    },
+    data: {
+      isRead: true,
+    },
+  });
+}
+
 module.exports = {
   createConversation,
   findConversationByItemAndParticipant,
@@ -134,4 +149,5 @@ module.exports = {
   findUserConversations,
   createMessage,
   findMessagesByConversation,
+  markMessagesAsRead,
 };

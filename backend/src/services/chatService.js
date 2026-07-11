@@ -1,5 +1,6 @@
 const chatRepository = require("../repositories/chatRepository");
 const itemRepository = require("../repositories/itemRepository");
+const notificationService = require("./notificationService");
 
 async function startConversation(currentUser, itemId) {
   const item = await itemRepository.findItemById(itemId);
@@ -66,11 +67,25 @@ async function sendMessage(currentUser, conversationId, content) {
     throw error;
   }
 
-  return await chatRepository.createMessage({
+  const message = await chatRepository.createMessage({
     conversationId,
     senderId: currentUser.id,
     content,
   });
+
+  const receiverId =
+    conversation.ownerId === currentUser.id
+      ? conversation.participantId
+      : conversation.ownerId;
+
+  await notificationService.createNotification({
+    userId: receiverId,
+    conversationId,
+    title: "Nova mensagem",
+    message: `${currentUser.name} enviou uma mensagem`,
+  });
+
+  return message;
 }
 
 async function getMessages(currentUser, conversationId) {
@@ -92,6 +107,8 @@ async function getMessages(currentUser, conversationId) {
     error.statusCode = 403;
     throw error;
   }
+
+  await chatRepository.markMessagesAsRead(conversationId, currentUser.id);
 
   return await chatRepository.findMessagesByConversation(conversationId);
 }

@@ -1,0 +1,99 @@
+###
+@token = {{login.response.body.token}}
+@id = {{login.response.body.user.id}}
+@categoryId = {{category.response.body.$.[0].id}}
+@itemId = {{item.response.body.data.$.[0].id}}
+@conversationId = {{conversation.response.body.$.[0].id}}
+@messageId = {{message.response.body.id}}
+
+### LOGIN
+# @name login
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@test.com",
+    "password": "123456"
+}
+
+### MEU PERFIL
+GET http://localhost:5000/user/me
+Authorization: Bearer {{token}}
+
+### Criar Categoria (ADMIN)
+POST http://localhost:5000/category
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "name": "Roupa"
+}
+
+### Todas as Categorias
+# @name category
+GET http://localhost:5000/category
+Authorization: bearer {{token}}
+
+### Criar Item (USER ou ADMIN)
+POST http://localhost:5000/item
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "title": "Mochila Admin",
+  "description": "Mochila Adidas encontrada no user",
+  "categoryId": "{{categoryId}}",
+  "location": "Pátio central",
+  "occurrenceDate": "2026-07-07T12:00:00.000Z",
+  "type": "FOUND"
+}
+
+### Listar todos os itens
+# @name item
+GET http://localhost:5000/item
+Authorization: bearer {{token}}
+
+### Listar meus itens
+GET http://localhost:5000/item/me
+Authorization: bearer {{token}}
+
+
+### Criar conversa - id do item para criar conversa
+POST http://localhost:5000/chat/{{itemId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Mostrar conversas
+# @name conversation
+GET http://localhost:5000/chat
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Enviar mensagem - id do chat para mandar mensagem
+# @name message
+POST http://localhost:5000/chat/{{conversationId}}/messages
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "content": "Oi, pode me dar mais detalhes?"
+}
+
+### Buscar mensagens
+GET http://localhost:5000/chat/{{conversationId}}/messages
+Authorization: Bearer {{token}}
+
+###
+@notificationId = {{notification.response.body.$.[0].id}}
+
+
+### Buscar notificações do usuário autenticado
+# @name notification
+GET http://localhost:5000/notification
+Authorization: Bearer {{token}}
+
+
+### Marcar notificação como lida
+PATCH http://localhost:5000/notification/{{notificationId}}/read
+Authorization: Bearer {{token}}
+Content-Type: application/json

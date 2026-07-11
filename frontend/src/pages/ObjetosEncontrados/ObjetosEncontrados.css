@@ -1,11 +1,11 @@
-.lost-items-main {
+.found-items-main {
   width: 100%;
   min-height: 100vh;
   padding-bottom: 60px;
   box-sizing: border-box;
 }
 
-.lost-items-content {
+.found-items-content {
   max-width: 1280px;
   margin: 32px auto 0;
   padding: 0 40px;
@@ -16,7 +16,7 @@
 }
 
 @media (min-width: 900px) {
-  .lost-items-content {
+  .found-items-content {
     grid-template-columns: 280px 1fr;
   }
 }
@@ -75,13 +75,13 @@
 }
 
 @media (max-width: 900px) {
-  .lost-items-content {
+  .found-items-content {
     padding: 0 24px;
   }
 }
 
 @media (max-width: 600px) {
-  .lost-items-content {
+  .found-items-content {
     padding: 0 16px;
     margin-top: 24px;
   }

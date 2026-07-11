@@ -7,6 +7,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Perfil from "../pages/Perfil/Perfil";
 import MainLayout from "../layouts/MainLayout";
 import ObjetosPerdidos from "../pages/ObjetosPerdidos/ObjetosPerdidos";
+import ObjetosEncontrados from "../pages/ObjetosEncontrados/ObjetosEncontrados";
 
 export default function AppRoutes() {
   return (
@@ -15,11 +16,13 @@ export default function AppRoutes() {
         {/* Rotas com o Cabeçalho principal */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>}/>
+          <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
 
           <Route path="/objetos-perdidos" element={<ObjetosPerdidos />} />
+          <Route path="/objetos-encontrados" element={<ObjetosEncontrados />}
+          />
         </Route>
-        
+
         {/* Rotas sem Cabeçalho (Full screen) */}
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />

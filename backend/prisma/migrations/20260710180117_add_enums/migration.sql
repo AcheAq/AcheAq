@@ -12,7 +12,7 @@ CREATE TYPE "ItemType" AS ENUM ('LOST', 'FOUND');
 CREATE TYPE "ItemStatus" AS ENUM ('OPEN', 'RESOLVED');
 
 -- DropIndex
-DROP INDEX "password_reset_tokens_token_idx";
+DROP INDEX IF EXISTS "password_reset_tokens_token_idx";
 
 -- AlterTable
 ALTER TABLE "Item" DROP COLUMN "status",

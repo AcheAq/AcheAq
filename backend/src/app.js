@@ -10,6 +10,7 @@ const userRoute = require("./routes/userRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const itemRoute = require("./routes/itemRoute");
 const chatRoute = require("./routes/chatRoute");
+const notificationRoute = require("./routes/notificationRoute");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 
 const app = express();
@@ -29,6 +30,7 @@ app.use("/user", userRoute);
 app.use("/category", categoryRoute);
 app.use("/item", itemRoute);
 app.use("/chat", chatRoute);
+app.use("/notification", notificationRoute);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(errorMiddleware);

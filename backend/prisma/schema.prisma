@@ -13,6 +13,16 @@ enum UserRole {
   ADMIN
 }
 
+enum ItemType {
+  LOST
+  FOUND
+}
+
+enum ItemStatus {
+  OPEN
+  RESOLVED
+}
+
 model User {
   id          String    @id @default(uuid())
   email       String    @unique
@@ -47,11 +57,16 @@ model Item {
   categoryId     String
   location       String // Local (ex: Bloco A, Estacionamento)
   occurrenceDate DateTime // Data da ocorrência
+<<<<<<< HEAD
   type           String @default("LOST") // Perdido ou Encontrado
   status         String @default("OPEN") // Aberto ou Resolvido
   observations   String? // Observações adicionais do objeto
   returnedAt     DateTime? // Data em que o objeto foi devolvido ao dono
   returnNote     String? // Nota/observação sobre a devolução
+=======
+  type           ItemType @default(LOST) // Perdido ou Encontrado
+  status         ItemStatus @default(OPEN) // Aberto ou Resolvido
+>>>>>>> origin/develop
   user           User     @relation(fields: [userId], references: [id])
   userId         String
   createdAt      DateTime @default(now())

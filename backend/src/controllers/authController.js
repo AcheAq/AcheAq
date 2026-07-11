@@ -4,23 +4,26 @@ const {
   changePasswordUser,
 } = require("../services/authService.js");
 const passwordResetService = require("../services/passwordResetService");
-
-function validatePassword(password) {
-  if (!password || password.trim() === "") {
-    throw new Error("A senha não pode ser vazia");
-  }
-
-  if (password.length < 6) {
-    throw new Error("A senha deve ter no mínimo 6 caracteres");
-  }
-}
+const {
+  registerSchema,
+  loginSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
+  changePasswordSchema,
+} = require("../schemas/auth.schema");
 
 async function register(req, res) {
   try {
+    const registerValidate = registerSchema.safeParse(req.body);
+
+    if (!registerValidate.success) {
+      return res.status(400).json({
+        errors: registerValidate.error.flatten().fieldErrors,
+      });
+    }
+
     const { name, email, password, phone, registration, course, institution } =
       req.body;
-
-    validatePassword(password);
 
     const user = await registerUser({
       name,
@@ -42,6 +45,14 @@ async function register(req, res) {
 
 async function login(req, res) {
   try {
+    const loginValidate = loginSchema.safeParse(req.body);
+
+    if (!loginValidate.success) {
+      return res.status(400).json({
+        errors: loginValidate.error.flatten().fieldErrors,
+      });
+    }
+
     const { email, password } = req.body;
 
     const result = await loginUser({ email, password });
@@ -56,13 +67,14 @@ async function login(req, res) {
 
 async function forgotPassword(req, res) {
   try {
-    const { email } = req.body;
+    const forgotPasswordValidate = forgotPasswordSchema.safeParse(req.body);
 
-    if (!email) {
+    if (!forgotPasswordValidate.success) {
       return res.status(400).json({
-        message: "E-mail é obrigatório.",
+        errors: forgotPasswordValidate.error.flatten().fieldErrors,
       });
     }
+    const { email } = req.body;
 
     await passwordResetService.requestPasswordReset(email);
 
@@ -81,9 +93,14 @@ async function forgotPassword(req, res) {
 
 async function resetPassword(req, res) {
   try {
-    const { token, password } = req.body;
+    const resetPasswordValidate = resetPasswordSchema.safeParse(req.body);
 
-    validatePassword(password);
+    if (!resetPasswordValidate.success) {
+      return res.status(400).json({
+        errors: resetPasswordValidate.error.flatten().fieldErrors,
+      });
+    }
+    const { token, password } = req.body;
 
     await passwordResetService.resetPassword(token, password);
 
@@ -99,10 +116,15 @@ async function resetPassword(req, res) {
 
 async function changePassword(req, res) {
   try {
+    const changePasswordValidate = changePasswordSchema.safeParse(req.body);
+
+    if (!changePasswordValidate.success) {
+      return res.status(400).json({
+        errors: changePasswordValidate.error.flatten().fieldErrors,
+      });
+    }
     const { currentPassword, newPassword } = req.body;
     const { id: id } = req.user;
-
-    validatePassword(newPassword);
 
     await changePasswordUser(id, currentPassword, newPassword);
 

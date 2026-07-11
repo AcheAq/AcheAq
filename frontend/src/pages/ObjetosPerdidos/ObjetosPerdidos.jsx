@@ -8,6 +8,7 @@ import CardAnuncio from "../../components/CardAnuncio/CardAnuncio";
 import Button from "../../components/Button/Button";
 import ActiveFilters from "../../components/ActiveFilters/ActiveFilters";
 import Pagination from "../../components/Pagination/Pagination";
+import DetalhesAnuncioModal from "../../components/Modals/DetalhesAnuncioModal/DetalhesAnuncioModal";
 
 import { categories, locations, sortOptions } from "../../utils/constants/filterOptions";
 import { objetosPerdidosMock } from "../../utils/mocks/objetosPerdidosMock";
@@ -27,6 +28,10 @@ function ObjetosPerdidos() {
   });
 
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Controle do modal de detalhes
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
   const categoryLabels = Object.fromEntries(
     categories.map((item) => [item.value, item.label])
@@ -63,6 +68,18 @@ function ObjetosPerdidos() {
 
   const handleSearch = (term) => {
     alert(`Buscando por: "${term}"`);
+  };
+
+  // Abrir detalhes
+  const handleOpenDetails = (item) => {
+    setSelectedItem(item);
+    setIsDetailsOpen(true);
+  };
+
+  // Fechar detalhes
+  const handleCloseDetails = () => {
+    setSelectedItem(null);
+    setIsDetailsOpen(false);
   };
 
   return (
@@ -122,6 +139,7 @@ function ObjetosPerdidos() {
                 category={item.category}
                 location={item.location}
                 date={item.date}
+                onDetails={() => handleOpenDetails(item)}
               />
             ))}
           </section>
@@ -132,6 +150,12 @@ function ObjetosPerdidos() {
           />
         </section>
       </section>
+
+      <DetalhesAnuncioModal
+        isOpen={isDetailsOpen}
+        onClose={handleCloseDetails}
+        item={selectedItem}
+      />
     </main>
   );
 }

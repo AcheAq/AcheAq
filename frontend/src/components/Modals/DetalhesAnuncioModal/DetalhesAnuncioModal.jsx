@@ -1,0 +1,149 @@
+import Modal from "../../Modal/Modal";
+import { Tag, MapPin, Calendar, Clock, User } from "lucide-react";
+import "./DetalhesAnuncioModal.css";
+
+function DetalhesAnuncioModal({ isOpen, onClose, item, onContact }) {
+  if (!item && isOpen) return null;
+
+  const anunciante = {
+    autor: item?.autor || "Usuário",
+    instituicao: item?.instituicao || "Instituição / Curso",
+    membroDesde: item?.membroDesde || "-",
+    email: item?.email || "-",
+    telefone: item?.telefone || "-",
+    dataPublicacao: item?.dataPublicacao || "-"
+  };
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Detalhes do Anúncio"
+      subtitle="Visualize todas as informações cadastradas para este objeto."
+    >
+      <section className="detalhes-grid">
+        <section className="detalhes-coluna-esq">
+          <section className="detalhes-img-wrapper">
+            <img
+              src={
+                item?.imagem ||
+                item?.image ||
+                "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=80"
+              }
+              alt={`Foto de ${item?.titulo || item?.title}`}
+              className="detalhes-img"
+            />
+          </section>
+
+          <aside className="anunciante-card" aria-label="Informações de quem anunciou">
+            <p className="anunciante-label">Anunciado por</p>
+
+            <section className="anunciante-perfil">
+              <span className="anunciante-avatar" aria-hidden="true">
+                <User size={24} />
+              </span>
+
+              <section className="anunciante-dados">
+                <h3 className="anunciante-nome">{anunciante.autor}</h3>
+                <p className="anunciante-curso">{anunciante.instituicao}</p>
+              </section>
+            </section>
+
+            <p className="anunciante-membro">Membro desde {anunciante.membroDesde}</p>
+          </aside>
+
+          <section className="detalhes-contato-sec" aria-label="Canais de contato">
+            <h3 className="contato-titulo">Contato</h3>
+
+            <section className="contato-input-fake" aria-label="E-mail de contato">
+              {anunciante.email}
+            </section>
+
+            <section className="contato-input-fake" aria-label="Telefone de contato">
+              {anunciante.telefone}
+            </section>
+
+            <button
+              type="button"
+              className="btn-entrar-contato"
+              onClick={() => onContact?.(item)}
+            >
+              Entrar em Contato
+            </button>
+          </section>
+        </section>
+
+        <span className="coluna-divisor" aria-hidden="true" />
+
+        <section className="detalhes-coluna-dir">
+          <header className="detalhes-dir-header">
+            <span
+              className={`badge-status ${
+                item?.status === "Perdido" || item?.status === "lost" ? "lost" : "found"
+              }`}
+            >
+              • {item?.status === "Perdido" || item?.status === "lost" ? "Perdido" : "Encontrado"}
+            </span>
+
+            <h1 className="detalhes-obj-titulo">
+              {item?.titulo || item?.title || "Objeto Sem Título"}
+            </h1>
+          </header>
+
+          <section className="metadados-grid" aria-label="Informações de local e data">
+            <article className="meta-item">
+              <p className="meta-label">
+                <Tag size={15} color="#64748b" aria-hidden="true" />
+                <span>Categoria</span>
+              </p>
+              <p className="meta-valor">
+                {item?.categoria || item?.category || "Acessórios"}
+              </p>
+            </article>
+
+            <article className="meta-item">
+              <p className="meta-label">
+                <MapPin size={15} color="#64748b" aria-hidden="true" />
+                <span>Local</span>
+              </p>
+              <p className="meta-valor">
+                {item?.localizacao || item?.location || "-"}
+              </p>
+            </article>
+
+            <article className="meta-item">
+              <p className="meta-label">
+                <Calendar size={15} color="#64748b" aria-hidden="true" />
+                <span>Data da ocorrência</span>
+              </p>
+              <p className="meta-valor">
+                {item?.data || item?.date || "-"}
+              </p>
+            </article>
+
+            <article className="meta-item">
+              <p className="meta-label">
+                <Clock size={15} color="#64748b" aria-hidden="true" />
+                <span>Publicado em</span>
+              </p>
+              <p className="meta-valor">
+                {anunciante.dataPublicacao}
+              </p>
+            </article>
+          </section>
+
+          <hr className="linha-horizontal" />
+
+          <section className="detalhes-desc-sec">
+            <h3 className="desc-titulo">Descrição do Objeto</h3>
+            <p className="desc-box">
+              {item?.descricao || item?.description || "Sem descrição cadastrada."}
+            </p>
+          </section>
+        </section>
+      </section>
+    </Modal>
+  );
+}
+
+export default DetalhesAnuncioModal;

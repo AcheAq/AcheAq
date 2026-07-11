@@ -1,35 +1,56 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import api from "../services/api";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [token, setToken] = useState(null);
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const fetchUserProfile = async (authToken) => {
+        try {
+            // Configura o cabeçalho manualmente para a primeira requisição imediata
+            const response = await api.get("/user/me", {
+                headers: {
+                    Authorization: `Bearer ${authToken}`
+                }
+            });
+            setUser(response.data);
+        } catch (error) {
+            console.error("Erro ao carregar perfil do usuário:", error);
+            logout();
+        }
+    };
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
 
         if (storedToken) {
             setToken(storedToken);
+            fetchUserProfile(storedToken);
         }
 
         setLoading(false);
     }, []);
 
-    function login(token) {
-        localStorage.setItem("token", token);
-        setToken(token);
-    }
+    const login = async (newToken) => {
+        localStorage.setItem("token", newToken);
+        setToken(newToken);
+        await fetchUserProfile(newToken);
+    };
 
-    function logout() {
+    const logout = () => {
         localStorage.removeItem("token");
         setToken(null);
-    }
+        setUser(null);
+    };
 
     return (
         <AuthContext.Provider
             value={{
                 token,
+                user,
                 login,
                 logout,
                 isAuthenticated: !!token,

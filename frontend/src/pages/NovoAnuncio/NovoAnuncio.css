@@ -1,0 +1,37 @@
+@import "../../styles/aq-tokens.css";
+
+.nova {
+  background: var(--aq-page);
+  font-family: var(--aq-font);
+  padding-bottom: 48px;
+  min-height: 100%;
+}
+
+.nova-hero {
+  background: var(--aq-blue);
+  color: #fff;
+  padding: 28px 0;
+}
+
+.nova-hero-inner,
+.nova-body {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+.nova-hero-inner h1 {
+  margin: 0 0 4px;
+  font-size: 26px;
+  font-weight: 700;
+}
+.nova-hero-inner p {
+  margin: 0;
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+.nova-body {
+  margin-top: 28px;
+}

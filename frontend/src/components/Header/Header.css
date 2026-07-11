@@ -1,0 +1,274 @@
+.main-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+}
+
+
+/* ===========================
+   Logo
+=========================== */
+
+.header-logo-link {
+    text-decoration: none;
+}
+
+.header-logo-img {
+    height: 64px;
+    width: auto;
+    display: block;
+    user-select: none;
+    transition: opacity .2s ease;
+}
+
+.header-logo-link:hover .header-logo-img {
+    opacity: .85;
+}
+
+
+/* ===========================
+   Navegação
+=========================== */
+
+.header-nav ul {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.header-nav a {
+    text-decoration: none;
+    color: #7A8FA6;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color .2s;
+}
+
+.header-nav a:hover {
+    color: #3557A1;
+}
+
+.header-nav a.active-link {
+    color: #426ABC;
+    font-weight: 700;
+}
+
+
+/* ===========================
+   Usuário
+=========================== */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.notification-btn {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    color: #64748b;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.notification-btn:hover {
+    border-color: #3557A1;
+    color: #3557A1;
+    background: #f8fafc;
+}
+
+.user-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+.user-profile-btn:hover {
+    background: #f1f5f9;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e2e8f0;
+    border-radius: 50%;
+    color: #64748b;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.2;
+}
+
+.user-role {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.2;
+}
+
+
+/* ===========================
+   Menu Mobile
+=========================== */
+
+.menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #3557A1;
+    border-radius: 8px;
+    transition: background-color .2s;
+}
+
+.menu-toggle:hover {
+    background-color: #f1f5f9;
+}
+
+.mobile-menu {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: #fff;
+    flex-direction: column;
+    padding-top: 80px;
+    z-index: 100;
+    box-shadow: 4px 0 15px rgba(0,0,0,.1);
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+}
+
+.mobile-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease;
+    z-index: 90;
+}
+
+
+.mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media(max-width:1024px){
+
+    .main-header {
+        padding:16px 24px;
+    }
+
+    .header-logo-img {
+        height:56px;
+    }
+
+    .header-nav ul {
+        gap:20px;
+    }
+
+    .header-nav a {
+        font-size:14px;
+    }
+
+    .header-actions {
+        gap:10px;
+    }
+}
+
+
+/* ===========================
+   Celular
+=========================== */
+
+@media(max-width:768px){
+
+    .main-header {
+        padding:16px;
+    }
+
+    .menu-toggle {
+        display:flex;
+    }
+
+    .header-logo-img {
+        height:52px;
+    }
+
+    .header-nav,
+    .header-actions {
+        display:none;
+    }
+
+    .mobile-menu a {
+        padding:16px;
+        text-decoration:none;
+        color:#1e293b;
+        font-weight:500;
+        border-bottom:1px solid #f1f5f9;
+    }
+
+    .mobile-menu a:hover {
+        background:#f8fafc;
+    }
+}
+
+/* ===========================
+   Celulares pequenos
+=========================== */
+
+@media(max-width:480px){
+
+}

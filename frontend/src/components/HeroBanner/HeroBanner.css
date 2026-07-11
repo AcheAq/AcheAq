@@ -1,0 +1,57 @@
+.hero-banner-section {
+  background-color: #426ABC;
+  width: 100%;
+  padding: 36px 20px;
+  box-sizing: border-box;
+}
+
+.hero-banner-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.hero-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  font-family: inherit;
+}
+
+.hero-subtitle {
+  font-size: 15px;
+  color: #eff6ff;
+  margin: 0;
+  font-weight: 400;
+  font-family: inherit;
+}
+
+.hero-children-wrapper {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media (max-width: 768px) {
+
+  .hero-banner-section {
+    padding: 28px 16px;
+  }
+
+  .hero-banner-content {
+    padding: 0;
+  }
+
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-children-wrapper {
+    margin-top: 20px;
+  }
+
+}

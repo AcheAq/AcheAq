@@ -10,7 +10,12 @@ const options = {
     },
     servers: [
       {
+        url: "/api",
+        description: "Servidor Atual (Produção/Preview)",
+      },
+      {
         url: "http://localhost:5000",
+        description: "Servidor Local (Desenvolvimento)",
       },
     ],
     components: {

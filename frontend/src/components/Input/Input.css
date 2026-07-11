@@ -1,0 +1,39 @@
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.input-label {
+  font-weight: 500;
+  color: #1e293b;
+  font-size: 15px;
+}
+
+.required-asterisk {
+  color: #ef4444;
+}
+
+.input-field {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 16px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-field:focus-visible {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.input-field:disabled {
+  background-color: #f8fafc;
+  cursor: not-allowed;
+}

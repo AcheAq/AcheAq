@@ -38,6 +38,7 @@ function MyAdCard({
             src={image || defaultImage}
             alt={`Imagem do anúncio ${title}`}
             className="my-ad-img"
+            loading="lazy"
           />
 
         </section>

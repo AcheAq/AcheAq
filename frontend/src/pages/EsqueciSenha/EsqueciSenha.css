@@ -1,0 +1,148 @@
+@import "../../styles/aq-tokens.css";
+
+.fp-card {
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  border-radius: var(--aq-radius-lg);
+  box-shadow: var(--aq-shadow-lg);
+  padding: 44px 40px;
+  font-family: var(--aq-font);
+}
+
+.fp-card--center {
+  text-align: center;
+}
+
+.fp-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue);
+}
+
+.fp-icon--success {
+  background: var(--aq-success-bg);
+  color: var(--aq-success);
+}
+
+.fp-title {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--aq-text);
+}
+
+.fp-subtitle {
+  margin: 0 auto 24px;
+  max-width: 420px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--aq-text-muted);
+}
+
+.fp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.fp-alert {
+  background: var(--aq-danger-bg);
+  color: var(--aq-danger);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+.fp-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--aq-text-muted);
+  cursor: pointer;
+}
+
+.fp-terms input {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: var(--aq-blue);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.fp-terms a {
+  color: var(--aq-blue);
+  text-decoration: none;
+}
+.fp-terms a:hover {
+  text-decoration: underline;
+}
+
+.fp-readonly {
+  background: var(--aq-field);
+  border: 1px solid var(--aq-border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  color: var(--aq-text-soft);
+  font-size: 15px;
+}
+
+.fp-help {
+  margin: 6px 0 20px;
+  text-align: left;
+  font-size: 13px;
+  color: var(--aq-text-muted);
+}
+
+.fp-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue-hover);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.fp-info svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.fp-resend {
+  display: block;
+  margin: 18px auto 0;
+  background: none;
+  border: none;
+  color: var(--aq-blue);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+}
+.fp-resend:hover:not(:disabled) {
+  text-decoration: underline;
+}
+.fp-resend:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .fp-card {
+    padding: 32px 20px;
+  }
+}

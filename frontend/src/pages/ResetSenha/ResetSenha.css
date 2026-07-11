@@ -1,0 +1,69 @@
+@import "../../styles/aq-tokens.css";
+
+.rp-card {
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  border-radius: var(--aq-radius-lg);
+  box-shadow: var(--aq-shadow-lg);
+  padding: 44px 40px;
+  font-family: var(--aq-font);
+}
+
+.rp-card--center {
+  text-align: center;
+}
+
+.rp-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue);
+}
+
+.rp-icon--success {
+  background: var(--aq-success-bg);
+  color: var(--aq-success);
+}
+
+.rp-title {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--aq-text);
+}
+
+.rp-subtitle {
+  margin: 0 auto 24px;
+  max-width: 420px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--aq-text-muted);
+}
+
+.rp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.rp-alert {
+  background: var(--aq-danger-bg);
+  color: var(--aq-danger);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .rp-card {
+    padding: 32px 20px;
+  }
+}

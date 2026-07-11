@@ -1,0 +1,294 @@
+@import "../../styles/aq-tokens.css";
+
+/* Estilos compartilhados pelos modais do meu escopo (perfil e anúncios),
+   aplicados via a prop className do <Modal /> compartilhado, sem alterá-lo. */
+
+.modal--narrow {
+  max-width: 560px;
+}
+
+.mtitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--aq-font);
+}
+
+.mtitle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue);
+}
+
+.mtitle-icon--danger {
+  background: var(--aq-danger-bg);
+  color: var(--aq-danger);
+}
+
+.mform {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: var(--aq-font);
+}
+
+.mform-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.mform-alert {
+  background: var(--aq-danger-bg);
+  color: var(--aq-danger);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+.mform-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue-hover);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 14px;
+}
+
+.mform-info--success {
+  background: var(--aq-success-bg);
+  color: #15803d;
+}
+
+.mform-info svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.mform-lead {
+  margin: 0;
+  font-size: 15px;
+  color: var(--aq-text-soft);
+  line-height: 1.6;
+}
+
+.mform-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.mform-date {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 16px;
+  border-radius: var(--aq-radius);
+  border: 1px solid var(--aq-border);
+  background: var(--aq-field);
+  color: var(--aq-text);
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+}
+.mform-date:focus-visible {
+  background: #fff;
+  border-color: var(--aq-blue);
+  box-shadow: 0 0 0 3px rgba(66, 106, 188, 0.15);
+}
+
+/* Card de item mostrado dentro dos modais de excluir/devolução */
+.mform-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--aq-field);
+  border-radius: var(--aq-radius);
+  padding: 14px 16px;
+}
+
+.mform-item-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.mform-item-badge--lost {
+  background: var(--aq-danger-bg);
+  color: var(--aq-danger);
+}
+.mform-item-badge--found {
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue);
+}
+.mform-item-badge--resolved {
+  background: var(--aq-success-bg);
+  color: var(--aq-success);
+}
+
+.mform-item-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #e2e8f0;
+  flex-shrink: 0;
+}
+
+.mform-item-body {
+  min-width: 0;
+}
+
+.mform-item-title {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--aq-text);
+}
+
+.mform-item-meta {
+  margin: 0;
+  font-size: 13px;
+  color: var(--aq-text-muted);
+}
+
+.mform-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 8px;
+  margin-top: 4px;
+  border-top: 1px solid var(--aq-border);
+}
+
+.mform-footer > * {
+  min-width: 120px;
+}
+
+/* Bloco de foto (Editar Perfil) */
+.mform-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.mform-photo-avatar {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 16px;
+  background: var(--aq-field);
+  color: var(--aq-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.mform-photo-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mform-photo-cam {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: var(--aq-blue);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mform-photo-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.mform-photo-btn {
+  border: none;
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.mform-photo-btn--muted {
+  background: var(--aq-field);
+  color: var(--aq-text-muted);
+}
+
+.mform-textarea-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--aq-text);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.mform-textarea-label span {
+  color: var(--aq-text-muted);
+  font-weight: 400;
+}
+
+.mform-textarea {
+  width: 100%;
+  min-height: 88px;
+  resize: vertical;
+  padding: 12px 16px;
+  border-radius: var(--aq-radius);
+  border: 1px solid var(--aq-border);
+  background: var(--aq-field);
+  color: var(--aq-text);
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+.mform-textarea:focus-visible {
+  background: #fff;
+  border-color: var(--aq-blue);
+  box-shadow: 0 0 0 3px rgba(66, 106, 188, 0.15);
+}
+
+.mform-counter {
+  text-align: right;
+  font-size: 12px;
+  color: var(--aq-text-muted);
+  margin-top: 4px;
+}
+
+@media (max-width: 560px) {
+  .mform-grid {
+    grid-template-columns: 1fr;
+  }
+  .mform-footer {
+    flex-direction: column-reverse;
+  }
+  .mform-footer > * {
+    width: 100%;
+  }
+}

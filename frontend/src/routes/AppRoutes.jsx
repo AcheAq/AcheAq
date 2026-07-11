@@ -6,6 +6,7 @@ import Cadastro from "../pages/Cadastro/Cadastro";
 import ProtectedRoute from "./ProtectedRoute";
 import Perfil from "../pages/Perfil/Perfil";
 import MainLayout from "../layouts/MainLayout";
+import ObjetosPerdidos from "../pages/ObjetosPerdidos/ObjetosPerdidos";
 
 export default function AppRoutes() {
   return (
@@ -15,6 +16,8 @@ export default function AppRoutes() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>}/>
+
+          <Route path="/objetos-perdidos" element={<ObjetosPerdidos />} />
         </Route>
         
         {/* Rotas sem Cabeçalho (Full screen) */}

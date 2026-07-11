@@ -1,0 +1,35 @@
+/*
+ * Tokens de tema CLARO das minhas telas (Tullio), alinhados ao Figma e às
+ * telas do colega (azul #426ABC / laranja #EA7C3F, fonte Inter).
+ * Prefixo --aq-* para NÃO colidir com os tokens globais (que ainda são escuros)
+ * e assim evitar regressão nas telas dos colegas.
+ */
+:root {
+  --aq-blue: #426abc;
+  --aq-blue-hover: #35569c;
+  --aq-blue-soft: #eaf0fb;
+  --aq-orange: #ea7c3f;
+  --aq-orange-hover: #d76f2e;
+
+  --aq-page: #eef2f8;
+  --aq-surface: #ffffff;
+  --aq-field: #f1f5f9;
+  --aq-border: #e2eaf0;
+
+  --aq-text: #1a2332;
+  --aq-text-soft: #475569;
+  --aq-text-muted: #7a8fa6;
+
+  --aq-danger: #dc2626;
+  --aq-danger-bg: #fdecec;
+  --aq-success: #16a34a;
+  --aq-success-bg: #e7f6ee;
+
+  --aq-radius: 12px;
+  --aq-radius-lg: 16px;
+  --aq-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --aq-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --aq-shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
+
+  --aq-font: "Inter", system-ui, sans-serif;
+}

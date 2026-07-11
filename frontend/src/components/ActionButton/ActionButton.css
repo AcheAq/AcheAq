@@ -1,0 +1,85 @@
+@import "../../styles/aq-tokens.css";
+
+.ab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 12px 22px;
+  border-radius: var(--aq-radius);
+  font-family: var(--aq-font);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease,
+    transform 0.1s ease, border-color 0.2s ease;
+}
+
+.ab--full {
+  width: 100%;
+}
+
+.ab:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.ab:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.ab:focus-visible {
+  outline: 2px solid var(--aq-blue);
+  outline-offset: 2px;
+}
+
+.ab--primary {
+  background: var(--aq-blue);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(66, 106, 188, 0.22);
+}
+.ab--primary:hover:not(:disabled) {
+  background: var(--aq-blue-hover);
+}
+
+.ab--orange {
+  background: var(--aq-orange);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(234, 124, 63, 0.25);
+}
+.ab--orange:hover:not(:disabled) {
+  background: var(--aq-orange-hover);
+}
+
+.ab--outline {
+  background: #fff;
+  color: var(--aq-blue);
+  border-color: var(--aq-blue);
+}
+.ab--outline:hover:not(:disabled) {
+  background: var(--aq-blue-soft);
+}
+
+.ab--danger {
+  background: var(--aq-danger);
+  color: #fff;
+}
+.ab--danger:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.ab-spin {
+  animation: ab-spin 0.8s linear infinite;
+}
+@keyframes ab-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ab-spin {
+    animation-duration: 1.5s;
+  }
+}

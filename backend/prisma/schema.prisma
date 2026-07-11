@@ -40,6 +40,7 @@ model User {
   ownedConversations Conversation[] @relation("OwnerConversations")
   participantConversations Conversation[] @relation("ParticipantConversations")
   sentMessages Message[]
+  notification Notification[]
 }
 
 model Category {
@@ -96,6 +97,7 @@ model Conversation {
   messages Message[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  notification Notification[]
 
   @@unique([itemId, participantId])
   @@index([ownerId])
@@ -112,4 +114,17 @@ model Message {
   isRead Boolean @default(false)
   createdAt DateTime @default(now())
   @@index([conversationId])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  conversationId String?
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)
 }

@@ -10,7 +10,10 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:5000',
-        changeOrigin: true
+        changeOrigin: true,
+        // O backend monta as rotas em /auth, /user, /item... (sem o prefixo /api).
+        // Removemos /api aqui para espelhar o comportamento do nginx em produção.
+        rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   }

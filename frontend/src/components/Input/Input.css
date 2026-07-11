@@ -19,20 +19,18 @@
   padding: 12px;
   border-radius: 8px;
   border: 1px solid #cbd5e1;
+  background-color: #f8fafc;
   font-size: 16px;
   outline: none;
   font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
-
   width: 100%;
   box-sizing: border-box;
 }
 
 .input-field:focus-visible {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background-color: #ffffff;
 }
-
 .input-field:disabled {
   background-color: #f8fafc;
   cursor: not-allowed;

@@ -1,6 +1,8 @@
 import Modal from "../../Modal/Modal";
 import { Tag, MapPin, Calendar, Clock, User } from "lucide-react";
 import ActionButton from "../../ActionButton/ActionButton";
+import defaultImage from "../../../assets/default-item.png";
+
 import "./DetalhesAnuncioModal.css";
 
 function DetalhesAnuncioModal({
@@ -39,14 +41,17 @@ function DetalhesAnuncioModal({
               src={
                 item?.imagem ||
                 item?.image ||
-                "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=80"
+                defaultImage
               }
               alt={`Foto de ${item?.titulo || item?.title}`}
               className="detalhes-img"
             />
           </section>
 
-          <aside className="anunciante-card" aria-label="Informações de quem anunciou">
+          <aside
+            className="anunciante-card"
+            aria-label="Informações de quem anunciou"
+          >
             <p className="anunciante-label">Anunciado por</p>
 
             <section className="anunciante-perfil">
@@ -55,22 +60,40 @@ function DetalhesAnuncioModal({
               </span>
 
               <section className="anunciante-dados">
-                <h3 className="anunciante-nome">{anunciante.autor}</h3>
-                <p className="anunciante-curso">{anunciante.instituicao}</p>
+                <h3 className="anunciante-nome">
+                  {anunciante.autor}
+                </h3>
+
+                <p className="anunciante-curso">
+                  {anunciante.instituicao}
+                </p>
               </section>
             </section>
 
-            <p className="anunciante-membro">Membro desde {anunciante.membroDesde}</p>
+            <p className="anunciante-membro">
+              Membro desde {anunciante.membroDesde}
+            </p>
           </aside>
 
-          <section className="detalhes-contato-sec" aria-label="Canais de contato">
-            <h3 className="contato-titulo">Contato</h3>
+          <section
+            className="detalhes-contato-sec"
+            aria-label="Canais de contato"
+          >
+            <h3 className="contato-titulo">
+              Contato
+            </h3>
 
-            <section className="contato-input-fake" aria-label="E-mail de contato">
+            <section
+              className="contato-input-fake"
+              aria-label="E-mail de contato"
+            >
               {anunciante.email}
             </section>
 
-            <section className="contato-input-fake" aria-label="Telefone de contato">
+            <section
+              className="contato-input-fake"
+              aria-label="Telefone de contato"
+            >
               {anunciante.telefone}
             </section>
 
@@ -90,10 +113,15 @@ function DetalhesAnuncioModal({
           <header className="detalhes-dir-header">
             <span
               className={`badge-status ${
-                item?.status === "Perdido" || item?.status === "lost" ? "lost" : "found"
+                item?.status === "Perdido" || item?.status === "lost"
+                  ? "lost"
+                  : "found"
               }`}
             >
-              • {item?.status === "Perdido" || item?.status === "lost" ? "Perdido" : "Encontrado"}
+              •{" "}
+              {item?.status === "Perdido" || item?.status === "lost"
+                ? "Perdido"
+                : "Encontrado"}
             </span>
 
             <h1 className="detalhes-obj-titulo">
@@ -101,12 +129,16 @@ function DetalhesAnuncioModal({
             </h1>
           </header>
 
-          <section className="metadados-grid" aria-label="Informações de local e data">
+          <section
+            className="metadados-grid"
+            aria-label="Informações de local e data"
+          >
             <article className="meta-item">
               <p className="meta-label">
-                <Tag size={15} color="#64748b" aria-hidden="true" />
+                <Tag size={15} color="#64748b" />
                 <span>Categoria</span>
               </p>
+
               <p className="meta-valor">
                 {item?.categoria || item?.category || "Acessórios"}
               </p>
@@ -114,9 +146,10 @@ function DetalhesAnuncioModal({
 
             <article className="meta-item">
               <p className="meta-label">
-                <MapPin size={15} color="#64748b" aria-hidden="true" />
+                <MapPin size={15} color="#64748b" />
                 <span>Local</span>
               </p>
+
               <p className="meta-valor">
                 {item?.localizacao || item?.location || "-"}
               </p>
@@ -124,9 +157,10 @@ function DetalhesAnuncioModal({
 
             <article className="meta-item">
               <p className="meta-label">
-                <Calendar size={15} color="#64748b" aria-hidden="true" />
+                <Calendar size={15} color="#64748b" />
                 <span>Data da ocorrência</span>
               </p>
+
               <p className="meta-valor">
                 {item?.data || item?.date || "-"}
               </p>
@@ -134,9 +168,10 @@ function DetalhesAnuncioModal({
 
             <article className="meta-item">
               <p className="meta-label">
-                <Clock size={15} color="#64748b" aria-hidden="true" />
+                <Clock size={15} color="#64748b" />
                 <span>Publicado em</span>
               </p>
+
               <p className="meta-valor">
                 {anunciante.dataPublicacao}
               </p>
@@ -146,9 +181,14 @@ function DetalhesAnuncioModal({
           <hr className="linha-horizontal" />
 
           <section className="detalhes-desc-sec">
-            <h3 className="desc-titulo">Descrição do Objeto</h3>
+            <h3 className="desc-titulo">
+              Descrição do Objeto
+            </h3>
+
             <p className="desc-box">
-              {item?.descricao || item?.description || "Sem descrição cadastrada."}
+              {item?.descricao ||
+                item?.description ||
+                "Sem descrição cadastrada."}
             </p>
           </section>
 
@@ -172,16 +212,37 @@ function DetalhesAnuncioModal({
               >
                 Ações do Anunciante
               </p>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <ActionButton variant="outline" type="button" onClick={onEdit}>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: 10,
+                  flexWrap: "wrap",
+                }}
+              >
+                <ActionButton
+                  variant="outline"
+                  type="button"
+                  onClick={onEdit}
+                >
                   Editar Anúncio
                 </ActionButton>
+
                 {!isResolved && (
-                  <ActionButton variant="primary" type="button" onClick={onResolve}>
+                  <ActionButton
+                    variant="primary"
+                    type="button"
+                    onClick={onResolve}
+                  >
                     Marcar como Devolvido
                   </ActionButton>
                 )}
-                <ActionButton variant="danger" type="button" onClick={onDelete}>
+
+                <ActionButton
+                  variant="danger"
+                  type="button"
+                  onClick={onDelete}
+                >
                   Excluir
                 </ActionButton>
               </div>

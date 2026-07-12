@@ -1,3 +1,5 @@
+import defaultImage from "../../assets/default-item.png";
+
 export const objetosEncontradosMock = [
   {
     id: 1,
@@ -8,8 +10,7 @@ export const objetosEncontradosMock = [
     category: "Documentos",
     location: "Biblioteca Central",
     date: "12 Jan 2025",
-    image:
-      "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=400&q=80"
+    image: defaultImage
   },
 
   {
@@ -21,8 +22,7 @@ export const objetosEncontradosMock = [
     category: "Acessórios",
     location: "Bloco B",
     date: "10 Jan 2025",
-    image:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80"
+    image: defaultImage
   },
 
   {
@@ -34,8 +34,7 @@ export const objetosEncontradosMock = [
     category: "Materiais",
     location: "Bloco A",
     date: "08 Jan 2025",
-    image:
-      "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80"
+    image: defaultImage
   },
 
   {
@@ -47,7 +46,6 @@ export const objetosEncontradosMock = [
     category: "Garrafas",
     location: "Cantina Principal",
     date: "05 Jan 2025",
-    image:
-      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=400&q=80"
+    image: defaultImage
   }
 ];

@@ -329,12 +329,17 @@
  */
 @media (prefers-reduced-motion: no-preference) {
   .about .reveal {
-    opacity: 0;
-    transform: translateY(24px);
     transition:
       opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
       transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* Estado inicial escondido: o JS aplica SÓ nos elementos fora da tela.
+   * Opacidade inicial limitada a 0.2 (o conteúdo nunca some por completo). */
+  .about .reveal.is-hidden {
+    opacity: 0.2;
+    transform: translateY(24px);
     will-change: opacity, transform;
   }
 

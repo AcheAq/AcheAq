@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { Search, ArrowRight } from "lucide-react";
 import "./Sobre.css";
 
@@ -51,7 +51,10 @@ function initials(name) {
 export default function Sobre() {
   const rootRef = useRef(null);
 
-  useEffect(() => {
+  // useLayoutEffect (não useEffect): roda após a mutação do DOM e ANTES do
+  // paint, para o estado inicial já sair correto no primeiro paint — sem flash
+  // e sem disparar transição nos elementos que nascem escondidos.
+  useLayoutEffect(() => {
     const root = rootRef.current;
     if (!root) return;
 
@@ -71,6 +74,7 @@ export default function Sobre() {
       (entries, obs) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            entry.target.classList.remove("is-hidden");
             entry.target.classList.add("is-visible");
             obs.unobserve(entry.target); // revela uma vez e para de observar
           }
@@ -79,7 +83,20 @@ export default function Sobre() {
       { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
     );
 
-    els.forEach((el) => observer.observe(el));
+    // Esconde o estado inicial APENAS no que está fora da tela agora. O que já
+    // está visível no carregamento aparece normal, sem animação de entrada.
+    const viewportH = window.innerHeight;
+    els.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      const alreadyVisible = rect.top < viewportH && rect.bottom > 0;
+      if (alreadyVisible) {
+        el.classList.add("is-visible");
+      } else {
+        el.classList.add("is-hidden");
+        observer.observe(el);
+      }
+    });
+
     return () => observer.disconnect();
   }, []);
 

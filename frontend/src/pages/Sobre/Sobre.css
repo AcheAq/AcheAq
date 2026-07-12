@@ -256,12 +256,30 @@
 }
 
 .about-team-avatar {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 56px;
   height: 56px;
   margin: 0 auto 12px;
   border-radius: 50%;
-  background: #e2e8f0;
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.about-team-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  margin: 6px 0;
+}
+
+.about-team-roles .about-team-role {
+  margin: 0;
 }
 
 .about-team-card strong {
@@ -302,4 +320,59 @@
   .about-hero-text h1 { font-size: 30px; }
   .about-steps,
   .about-team { grid-template-columns: 1fr; }
+}
+
+/* ===== Animações de rolagem (reveal on scroll) =====
+ * Só animam quando o usuário NÃO pediu movimento reduzido.
+ * O estado inicial escondido fica dentro deste @media de propósito:
+ * assim, com prefers-reduced-motion, nada é escondido (a11y).
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .about .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .about .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Delícias sutis no hero (elementos decorativos, aria-hidden) */
+  .about-hero-circle {
+    animation: about-pulse 4.5s ease-in-out infinite;
+  }
+
+  .about-hero-chip--a {
+    animation: about-float 6s ease-in-out infinite;
+  }
+
+  .about-hero-chip--b {
+    animation: about-float 6s ease-in-out infinite 0.9s;
+  }
+}
+
+@keyframes about-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+@keyframes about-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }

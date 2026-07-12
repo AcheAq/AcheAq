@@ -83,6 +83,15 @@ function Header() {
                                 </NavLink>
                             </li>
                         )}
+                        <li>
+                            <NavLink
+                                to="/sobre"
+                                className={({ isActive }) => isActive ? 'active-link' : ''}
+                                onClick={closeMenu}
+                            >
+                                Sobre
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
 
@@ -182,6 +191,10 @@ function Header() {
 
                     <NavLink to="/objetos-encontrados" onClick={closeMenu}>
                         Objetos Encontrados
+                    </NavLink>
+
+                    <NavLink to="/sobre" onClick={closeMenu}>
+                        Sobre
                     </NavLink>
 
                     {isAuthenticated ? (

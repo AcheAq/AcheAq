@@ -5,7 +5,8 @@ const {
   updatePassword,
 } = require("../repositories/userRepository.js");
 const { hashPassword, comparePassword } = require("../utils/hash.js");
-const { generateToken } = require("../utils/jwt.js");
+const { generateAccessToken, generateRefreshToken } = require("../utils/jwt.js");
+const prisma = require("../lib/prisma.js");
 
 async function registerUser({
   name,
@@ -45,7 +46,7 @@ async function registerUser({
   };
 }
 
-async function loginUser({ email, password }) {
+async function loginUser({ email, password, rememberMe }) {
   const user = await findUserByEmail(email);
 
   if (!user) {
@@ -58,14 +59,31 @@ async function loginUser({ email, password }) {
     throw new Error("Usuário ou senha inválidos");
   }
 
-  const token = generateToken({
+  const token = generateAccessToken({
     id: user.id,
     email: user.email,
     role: user.role,
   });
 
+  const refreshToken = generateRefreshToken();
+  
+  // Se "Lembrar-me", expira em 15 dias. Senão, 1 dia.
+  const days = rememberMe ? 15 : 1;
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + days);
+
+  await prisma.refreshToken.create({
+    data: {
+      token: refreshToken,
+      expiresAt,
+      userId: user.id,
+    },
+  });
+
   return {
     token,
+    refreshToken,
+    expiresAt,
     user: {
       id: user.id,
       name: user.name,
@@ -77,6 +95,43 @@ async function loginUser({ email, password }) {
       role: user.role,
     },
   };
+}
+
+async function refreshTokenService(tokenString) {
+  const refreshToken = await prisma.refreshToken.findUnique({
+    where: { token: tokenString },
+    include: { user: true },
+  });
+
+  if (!refreshToken) {
+    throw new Error("Refresh Token inválido ou não encontrado");
+  }
+
+  if (new Date() > refreshToken.expiresAt) {
+    await prisma.refreshToken.delete({ where: { id: refreshToken.id } });
+    throw new Error("Refresh Token expirado. Faça login novamente.");
+  }
+
+  const newAccessToken = generateAccessToken({
+    id: refreshToken.user.id,
+    email: refreshToken.user.email,
+    role: refreshToken.user.role,
+  });
+
+  return { token: newAccessToken };
+}
+
+async function logoutUser(tokenString) {
+  if (!tokenString) return;
+  await prisma.refreshToken.deleteMany({
+    where: { token: tokenString },
+  });
+}
+
+async function logoutAllDevices(userId) {
+  await prisma.refreshToken.deleteMany({
+    where: { userId },
+  });
 }
 
 async function changePasswordUser(id, currentPassword, newPassword) {
@@ -97,4 +152,11 @@ async function changePasswordUser(id, currentPassword, newPassword) {
   await updatePassword(id, newPasswordHash);
 }
 
-module.exports = { registerUser, loginUser, changePasswordUser };
+module.exports = { 
+  registerUser, 
+  loginUser, 
+  changePasswordUser, 
+  refreshTokenService, 
+  logoutUser, 
+  logoutAllDevices 
+};

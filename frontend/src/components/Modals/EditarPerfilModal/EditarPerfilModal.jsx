@@ -5,6 +5,7 @@ import FormInput from "../../FormInput/FormInput";
 import ActionButton from "../../ActionButton/ActionButton";
 import { useToast } from "../../Toast/ToastProvider";
 import userService from "../../../services/userService";
+import { imageUrl } from "../../../utils/imageUrl";
 import "../modalForm.css";
 
 const BIO_MAX = 60;
@@ -29,6 +30,7 @@ export default function EditarPerfilModal({ isOpen, onClose, user, onUpdated }) 
       setForm(mapUser(user));
       setErrors({});
       setApiError("");
+      setPhotoPreview(user?.photoUrl ? imageUrl(user.photoUrl) : null);
     }
   }, [isOpen, user]);
 
@@ -61,14 +63,23 @@ export default function EditarPerfilModal({ isOpen, onClose, user, onUpdated }) 
 
     setLoading(true);
     try {
-      const updated = await userService.updateMe({
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        institution: form.institution,
-        course: form.course,
-        registration: form.registration,
-      });
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("email", form.email);
+      formData.append("phone", form.phone);
+      formData.append("institution", form.institution);
+      formData.append("course", form.course);
+      if (form.registration) {
+        formData.append("registration", form.registration);
+      }
+      const photoFile = fileInputRef.current?.files?.[0];
+      if (photoFile) {
+        formData.append("photo", photoFile);
+      } else if (!photoPreview && user?.photoUrl) {
+        formData.append("removePhoto", "true");
+      }
+
+      const updated = await userService.updateMe(formData);
       toast.success("Perfil atualizado com sucesso!");
       onUpdated(updated);
     } catch (err) {

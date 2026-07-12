@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/authService";
 import { Eye, EyeOff } from "lucide-react";
 import logoImg from "../../assets/images/logo-azul-com-fundo-branco.jpg";
+import PasswordStrength, { isPasswordStrong } from "../../components/PasswordStrength/PasswordStrength";
 import "./Cadastro.css";
 
 export default function Cadastro() {
@@ -69,8 +70,8 @@ export default function Cadastro() {
       return;
     }
 
-    if (password.length < 6) {
-      setError("A senha deve conter no mínimo 6 caracteres.");
+    if (!isPasswordStrong(password)) {
+      setError("A senha não atende a todos os requisitos.");
       return;
     }
 
@@ -253,7 +254,7 @@ export default function Cadastro() {
                   <input
                     id="cad-password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Mínimo 6 caracteres"
+                    placeholder="Senha forte"
                     className="input-cadastro"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -303,6 +304,10 @@ export default function Cadastro() {
                     {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
+              </div>
+
+              <div className="grid-col-full">
+                <PasswordStrength password={password} confirmPassword={confirmPassword} />
               </div>
             </div>
           </div>

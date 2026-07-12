@@ -8,6 +8,7 @@ import { normalizeList } from "../../utils/normalizeList";
 import ActionButton from "../../components/ActionButton/ActionButton";
 import EditarPerfilModal from "../../components/Modals/EditarPerfilModal/EditarPerfilModal";
 import AlterarSenhaModal from "../../components/Modals/AlterarSenhaModal/AlterarSenhaModal";
+import { imageUrl } from "../../utils/imageUrl";
 import "./Perfil.css";
 
 function typeOf(item) {
@@ -19,7 +20,7 @@ function isResolved(item) {
 
 export default function Perfil() {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, setUser: setGlobalUser } = useAuth();
 
   const [user, setUser] = useState(null);
   const [items, setItems] = useState([]);
@@ -68,8 +69,21 @@ export default function Perfil() {
     navigate("/login", { replace: true });
   }
 
+  async function handleLogoutAll() {
+    try {
+      const api = (await import("../../services/api")).default;
+      await api.post("/auth/logout-all");
+    } catch (error) {
+      console.error("Erro ao sair de todos os dispositivos:", error);
+    } finally {
+      logout();
+      navigate("/login", { replace: true });
+    }
+  }
+
   function handleUpdated(updated) {
     setUser(updated);
+    setGlobalUser(updated);
     setEditOpen(false);
   }
 
@@ -103,14 +117,18 @@ export default function Perfil() {
             <section className="profile-id card">
               <div className="profile-id-main">
                 <div className="profile-avatar">
-                  <span aria-hidden="true">
-                    {(user.name || "?").charAt(0).toUpperCase()}
-                  </span>
+                  {user.photoUrl ? (
+                    <img src={imageUrl(user.photoUrl)} alt={`Foto de ${user.name}`} className="profile-avatar-img" />
+                  ) : (
+                    <span aria-hidden="true">
+                      {(user.name || "?").charAt(0).toUpperCase()}
+                    </span>
+                  )}
                   <button
                     type="button"
                     className="profile-avatar-cam"
-                    aria-label="Alterar foto (em breve)"
-                    disabled
+                    aria-label="Alterar foto"
+                    onClick={() => setEditOpen(true)}
                   >
                     <Camera size={16} aria-hidden="true" />
                   </button>
@@ -199,6 +217,19 @@ export default function Perfil() {
                       <span className="profile-settings-text">
                         <strong>Sair da Conta</strong>
                         <small>Encerrar sua sessão atual</small>
+                      </span>
+                      <LogOut size={18} aria-hidden="true" />
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      className="profile-settings-item profile-settings-item--danger"
+                      onClick={handleLogoutAll}
+                    >
+                      <span className="profile-settings-text">
+                        <strong>Sair de Todos os Dispositivos</strong>
+                        <small>Encerrar sessões ativas em todos os locais</small>
                       </span>
                       <LogOut size={18} aria-hidden="true" />
                     </button>

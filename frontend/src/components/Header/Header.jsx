@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logoAcheAq from '../../assets/images/logo-azul-com-fundo-branco.jpg';
 import { Bell, User, ChevronDown, Menu, X } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { imageUrl } from '../../utils/imageUrl';
 import './Header.css';
 
 function Header() {
@@ -108,7 +109,11 @@ function Header() {
                                     onClick={() => setDropdownOpen(!dropdownOpen)}
                                 >
                                     <span className="user-avatar" aria-hidden="true">
-                                        <User size={20} color="#888888" />
+                                        {user?.photoUrl ? (
+                                            <img src={imageUrl(user.photoUrl)} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                                        ) : (
+                                            <User size={20} color="#888888" />
+                                        )}
                                     </span>
 
                                     <span className="user-info">

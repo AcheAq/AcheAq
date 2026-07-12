@@ -5,6 +5,9 @@ const {
   forgotPassword,
   resetPassword,
   changePassword,
+  refresh,
+  logout,
+  logoutAll,
 } = require("../controllers/authController.js");
 const authRoute = express.Router();
 const authMiddleware = require("../middlewares/authMiddleware");
@@ -84,6 +87,9 @@ authRoute.post("/register", register);
  *               password:
  *                 type: string
  *                 example: 123456
+ *               rememberMe:
+ *                 type: boolean
+ *                 example: true
  *     responses:
  *       200:
  *         description: Login realizado com sucesso
@@ -248,5 +254,57 @@ authRoute.patch(
   authorizeRoles("USER", "ADMIN"),
   changePassword,
 );
+
+/**
+ * @swagger
+ * /auth/refresh:
+ *   post:
+ *     summary: Atualiza o Access Token usando o Refresh Token
+ *     tags:
+ *       - Autenticação
+ *     responses:
+ *       200:
+ *         description: Novo Access Token gerado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *       401:
+ *         description: Refresh Token ausente ou inválido
+ */
+authRoute.post("/refresh", refresh);
+
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: Faz logout do dispositivo atual
+ *     tags:
+ *       - Autenticação
+ *     responses:
+ *       200:
+ *         description: Logout realizado com sucesso
+ */
+authRoute.post("/logout", logout);
+
+/**
+ * @swagger
+ * /auth/logout-all:
+ *   post:
+ *     summary: Faz logout de todos os dispositivos
+ *     tags:
+ *       - Autenticação
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Logout de todos os dispositivos realizado com sucesso
+ *       401:
+ *         description: Usuário não autenticado
+ */
+authRoute.post("/logout-all", authMiddleware, logoutAll);
 
 module.exports = authRoute;

@@ -16,16 +16,28 @@ export const PASSWORD_RULES = [
   },
 ];
 
-export function getPasswordChecks(password = "") {
-  return PASSWORD_RULES.map((rule) => ({ ...rule, met: rule.test(password) }));
+export function getPasswordChecks(password = "", confirmPassword = undefined) {
+  const checks = PASSWORD_RULES.map((rule) => ({ ...rule, met: rule.test(password) }));
+  if (confirmPassword !== undefined) {
+    checks.push({
+      key: "match",
+      label: "As senhas coincidem",
+      met: password.length > 0 && password === confirmPassword,
+    });
+  }
+  return checks;
 }
 
-export function isPasswordStrong(password = "") {
-  return PASSWORD_RULES.every((rule) => rule.test(password));
+export function isPasswordStrong(password = "", confirmPassword = undefined) {
+  const baseStrong = PASSWORD_RULES.every((rule) => rule.test(password));
+  if (confirmPassword !== undefined) {
+    return baseStrong && password.length > 0 && password === confirmPassword;
+  }
+  return baseStrong;
 }
 
-function PasswordStrength({ password = "" }) {
-  const checks = getPasswordChecks(password);
+function PasswordStrength({ password = "", confirmPassword = undefined }) {
+  const checks = getPasswordChecks(password, confirmPassword);
 
   return (
     <div className="pw" aria-live="polite">

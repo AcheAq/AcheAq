@@ -50,7 +50,7 @@ export default function Login() {
     }
 
     try {
-      const data = await authService.login({ email, password });
+      const data = await authService.login({ email, password, rememberMe });
 
       // Salvar token no contexto global
       authLogin(data.token);

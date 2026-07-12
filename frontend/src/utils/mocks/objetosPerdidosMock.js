@@ -1,3 +1,5 @@
+import defaultImage from "../../assets/default-item.png";
+
 export const objetosPerdidosMock = [
 
   {
@@ -9,8 +11,7 @@ export const objetosPerdidosMock = [
     category: "Acessórios",
     location: "Biblioteca Central",
     date: "12 Jan 2025",
-    image:
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=80"
+    image: defaultImage
   },
 
 
@@ -23,8 +24,7 @@ export const objetosPerdidosMock = [
     category: "Acessórios",
     location: "Biblioteca Central",
     date: "10 Jan 2025",
-    image:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80"
+    image: defaultImage
   },
 
 
@@ -37,8 +37,7 @@ export const objetosPerdidosMock = [
     category: "Materiais",
     location: "Bloco B",
     date: "08 Jan 2025",
-    image:
-      "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=400&q=80"
+    image: defaultImage
   },
 
 
@@ -51,8 +50,7 @@ export const objetosPerdidosMock = [
     category: "Garrafas",
     location: "Cantina Principal",
     date: "05 Jan 2025",
-    image:
-      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=400&q=80"
+    image: defaultImage
   }
 
 ];

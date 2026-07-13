@@ -9,6 +9,7 @@ const userSelect = {
   course: true,
   institution: true,
   role: true,
+  photoUrl: true,
   createdAt: true,
 };
 

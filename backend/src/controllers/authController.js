@@ -2,6 +2,9 @@ const {
   registerUser,
   loginUser,
   changePasswordUser,
+  refreshTokenService,
+  logoutUser,
+  logoutAllDevices,
 } = require("../services/authService.js");
 const passwordResetService = require("../services/passwordResetService");
 const {
@@ -53,11 +56,18 @@ async function login(req, res) {
       });
     }
 
-    const { email, password } = req.body;
+    const { email, password, rememberMe } = req.body;
 
-    const result = await loginUser({ email, password });
+    const result = await loginUser({ email, password, rememberMe });
 
-    return res.status(200).json(result);
+    res.cookie("refreshToken", result.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      expires: result.expiresAt,
+    });
+
+    return res.status(200).json({ token: result.token, user: result.user });
   } catch (error) {
     return res.status(401).json({
       message: error.message,
@@ -138,10 +148,53 @@ async function changePassword(req, res) {
   }
 }
 
+async function refresh(req, res) {
+  try {
+    const { refreshToken } = req.cookies;
+
+    if (!refreshToken) {
+      return res.status(401).json({ message: "Refresh Token ausente" });
+    }
+
+    const result = await refreshTokenService(refreshToken);
+
+    return res.status(200).json({ token: result.token });
+  } catch (error) {
+    return res.status(401).json({ message: error.message });
+  }
+}
+
+async function logout(req, res) {
+  try {
+    const { refreshToken } = req.cookies;
+    if (refreshToken) {
+      await logoutUser(refreshToken);
+    }
+    res.clearCookie("refreshToken");
+    return res.status(200).json({ message: "Logout realizado com sucesso" });
+  } catch (error) {
+    return res.status(500).json({ message: "Erro ao fazer logout" });
+  }
+}
+
+async function logoutAll(req, res) {
+  try {
+    const { id } = req.user;
+    await logoutAllDevices(id);
+    res.clearCookie("refreshToken");
+    return res.status(200).json({ message: "Logout de todos os dispositivos realizado com sucesso" });
+  } catch (error) {
+    return res.status(500).json({ message: "Erro ao sair de todos os dispositivos" });
+  }
+}
+
 module.exports = {
   register,
   login,
   forgotPassword,
   resetPassword,
   changePassword,
+  refresh,
+  logout,
+  logoutAll,
 };

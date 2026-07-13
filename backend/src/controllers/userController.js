@@ -12,7 +12,10 @@ async function getMe(req, res) {
 
 async function updateMe(req, res) {
   try {
-    const updateUserValidate = updateUserSchema.safeParse(req.body);
+    const updateUserValidate = updateUserSchema.safeParse({
+      ...req.body,
+      ...(req.file && { photoUrl: req.file.path }),
+    });
 
     if (!updateUserValidate.success) {
       const errors = updateUserValidate.error.flatten();
@@ -25,7 +28,7 @@ async function updateMe(req, res) {
         },
       });
     }
-    const user = await userService.updateMe(req.user.id, req.body);
+    const user = await userService.updateMe(req.user.id, updateUserValidate.data);
     return res.json(user);
   } catch (err) {
     return res.status(400).json({ message: err.message });

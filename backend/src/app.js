@@ -11,8 +11,10 @@ const userRoute = require("./routes/userRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const itemRoute = require("./routes/itemRoute");
 const errorMiddleware = require("./middlewares/errorMiddleware");
+const cookieParser = require("cookie-parser");
 
 const app = express();
+app.use(cookieParser());
 
 app.use(
   cors({

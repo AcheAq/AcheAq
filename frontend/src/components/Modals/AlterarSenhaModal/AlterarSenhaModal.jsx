@@ -114,7 +114,7 @@ export default function AlterarSenhaModal({ isOpen, onClose }) {
           error={errors.newPassword}
         />
 
-        <PasswordStrength password={form.newPassword} />
+        <PasswordStrength password={form.newPassword} confirmPassword={form.confirmPassword} />
 
         <FormInput
           label="Confirmar nova senha"

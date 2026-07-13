@@ -6,13 +6,19 @@ if (!JWT_SECRET) {
   throw new Error("JWT_SECRET não foi definida.");
 }
 
-function generateToken(payload) {
+function generateAccessToken(payload) {
   return jwt.sign(payload, JWT_SECRET, {
-    expiresIn: "1d",
+    expiresIn: "2h",
   });
+}
+
+function generateRefreshToken() {
+  const crypto = require("crypto");
+  return crypto.randomBytes(40).toString("hex");
 }
 
 function verifyToken(token) {
   return jwt.verify(token, JWT_SECRET);
 }
-module.exports = { generateToken, verifyToken };
+
+module.exports = { generateAccessToken, generateRefreshToken, verifyToken };

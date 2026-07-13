@@ -2,6 +2,7 @@ const express = require("express");
 const userController = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 const authorizeRoles = require("../middlewares/authorizeRoles");
+const upload = require("../middlewares/uploadMiddleware");
 
 const userRoute = express.Router();
 
@@ -123,6 +124,7 @@ userRoute.patch(
   "/me",
   authMiddleware,
   authorizeRoles("USER", "ADMIN"),
+  upload.single("photo"),
   userController.updateMe,
 );
 

@@ -13,6 +13,9 @@ const updateUserSchema = z
     course: z.string().trim().min(1, "Curso inválido").optional(),
 
     institution: z.string().trim().min(1, "Instituição inválida").optional(),
+
+    photoUrl: z.string().optional(),
+    removePhoto: z.any().optional(),
   })
   .strict()
   .refine((data) => Object.keys(data).length > 0, {

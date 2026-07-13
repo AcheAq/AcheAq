@@ -40,10 +40,16 @@ export function AuthProvider({ children }) {
         await fetchUserProfile(newToken);
     };
 
-    const logout = () => {
-        localStorage.removeItem("token");
-        setToken(null);
-        setUser(null);
+    const logout = async () => {
+        try {
+            await api.post("/auth/logout");
+        } catch (error) {
+            console.error("Erro ao fazer logout no servidor:", error);
+        } finally {
+            localStorage.removeItem("token");
+            setToken(null);
+            setUser(null);
+        }
     };
 
     return (
@@ -51,6 +57,7 @@ export function AuthProvider({ children }) {
             value={{
                 token,
                 user,
+                setUser,
                 login,
                 logout,
                 isAuthenticated: !!token,

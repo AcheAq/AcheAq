@@ -97,17 +97,10 @@
   padding: 12px 0;
 }
 
-.meus-filter select {
-  min-height: 46px;
-  border: 1px solid var(--aq-border);
-  border-radius: var(--aq-radius);
-  background: var(--aq-field);
-  padding: 0 14px;
-  font-family: inherit;
-  font-size: 15px;
-  color: var(--aq-text);
-  cursor: pointer;
+.meus-filter {
+  min-width: 180px;
 }
+
 
 .meus-status {
   color: var(--aq-text-soft);

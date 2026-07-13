@@ -13,6 +13,7 @@ import categoryService from "../../services/categoryService";
 import { normalizeList } from "../../utils/normalizeList";
 import { imageUrl } from "../../utils/imageUrl";
 import { formatDate } from "../../utils/format";
+import CustomSelect from "../../components/CustomSelect/CustomSelect";
 import "./MeusAnuncios.css";
 
 const PAGE_SIZE = 5;
@@ -130,21 +131,21 @@ export default function MeusAnuncios() {
               aria-label="Buscar anúncio"
             />
           </div>
-          <label className="meus-filter">
-            <span className="sr-only">Filtrar por status</span>
-            <select
+          <div className="meus-filter">
+            <CustomSelect
+              options={[
+                { value: "all", label: "Todos os status" },
+                { value: "lost", label: "Perdidos" },
+                { value: "found", label: "Encontrados" },
+                { value: "resolved", label: "Devolvidos" },
+              ]}
               value={status}
-              onChange={(e) => {
-                setStatus(e.target.value);
+              onChange={(val) => {
+                setStatus(val);
                 setPage(1);
               }}
-            >
-              <option value="all">Todos os status</option>
-              <option value="lost">Perdidos</option>
-              <option value="found">Encontrados</option>
-              <option value="resolved">Devolvidos</option>
-            </select>
-          </label>
+            />
+          </div>
         </section>
 
         {loading && <p className="meus-status">Carregando anúncios...</p>}

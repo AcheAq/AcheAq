@@ -1,0 +1,239 @@
+@import "../../styles/aq-tokens.css";
+
+.ctp {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  font-family: var(--aq-font);
+}
+
+.ctp-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--aq-text);
+  user-select: none;
+}
+
+.ctp-req {
+  color: var(--aq-danger);
+}
+
+.ctp-trigger {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 16px;
+  border-radius: var(--aq-radius);
+  border: 1px solid var(--aq-border);
+  background: var(--aq-field);
+  color: var(--aq-text);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.ctp-trigger:focus-visible,
+.ctp-trigger.is-open {
+  background: #fff;
+  border-color: var(--aq-blue);
+  box-shadow: 0 0 0 3px rgba(66, 106, 188, 0.15);
+}
+
+.ctp-trigger.is-error {
+  border-color: var(--aq-danger);
+}
+
+.ctp-trigger.is-error:focus-visible {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.ctp-value.is-placeholder {
+  color: var(--aq-text-muted);
+}
+
+.ctp-icon {
+  color: var(--aq-blue);
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.ctp-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 220px;
+  background: #ffffff;
+  border: 1px solid var(--aq-border);
+  border-radius: var(--aq-radius-lg);
+  box-shadow: var(--aq-shadow-lg);
+  padding: 12px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: ctpFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes ctpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ctp-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  border-bottom: 1px solid var(--aq-border);
+  padding-bottom: 10px;
+}
+
+.ctp-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ctp-col-header {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--aq-text-muted);
+  text-transform: uppercase;
+  text-align: center;
+  user-select: none;
+}
+
+.ctp-list {
+  display: flex;
+  flex-direction: column;
+  height: 180px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--aq-border) transparent;
+}
+
+/* Scrollbar personalizado para navegadores Webkit (Chrome, Safari, Edge) */
+.ctp-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.ctp-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ctp-list::-webkit-scrollbar-thumb {
+  background-color: var(--aq-border);
+  border-radius: 10px;
+}
+
+.ctp-item {
+  width: 100%;
+  padding: 6px 4px;
+  border: none;
+  background: transparent;
+  color: var(--aq-text);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.1s ease;
+}
+
+.ctp-item:hover {
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue);
+}
+
+.ctp-item.is-selected {
+  background: var(--aq-blue) !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.ctp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  user-select: none;
+}
+
+.ctp-clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--aq-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: color 0.1s ease;
+}
+
+.ctp-clear-btn:hover {
+  color: var(--aq-danger);
+}
+
+.ctp-ok-btn {
+  background: var(--aq-blue);
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 16px;
+  border-radius: 6px;
+  transition: background-color 0.1s ease;
+}
+
+.ctp-ok-btn:hover {
+  background: var(--aq-blue-hover);
+}
+
+.ctp-helper-text {
+  margin: 0;
+  font-size: 13px;
+  color: var(--aq-text-muted);
+}
+
+.ctp-error-text {
+  margin: 0;
+  font-size: 13px;
+  color: var(--aq-danger);
+}
+
+.ctp.is-disabled .ctp-trigger {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--aq-field);
+}
+
+.ctp-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  cursor: text;
+}
+
+.ctp-input::placeholder {
+  color: var(--aq-text-muted);
+}
+

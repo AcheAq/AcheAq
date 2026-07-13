@@ -1,5 +1,7 @@
 import React from 'react';
 import { Lightbulb } from 'lucide-react';
+import CustomSelect from '../CustomSelect/CustomSelect';
+import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 import './FilterSidebar.css';
 
 function FilterSidebar({
@@ -48,60 +50,34 @@ function FilterSidebar({
                     <label htmlFor="filter-category" className="filter-label">
                         Categoria
                     </label>
-
-                    <select
-                        id="filter-category"
-                        name="category"
+                    <CustomSelect
+                        options={categories}
                         value={filters.category || ''}
-                        onChange={handleSelectChange}
-                        className="filter-select"
-                    >
-                        {categories.map((option) => (
-                            <option
-                                key={option.value}
-                                value={option.value}
-                            >
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
+                        onChange={(val) => onFilterChange?.('category', val)}
+                        placeholder="Selecione uma categoria"
+                    />
                 </section>
 
                 <section className="filter-field-group">
                     <label htmlFor="filter-location" className="filter-label">
                         Local
                     </label>
-
-                    <select
-                        id="filter-location"
-                        name="location"
+                    <CustomSelect
+                        options={locations}
                         value={filters.location || ''}
-                        onChange={handleSelectChange}
-                        className="filter-select"
-                    >
-                        {locations.map((option) => (
-                            <option
-                                key={option.value}
-                                value={option.value}
-                            >
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
+                        onChange={(val) => onFilterChange?.('location', val)}
+                        placeholder="Selecione um local"
+                    />
                 </section>
 
                 <section className="filter-field-group">
                     <label htmlFor="filter-date" className="filter-label">
                         Data
                     </label>
-
-                    <input
-                        id="filter-date"
-                        name="date"
-                        type="date"
+                    <CustomDatePicker
                         value={filters.date || ''}
-                        onChange={handleSelectChange}
-                        className="filter-input-date"
+                        onChange={(val) => onFilterChange?.('date', val)}
+                        placeholder="Selecione uma data"
                     />
                 </section>
 

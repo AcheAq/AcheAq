@@ -3,6 +3,9 @@ import { Box, UploadCloud, Lock } from "lucide-react";
 import FormInput from "../FormInput/FormInput";
 import ActionButton from "../ActionButton/ActionButton";
 import { useToast } from "../Toast/ToastProvider";
+import CustomDatePicker from "../CustomDatePicker/CustomDatePicker";
+import CustomTimePicker from "../CustomTimePicker/CustomTimePicker";
+import CustomSelect from "../CustomSelect/CustomSelect";
 import { imageUrl } from "../../utils/imageUrl";
 import "./AnuncioForm.css";
 
@@ -114,7 +117,7 @@ export default function AnuncioForm({
       toast.error("Preencha os campos obrigatórios destacados.");
       setTimeout(() => {
         const el = formRef.current?.querySelector(
-          '[aria-invalid="true"], .af-select.is-error, .af-textarea.is-error, .af-drop.is-error',
+          '[aria-invalid="true"], .af-select.is-error, .af-textarea.is-error, .af-drop.is-error, .cdp-trigger.is-error, .ctp-trigger.is-error, .cs-trigger.is-error',
         );
         el?.scrollIntoView({ behavior: "smooth", block: "center" });
         el?.focus?.();
@@ -187,45 +190,38 @@ export default function AnuncioForm({
               error={errors.title}
             />
 
-            <div className="af-field">
-              <label className="af-label" htmlFor="af-cat">
-                Categoria <span aria-hidden="true">*</span>
-              </label>
-              <select
-                id="af-cat"
-                name="categoryId"
-                className={`af-select ${errors.categoryId ? "is-error" : ""}`}
-                value={form.categoryId}
-                onChange={handleChange}
-                aria-invalid={errors.categoryId ? "true" : undefined}
-              >
-                <option value="">Selecione uma categoria</option>
-                {categories.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-              {errors.categoryId && (
-                <p className="af-error" role="alert">
-                  {errors.categoryId}
-                </p>
-              )}
-            </div>
+            <CustomSelect
+              label="Categoria"
+              required
+              options={categories.map((c) => ({ value: c.id, label: c.name }))}
+              value={form.categoryId}
+              onChange={(val) => set("categoryId", val)}
+              error={errors.categoryId}
+              placeholder="Selecione uma categoria"
+            />
 
             <div className="af-field">
               <label className="af-label" htmlFor="af-desc">
                 Descrição <span aria-hidden="true">*</span>
               </label>
-              <textarea
-                id="af-desc"
-                name="description"
-                className={`af-textarea ${errors.description ? "is-error" : ""}`}
-                placeholder="Descreva o objeto com detalhes."
-                value={form.description}
-                onChange={handleChange}
-                aria-invalid={errors.description ? "true" : undefined}
-              />
+              <div className="af-char-count-wrapper">
+                <textarea
+                  id="af-desc"
+                  name="description"
+                  className={`af-textarea ${errors.description ? "is-error" : ""}`}
+                  placeholder="Descreva o objeto com detalhes."
+                  value={form.description}
+                  onChange={handleChange}
+                  aria-invalid={errors.description ? "true" : undefined}
+                />
+                <span
+                  className={`af-char-count ${
+                    form.description.trim().length >= 10 ? "is-valid" : "is-invalid"
+                  }`}
+                >
+                  {form.description.trim().length} / 10 caracteres mínimos
+                </span>
+              </div>
               {errors.description && (
                 <p className="af-error" role="alert">
                   {errors.description}
@@ -243,25 +239,21 @@ export default function AnuncioForm({
                 onChange={handleChange}
                 error={errors.location}
               />
-              <FormInput
+              <CustomDatePicker
                 label="Data de ocorrência"
-                name="date"
-                type="date"
                 required
                 value={form.date}
-                onChange={handleChange}
+                onChange={(val) => set("date", val)}
                 error={errors.date}
               />
             </div>
 
             <div className="af-row af-row--half">
-              <FormInput
+              <CustomTimePicker
                 label="Horário"
-                name="time"
-                type="time"
                 helperText="Opcional"
                 value={form.time}
-                onChange={handleChange}
+                onChange={(val) => set("time", val)}
               />
             </div>
           </section>

@@ -58,6 +58,16 @@ function FormInput({
           onChange={onChange}
           disabled={disabled}
           className="fi-field"
+          onClick={(e) => {
+            if (type === "date" || type === "time") {
+              try {
+                e.target.showPicker();
+              } catch (err) {
+                console.warn("showPicker error:", err);
+              }
+            }
+            if (props.onClick) props.onClick(e);
+          }}
           {...props}
         />
 

@@ -40,32 +40,10 @@
   flex-wrap: wrap;
 }
 
-.hf-select-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
+.hf-dropdowns .cs {
+  min-width: 150px;
 }
 
-.hf-select-icon {
-  position: absolute;
-  left: 12px;
-  pointer-events: none;
-  color: #64748b;
-}
-
-.hf-select {
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 8px 32px 8px 34px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #475569;
-  outline: none;
-  cursor: pointer;
-  appearance: none;
-  font-family: inherit;
-}
 
 
 /* ===========================

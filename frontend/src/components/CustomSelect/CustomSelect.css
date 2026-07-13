@@ -1,0 +1,153 @@
+@import "../../styles/aq-tokens.css";
+
+.cs {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  font-family: var(--aq-font);
+}
+
+.cs-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--aq-text);
+  user-select: none;
+}
+
+.cs-req {
+  color: var(--aq-danger);
+}
+
+.cs-trigger {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 16px;
+  border-radius: var(--aq-radius);
+  border: 1px solid var(--aq-border);
+  background: var(--aq-field);
+  color: var(--aq-text);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.cs-trigger:focus-visible,
+.cs-trigger.is-open {
+  background: #fff;
+  border-color: var(--aq-blue);
+  box-shadow: 0 0 0 3px rgba(66, 106, 188, 0.15);
+}
+
+.cs-trigger.is-error {
+  border-color: var(--aq-danger);
+}
+
+.cs-trigger.is-error:focus-visible {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.cs-value.is-placeholder {
+  color: var(--aq-text-muted);
+}
+
+.cs-icon {
+  color: var(--aq-blue);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.cs-trigger.is-open .cs-icon {
+  transform: rotate(180deg);
+}
+
+.cs-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid var(--aq-border);
+  border-radius: var(--aq-radius-lg);
+  box-shadow: var(--aq-shadow-lg);
+  padding: 6px;
+  margin: 0;
+  list-style: none;
+  z-index: 100;
+  animation: csFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--aq-border) transparent;
+}
+
+.cs-dropdown::-webkit-scrollbar {
+  width: 5px;
+}
+
+.cs-dropdown::-webkit-scrollbar-thumb {
+  background-color: var(--aq-border);
+  border-radius: 10px;
+}
+
+@keyframes csFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cs-item {
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--aq-text);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.cs-item:hover,
+.cs-item.is-active {
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue);
+}
+
+.cs-item.is-selected {
+  background: var(--aq-blue);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.cs-item.is-selected:hover {
+  background: var(--aq-blue-hover);
+}
+
+.cs-no-options {
+  padding: 12px;
+  font-size: 14px;
+  color: var(--aq-text-muted);
+  text-align: center;
+}
+
+.cs-error-text {
+  margin: 0;
+  font-size: 13px;
+  color: var(--aq-danger);
+}
+
+.cs.is-disabled .cs-trigger {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--aq-field);
+}

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Search, Tag, Calendar, CheckCircle } from 'lucide-react';
+import { Search } from 'lucide-react';
+import CustomSelect from '../CustomSelect/CustomSelect';
 import './HorizontalFilterBar.css';
 
 function HorizontalFilterBar({
@@ -35,84 +36,26 @@ function HorizontalFilterBar({
 
 
       <section className="hf-dropdowns">
+        <CustomSelect
+          options={statusOptions}
+          value={filters.status || ''}
+          onChange={(val) => onFilterChange?.('status', val)}
+          placeholder="Status"
+        />
 
-        <section className="hf-select-wrapper">
-          <CheckCircle
-            size={15}
-            className="hf-select-icon"
-          />
+        <CustomSelect
+          options={categoryOptions}
+          value={filters.category || ''}
+          onChange={(val) => onFilterChange?.('category', val)}
+          placeholder="Categoria"
+        />
 
-          <select
-            name="status"
-            value={filters.status || ''}
-            onChange={(e) =>
-              onFilterChange?.('status', e.target.value)
-            }
-            className="hf-select"
-          >
-            {statusOptions.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-              >
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </section>
-
-
-        <section className="hf-select-wrapper">
-          <Tag
-            size={15}
-            className="hf-select-icon"
-          />
-
-          <select
-            name="category"
-            value={filters.category || ''}
-            onChange={(e) =>
-              onFilterChange?.('category', e.target.value)
-            }
-            className="hf-select"
-          >
-            {categoryOptions.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-              >
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </section>
-
-
-        <section className="hf-select-wrapper">
-          <Calendar
-            size={15}
-            className="hf-select-icon"
-          />
-
-          <select
-            name="date"
-            value={filters.date || ''}
-            onChange={(e) =>
-              onFilterChange?.('date', e.target.value)
-            }
-            className="hf-select"
-          >
-            {dateOptions.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-              >
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </section>
-
+        <CustomSelect
+          options={dateOptions}
+          value={filters.date || ''}
+          onChange={(val) => onFilterChange?.('date', val)}
+          placeholder="Data"
+        />
       </section>
 
     </section>

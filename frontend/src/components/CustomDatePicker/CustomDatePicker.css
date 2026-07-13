@@ -1,0 +1,224 @@
+@import "../../styles/aq-tokens.css";
+
+.cdp {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  font-family: var(--aq-font);
+}
+
+.cdp-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--aq-text);
+  user-select: none;
+}
+
+.cdp-req {
+  color: var(--aq-danger);
+}
+
+.cdp-trigger {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 16px;
+  border-radius: var(--aq-radius);
+  border: 1px solid var(--aq-border);
+  background: var(--aq-field);
+  color: var(--aq-text);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.cdp-trigger:focus-visible,
+.cdp-trigger.is-open {
+  background: #fff;
+  border-color: var(--aq-blue);
+  box-shadow: 0 0 0 3px rgba(66, 106, 188, 0.15);
+}
+
+.cdp-trigger.is-error {
+  border-color: var(--aq-danger);
+}
+
+.cdp-trigger.is-error:focus-visible {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.cdp-value.is-placeholder {
+  color: var(--aq-text-muted);
+}
+
+.cdp-icon {
+  color: var(--aq-blue);
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.cdp-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 320px;
+  background: #ffffff;
+  border: 1px solid var(--aq-border);
+  border-radius: var(--aq-radius-lg);
+  box-shadow: var(--aq-shadow-lg);
+  padding: 16px;
+  z-index: 100;
+  animation: cdpFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cdpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cdp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  user-select: none;
+}
+
+.cdp-month-year {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--aq-text);
+}
+
+.cdp-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--aq-border);
+  background: #ffffff;
+  color: var(--aq-text-soft);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.cdp-nav-btn:hover {
+  background: var(--aq-field);
+  color: var(--aq-blue);
+  border-color: var(--aq-blue);
+}
+
+.cdp-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 6px;
+  text-align: center;
+  user-select: none;
+}
+
+.cdp-weekday {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--aq-text-muted);
+  text-transform: uppercase;
+}
+
+.cdp-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cdp-day {
+  aspect-ratio: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--aq-text);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.cdp-day:hover {
+  background: var(--aq-blue-soft);
+  color: var(--aq-blue);
+}
+
+.cdp-day.is-outside {
+  color: var(--aq-text-muted);
+  opacity: 0.35;
+}
+
+.cdp-day.is-today {
+  border: 1.5px solid var(--aq-blue);
+  color: var(--aq-blue);
+  font-weight: 700;
+}
+
+.cdp-day.is-selected {
+  background: var(--aq-blue) !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.cdp-day.is-selected:hover {
+  background: var(--aq-blue-hover) !important;
+}
+
+.cdp-error-text {
+  margin: 0;
+  font-size: 13px;
+  color: var(--aq-danger);
+}
+
+.cdp.is-disabled .cdp-trigger {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--aq-field);
+}
+
+/* Responsividade */
+@media (max-width: 360px) {
+  .cdp-dropdown {
+    width: 290px;
+    padding: 12px;
+  }
+}
+
+.cdp-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  cursor: text;
+}
+
+.cdp-input::placeholder {
+  color: var(--aq-text-muted);
+}
+

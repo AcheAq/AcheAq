@@ -53,11 +53,14 @@ function Header() {
                     aria-label="Navegação principal"
                 >
                     <ul>
-                        <li>
-                            <NavLink to="/" onClick={closeMenu}>
-                                Início
-                            </NavLink>
-                        </li>
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) => isActive ? 'active-link' : ''}
+                            end
+                            onClick={closeMenu}
+                        >
+                            Início
+                        </NavLink>
                         <li>
                             <NavLink to="/objetos-perdidos" onClick={closeMenu}>
                                 Objetos Perdidos
@@ -181,7 +184,12 @@ function Header() {
                     className={`mobile-menu ${menuOpen ? 'active' : ''}`}
                     aria-label="Menu de navegação mobile"
                 >
-                    <NavLink to="/" onClick={closeMenu}>
+                    <NavLink
+                        to="/"
+                        end
+                        className={({ isActive }) => isActive ? 'active-link' : ''}
+                        onClick={closeMenu}
+                    >
                         Início
                     </NavLink>
 
@@ -205,8 +213,8 @@ function Header() {
                             <NavLink to="/perfil" onClick={closeMenu}>
                                 Perfil
                             </NavLink>
-                            <button 
-                                onClick={handleLogout} 
+                            <button
+                                onClick={handleLogout}
                                 className="user-dropdown-item logout"
                                 style={{ margin: '16px', width: 'calc(100% - 32px)', textAlign: 'center' }}
                             >

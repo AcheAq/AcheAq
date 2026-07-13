@@ -5,7 +5,6 @@ import './FilterSidebar.css';
 function FilterSidebar({
     filters = {},
     categories = [],
-    locations = [],
     sortOptions = [],
     onFilterChange,
     onClearFilters,
@@ -29,7 +28,6 @@ function FilterSidebar({
             className="filter-sidebar-container"
             aria-label="Painel de filtros laterais"
         >
-
             <form onSubmit={handleFormSubmit} className="filter-card">
 
                 <header className="filter-card-header">
@@ -68,29 +66,6 @@ function FilterSidebar({
                 </section>
 
                 <section className="filter-field-group">
-                    <label htmlFor="filter-location" className="filter-label">
-                        Local
-                    </label>
-
-                    <select
-                        id="filter-location"
-                        name="location"
-                        value={filters.location || ''}
-                        onChange={handleSelectChange}
-                        className="filter-select"
-                    >
-                        {locations.map((option) => (
-                            <option
-                                key={option.value}
-                                value={option.value}
-                            >
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
-                </section>
-
-                <section className="filter-field-group">
                     <label htmlFor="filter-date" className="filter-label">
                         Data
                     </label>
@@ -113,8 +88,9 @@ function FilterSidebar({
                     {sortOptions.map((option) => (
                         <label
                             key={option.value}
-                            className={`sort-option-label ${filters.sortBy === option.value ? 'active' : ''
-                                }`}
+                            className={`sort-option-label ${
+                                filters.sortBy === option.value ? 'active' : ''
+                            }`}
                         >
                             <input
                                 type="radio"

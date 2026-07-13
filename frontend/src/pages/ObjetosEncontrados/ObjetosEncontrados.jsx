@@ -10,7 +10,7 @@ import ActiveFilters from "../../components/ActiveFilters/ActiveFilters";
 import Pagination from "../../components/Pagination/Pagination";
 import DetalhesAnuncioModal from "../../components/Modals/DetalhesAnuncioModal/DetalhesAnuncioModal";
 
-import { categories, locations, sortOptions } from "../../utils/constants/filterOptions";
+import { categories, sortOptions } from "../../utils/constants/filterOptions";
 import { objetosEncontradosMock } from "../../utils/mocks/objetosEncontradosMock";
 
 import "./ObjetosEncontrados.css";
@@ -22,7 +22,6 @@ function ObjetosEncontrados() {
 
   const [filters, setFilters] = useState({
     category: "todas",
-    location: "todos",
     date: "",
     sortBy: "recentes"
   });
@@ -35,10 +34,6 @@ function ObjetosEncontrados() {
 
   const categoryLabels = Object.fromEntries(
     categories.map((item) => [item.value, item.label])
-  );
-
-  const locationLabels = Object.fromEntries(
-    locations.map((item) => [item.value, item.label])
   );
 
   const sortLabels = Object.fromEntries(
@@ -55,7 +50,6 @@ function ObjetosEncontrados() {
   const handleClearFilters = () => {
     setFilters({
       category: "todas",
-      location: "todos",
       date: "",
       sortBy: "recentes"
     });
@@ -101,7 +95,6 @@ function ObjetosEncontrados() {
         <FilterSidebar
           filters={filters}
           categories={categories}
-          locations={locations}
           sortOptions={sortOptions}
           onFilterChange={handleFilterChange}
           onClearFilters={handleClearFilters}
@@ -122,7 +115,6 @@ function ObjetosEncontrados() {
                 filters={filters}
                 onFilterChange={handleFilterChange}
                 categoryLabels={categoryLabels}
-                locationLabels={locationLabels}
                 sortLabels={sortLabels}
               />
             </section>

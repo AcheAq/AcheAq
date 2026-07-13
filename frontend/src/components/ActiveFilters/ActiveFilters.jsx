@@ -4,12 +4,10 @@ function ActiveFilters({
   filters,
   onFilterChange,
   categoryLabels,
-  locationLabels,
   sortLabels
 }) {
   const hasActiveFilters =
     filters.category !== "todas" ||
-    filters.location !== "todos" ||
     filters.date !== "" ||
     filters.sortBy !== "recentes";
 
@@ -28,19 +26,6 @@ function ActiveFilters({
             type="button"
             className="filter-pill-close"
             onClick={() => onFilterChange("sortBy", "recentes")}
-          >
-            ×
-          </button>
-        </span>
-      )}
-
-      {filters.location !== "todos" && (
-        <span className="filter-pill">
-          {locationLabels[filters.location] || filters.location}
-          <button
-            type="button"
-            className="filter-pill-close"
-            onClick={() => onFilterChange("location", "todos")}
           >
             ×
           </button>

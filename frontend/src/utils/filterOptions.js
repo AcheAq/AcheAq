@@ -10,15 +10,6 @@ export const categories = [
   { value: 'outros', label: 'Outros itens' }
 ];
 
-export const locations = [
-  { value: 'todos', label: 'Todos os locais' },
-  { value: 'biblioteca', label: 'Biblioteca Central' },
-  { value: 'bloco-a', label: 'Bloco A' },
-  { value: 'bloco-b', label: 'Bloco B' },
-  { value: 'cantina', label: 'Cantina Principal' },
-  { value: 'quadra', label: 'Quadra Poliesportiva' }
-];
-
 export const sortOptions = [
   { value: 'recentes', label: 'Mais recentes' },
   { value: 'antigos', label: 'Mais antigos' },
@@ -43,7 +34,6 @@ export const statusOptions = [
     label: 'Devolvidos'
   }
 ];
-
 
 export const dateOptions = [
   {

@@ -10,7 +10,7 @@ import ActiveFilters from "../../components/ActiveFilters/ActiveFilters";
 import Pagination from "../../components/Pagination/Pagination";
 import DetalhesAnuncioModal from "../../components/Modals/DetalhesAnuncioModal/DetalhesAnuncioModal";
 
-import { categories, locations, sortOptions } from "../../utils/constants/filterOptions";
+import { categories, sortOptions } from "../../utils/constants/filterOptions";
 import { objetosPerdidosMock } from "../../utils/mocks/objetosPerdidosMock";
 
 import "./ObjetosPerdidos.css";
@@ -22,7 +22,6 @@ function ObjetosPerdidos() {
 
   const [filters, setFilters] = useState({
     category: "todas",
-    location: "todos",
     date: "",
     sortBy: "recentes"
   });
@@ -35,10 +34,6 @@ function ObjetosPerdidos() {
 
   const categoryLabels = Object.fromEntries(
     categories.map((item) => [item.value, item.label])
-  );
-
-  const locationLabels = Object.fromEntries(
-    locations.map((item) => [item.value, item.label])
   );
 
   const sortLabels = Object.fromEntries(
@@ -55,7 +50,6 @@ function ObjetosPerdidos() {
   const handleClearFilters = () => {
     setFilters({
       category: "todas",
-      location: "todos",
       date: "",
       sortBy: "recentes"
     });
@@ -100,7 +94,6 @@ function ObjetosPerdidos() {
         <FilterSidebar
           filters={filters}
           categories={categories}
-          locations={locations}
           sortOptions={sortOptions}
           onFilterChange={handleFilterChange}
           onClearFilters={handleClearFilters}
@@ -118,7 +111,6 @@ function ObjetosPerdidos() {
                 filters={filters}
                 onFilterChange={handleFilterChange}
                 categoryLabels={categoryLabels}
-                locationLabels={locationLabels}
                 sortLabels={sortLabels}
               />
             </section>

@@ -195,7 +195,7 @@ function Dashboard() {
               <XAxis dataKey="name" fontSize={12} />
               <YAxis allowDecimals={false} fontSize={12} />
               <Tooltip />
-              <Bar dataKey="value" fill="#426ABC" radius={[6, 6, 0, 0]} />
+              <Bar name="Itens" dataKey="value" fill="#426ABC" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -209,6 +209,7 @@ function Dashboard() {
               <YAxis allowDecimals={false} fontSize={12} />
               <Tooltip />
               <Line
+                name="Itens"
                 type="monotone"
                 dataKey="value"
                 stroke="#426ABC"

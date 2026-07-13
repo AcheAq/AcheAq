@@ -19,6 +19,7 @@ import MeusAnuncios from "../pages/MeusAnuncios/MeusAnuncios";
 import DetalheItem from "../pages/DetalheItem/DetalheItem";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Inicio from "../pages/Inicio/Inicio";
+import NotFound from "../pages/NotFound/NotFound";
 
 function HomeOrInicio() {
   const { isAuthenticated, loading } = useAuth();
@@ -44,7 +45,6 @@ export default function AppRoutes() {
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/objetos-perdidos" element={<ObjetosPerdidos />} />
           <Route path="/objetos-encontrados" element={<ObjetosEncontrados />} />
-          <Route path="/teste/inicio" element={<Inicio />} />
 
           <Route
             path="/perfil"
@@ -86,6 +86,9 @@ export default function AppRoutes() {
               </AdminRoute>
             }
           />
+          
+          {/* Catch-all para rotas não encontradas sob MainLayout */}
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         {/* Rotas sem Cabeçalho (tela cheia) */}

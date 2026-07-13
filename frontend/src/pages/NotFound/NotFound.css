@@ -1,0 +1,130 @@
+.notfound-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 96px); /* accounting for header */
+  background: #f8fafc;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.notfound-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 48px 32px;
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.notfound-icon-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 32px auto;
+  background: rgba(66, 106, 188, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notfound-search-icon {
+  color: #426ABC;
+  animation: floatIcon 3s ease-in-out infinite alternate;
+}
+
+.notfound-help-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #EA7C3F;
+  animation: pulseHelp 2s ease-in-out infinite alternate;
+}
+
+.notfound-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 16px 0;
+  font-family: inherit;
+}
+
+.notfound-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0 0 12px 0;
+}
+
+.notfound-subtext {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #64748b;
+  margin: 0 0 32px 0;
+}
+
+.notfound-btn-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #426ABC;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgba(66, 106, 188, 0.15);
+}
+
+.notfound-btn-back:hover {
+  background-color: #3557A1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(66, 106, 188, 0.25);
+}
+
+.notfound-btn-back:active {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes floatIcon {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-8px) rotate(15deg);
+  }
+}
+
+@keyframes pulseHelp {
+  0% {
+    transform: scale(0.9) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.1) rotate(-10deg);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .notfound-card {
+    padding: 32px 20px;
+  }
+  
+  .notfound-title {
+    font-size: 20px;
+  }
+  
+  .notfound-text {
+    font-size: 15px;
+  }
+}

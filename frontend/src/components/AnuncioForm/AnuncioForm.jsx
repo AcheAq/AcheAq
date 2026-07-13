@@ -102,7 +102,11 @@ export default function AnuncioForm({
     if (!form.title.trim()) next.title = "Informe o nome do objeto.";
     if (!form.categoryId) next.categoryId = "Selecione uma categoria.";
     if (!form.description.trim()) next.description = "Descreva o objeto.";
-    if (!form.location.trim()) next.location = "Informe o local.";
+    if (!form.location.trim()) {
+      next.location = "Informe o local.";
+    } else if (form.location.trim().length <= 3) {
+      next.location = "O local deve ter mais de 3 caracteres.";
+    }
     if (!form.date) next.date = "Informe a data de ocorrência.";
     if (mode === "create" && !file) next.image = "Adicione uma foto do objeto.";
     return next;

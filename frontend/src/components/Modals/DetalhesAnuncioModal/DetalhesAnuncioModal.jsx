@@ -2,6 +2,7 @@ import Modal from "../../Modal/Modal";
 import { Tag, MapPin, Calendar, Clock, User } from "lucide-react";
 import ActionButton from "../../ActionButton/ActionButton";
 import defaultImage from "../../../assets/default-item.png";
+import getCategoryFallback from "../../../utils/categoryFallback";
 
 import "./DetalhesAnuncioModal.css";
 
@@ -27,6 +28,11 @@ function DetalhesAnuncioModal({
     dataPublicacao: item?.dataPublicacao || "-"
   };
 
+  const image = item?.imagem || item?.image;
+  const isDefaultImage = !image || image === defaultImage;
+  const fallback = getCategoryFallback(item?.categoria || item?.category, item?.titulo || item?.title);
+  const FallbackIcon = fallback.Icon;
+
   return (
     <Modal
       isOpen={isOpen}
@@ -37,15 +43,20 @@ function DetalhesAnuncioModal({
       <section className="detalhes-grid">
         <section className="detalhes-coluna-esq">
           <section className="detalhes-img-wrapper">
-            <img
-              src={
-                item?.imagem ||
-                item?.image ||
-                defaultImage
-              }
-              alt={`Foto de ${item?.titulo || item?.title}`}
-              className="detalhes-img"
-            />
+            {isDefaultImage ? (
+              <div
+                className="detalhes-img-fallback-wrapper"
+                style={{ background: fallback.gradient }}
+              >
+                <FallbackIcon size={80} color={fallback.color} strokeWidth={1.5} />
+              </div>
+            ) : (
+              <img
+                src={image}
+                alt={`Foto de ${item?.titulo || item?.title}`}
+                className="detalhes-img"
+              />
+            )}
           </section>
 
           <aside

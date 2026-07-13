@@ -2,6 +2,7 @@ import React from "react";
 import { Tag, MapPin, Calendar } from "lucide-react";
 
 import defaultImage from "../../assets/default-item.png";
+import getCategoryFallback from "../../utils/categoryFallback";
 
 import "./CardAnuncio.css";
 
@@ -15,15 +16,28 @@ function CardAnuncio({
   date,
   onDetails
 }) {
+  const isDefaultImage = !image || image === defaultImage;
+  const fallback = getCategoryFallback(category, title);
+  const FallbackIcon = fallback.Icon;
+
   return (
     <article className="item-card" aria-label={`Anúncio de ${title}`}>
       <section className="item-card-image-wrapper">
-        <img
-          src={image || defaultImage}
-          alt={`Imagem do anúncio ${title}`}
-          className="item-card-img"
-          loading="lazy"
-        />
+        {isDefaultImage ? (
+          <div
+            className="item-card-fallback-wrapper"
+            style={{ background: fallback.gradient }}
+          >
+            <FallbackIcon size={48} color={fallback.color} strokeWidth={1.5} />
+          </div>
+        ) : (
+          <img
+            src={image}
+            alt={`Imagem do anúncio ${title}`}
+            className="item-card-img"
+            loading="lazy"
+          />
+        )}
       </section>
 
       <section className="item-card-body">

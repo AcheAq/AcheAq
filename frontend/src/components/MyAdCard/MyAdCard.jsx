@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 
 import defaultImage from '../../assets/default-item.png';
+import getCategoryFallback from '../../utils/categoryFallback';
 
 import './MyAdCard.css';
 
@@ -23,6 +24,9 @@ function MyAdCard({
   onEdit,
   onDelete
 }) {
+  const isDefaultImage = !image || image === defaultImage;
+  const fallback = getCategoryFallback(category, title);
+  const FallbackIcon = fallback.Icon;
 
   return (
     <article
@@ -33,14 +37,21 @@ function MyAdCard({
       <section className="my-ad-left">
 
         <section className="my-ad-img-wrapper">
-
-          <img
-            src={image || defaultImage}
-            alt={`Imagem do anúncio ${title}`}
-            className="my-ad-img"
-            loading="lazy"
-          />
-
+          {isDefaultImage ? (
+            <div
+              className="my-ad-img-fallback-wrapper"
+              style={{ background: fallback.gradient }}
+            >
+              <FallbackIcon size={36} color={fallback.color} strokeWidth={1.5} />
+            </div>
+          ) : (
+            <img
+              src={image}
+              alt={`Imagem do anúncio ${title}`}
+              className="my-ad-img"
+              loading="lazy"
+            />
+          )}
         </section>
 
 

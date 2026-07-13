@@ -4,7 +4,7 @@
   background: var(--aq-page);
   font-family: var(--aq-font);
   padding-bottom: 48px;
-  min-height: 100%;
+  min-height: 100vh;
 }
 
 .sr-only {

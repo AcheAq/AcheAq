@@ -257,3 +257,11 @@
   max-height: 180px;     
   overflow-y: auto;     
 }
+
+.detalhes-img-fallback-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

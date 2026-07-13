@@ -293,26 +293,26 @@ function ObjetosPerdidos() {
             )}
           </section>
         </section>
+      </div>
 
-        {!isAuthenticated && (
-          <div className="auth-blur-overlay">
-            <div className="auth-blur-card">
-              <h3 className="auth-blur-title">Acesso Restrito</h3>
-              <p className="auth-blur-desc">
-                Você precisa estar logado na plataforma para pesquisar e visualizar os detalhes dos objetos perdidos.
-              </p>
-              <div className="auth-blur-buttons">
-                <Button variant="outline" onClick={() => navigate("/login")}>
-                  Entrar
-                </Button>
-                <Button variant="primary" onClick={() => navigate("/cadastro")}>
-                  Criar Conta
-                </Button>
-              </div>
+      {!isAuthenticated && (
+        <div className="auth-blur-overlay">
+          <div className="auth-blur-card">
+            <h3 className="auth-blur-title">Acesso Restrito</h3>
+            <p className="auth-blur-desc">
+              Você precisa estar logado na plataforma para pesquisar e visualizar os detalhes dos objetos perdidos.
+            </p>
+            <div className="auth-blur-buttons">
+              <Button variant="outline" onClick={() => navigate("/login")}>
+                Entrar
+              </Button>
+              <Button variant="primary" onClick={() => navigate("/cadastro")}>
+                Criar Conta
+              </Button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <DetalhesAnuncioModal
         isOpen={isDetailsOpen}

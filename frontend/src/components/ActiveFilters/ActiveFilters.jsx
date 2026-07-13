@@ -8,10 +8,10 @@ function ActiveFilters({
   sortLabels
 }) {
   const hasActiveFilters =
-    filters.category !== "todas" ||
-    filters.location !== "todos" ||
-    filters.date !== "" ||
-    filters.sortBy !== "recentes";
+    (filters.category && filters.category !== "todas") ||
+    (filters.location && filters.location !== "todos") ||
+    (filters.date && filters.date !== "") ||
+    (filters.sortBy && filters.sortBy !== "recentes");
 
   if (!hasActiveFilters) {
     return null;
@@ -34,9 +34,9 @@ function ActiveFilters({
         </span>
       )}
 
-      {filters.location !== "todos" && (
+      {filters.location && filters.location !== "todos" && (
         <span className="filter-pill">
-          {locationLabels[filters.location] || filters.location}
+          {(locationLabels && locationLabels[filters.location]) || filters.location}
           <button
             type="button"
             className="filter-pill-close"

@@ -1,32 +1,54 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import Header from "../../components/Header/Header";
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import CategoryGrid from "../../components/CategoryGrid/CategoryGrid";
 import CardAnuncio from "../../components/CardAnuncio/CardAnuncio";
 import CTASection from "../../components/CTASection/CTASection";
 
-import { objetosRecentes } from "../../utils/mocks/objetosRecentesMock";
+import { useAuth } from "../../contexts/AuthContext";
+import itemService from "../../services/itemService";
+import { imageUrl } from "../../utils/imageUrl";
+import { formatDate } from "../../utils/format";
 
 import styles from "./Inicio.module.css";
 
 function Inicio() {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [search, setSearch] = useState("");
+  const [recentItems, setRecentItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    setLoading(true);
+    itemService.getAll({ page: 1, limit: 3 })
+      .then((res) => {
+        setRecentItems(res.data || []);
+      })
+      .catch((err) => {
+        console.error("Erro ao carregar itens recentes:", err);
+        setError("Não foi possível carregar os itens recentes.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [isAuthenticated]);
 
   function handleSearch(value) {
-    console.log("Pesquisar:", value);
+    navigate(`/objetos-encontrados?busca=${encodeURIComponent(value)}`);
   }
 
   function handleCategory(category) {
-    console.log("Categoria selecionada:", category);
+    navigate(`/objetos-encontrados?categoria=${encodeURIComponent(category)}`);
   }
 
   return (
     <div className={styles.pageWrapper}>
-      <Header />
-
       <HeroBanner
         title="Perdeu ou encontrou algum objeto?"
         subtitle="O AcheAq conecta pessoas para facilitar a devolução de objetos perdidos dentro da instituição."
@@ -69,17 +91,22 @@ function Inicio() {
           </div>
 
           <div className={styles.objGrid}>
-            {objetosRecentes.map((objeto) => (
+            {loading && <p>Carregando objetos recentes...</p>}
+            {error && <p className="error" role="alert">{error}</p>}
+            {!loading && !error && recentItems.length === 0 && (
+              <p>Nenhum objeto registrado recentemente.</p>
+            )}
+            {!loading && !error && recentItems.map((objeto) => (
               <CardAnuncio
                 key={objeto.id}
                 title={objeto.title}
-                image={objeto.image}
-                status={objeto.status}
+                image={objeto.photoUrl ? imageUrl(objeto.photoUrl) : null}
+                status={objeto.type?.toLowerCase()}
                 description={objeto.description}
-                category={objeto.category}
+                category={objeto.category?.name || "Sem categoria"}
                 location={objeto.location}
-                date={objeto.date}
-                onDetails={() => console.log("Detalhes:", objeto)}
+                date={formatDate(objeto.occurrenceDate)}
+                onDetails={() => navigate(`/item/${objeto.id}`)}
               />
             ))}
           </div>

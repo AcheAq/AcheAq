@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
 import SearchBar from "../../components/SearchBar/SearchBar";
@@ -23,16 +23,27 @@ import "./ObjetosPerdidos.css";
 
 function ObjetosPerdidos() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const searchParam = searchParams.get("busca") || "";
+  const categoryParam = searchParams.get("categoria") || "";
+
   const { isAuthenticated, user: currentUser, loading: authLoading } = useAuth();
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchTerm, setSearchTerm] = useState(searchParam);
+  const [searchQuery, setSearchQuery] = useState(searchParam);
 
   const [filters, setFilters] = useState({
     category: "todas",
     date: "",
     sortBy: "recentes"
   });
+
+  // Sync search parameters from URL
+  useEffect(() => {
+    const searchVal = searchParams.get("busca") || "";
+    setSearchTerm(searchVal);
+    setSearchQuery(searchVal);
+  }, [searchParams]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [items, setItems] = useState([]);
@@ -65,9 +76,16 @@ function ObjetosPerdidos() {
           { value: "todas", label: "Todas as categorias" },
           ...res.map((c) => ({ value: c.id, label: c.name }))
         ]);
+
+        if (categoryParam) {
+          const matched = res.find(c => c.name.toLowerCase() === categoryParam.toLowerCase());
+          if (matched) {
+            setFilters(prev => ({ ...prev, category: matched.id }));
+          }
+        }
       })
       .catch((err) => console.error("Erro ao carregar categorias:", err));
-  }, [isAuthenticated]);
+  }, [isAuthenticated, categoryParam]);
 
   // Carregar itens da API caso autenticado
   const loadItems = () => {

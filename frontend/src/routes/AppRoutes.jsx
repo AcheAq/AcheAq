@@ -4,6 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import AdminRoute from "./AdminRoute";
 
+import { useAuth } from "../contexts/AuthContext";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Cadastro from "../pages/Cadastro/Cadastro";
@@ -19,13 +20,27 @@ import DetalheItem from "../pages/DetalheItem/DetalheItem";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Inicio from "../pages/Inicio/Inicio";
 
+function HomeOrInicio() {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <p>Carregando...</p>
+      </div>
+    );
+  }
+
+  return isAuthenticated ? <Inicio /> : <Home />;
+}
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         {/* Rotas com o Cabeçalho principal (MainLayout) */}
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomeOrInicio />} />
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/objetos-perdidos" element={<ObjetosPerdidos />} />
           <Route path="/objetos-encontrados" element={<ObjetosEncontrados />} />

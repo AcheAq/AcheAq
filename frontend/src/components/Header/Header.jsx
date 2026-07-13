@@ -3,12 +3,14 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logoAcheAq from '../../assets/images/logo-azul-com-fundo-branco.jpg';
 import { Bell, User, ChevronDown, Menu, X } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../Toast/ToastProvider';
 import { imageUrl } from '../../utils/imageUrl';
 import './Header.css';
 
 function Header() {
     const { isAuthenticated, user, logout } = useAuth();
     const navigate = useNavigate();
+    const toast = useToast();
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -109,6 +111,7 @@ function Header() {
                                 type="button"
                                 className="notification-btn"
                                 aria-label="Ver notificações, 0 não lidas"
+                                onClick={() => toast.info("Funcionalidade em desenvolvimento. Estamos trabalhando nisso!")}
                             >
                                 <Bell size={20} color="#426ABC" />
                             </button>

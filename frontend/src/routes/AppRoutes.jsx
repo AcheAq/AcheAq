@@ -15,6 +15,7 @@ import ObjetosEncontrados from "../pages/ObjetosEncontrados/ObjetosEncontrados";
 import NovoAnuncio from "../pages/NovoAnuncio/NovoAnuncio";
 import MeusAnuncios from "../pages/MeusAnuncios/MeusAnuncios";
 import DetalheItem from "../pages/DetalheItem/DetalheItem";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
 export default function AppRoutes() {
   return (
@@ -26,6 +27,16 @@ export default function AppRoutes() {
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/objetos-perdidos" element={<ObjetosPerdidos />} />
           <Route path="/objetos-encontrados" element={<ObjetosEncontrados />} />
+
+          {/* 💻 NOVA ROTA ADICIONADA AQUI: Acessível em http://localhost:3000/dashboard */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/perfil"

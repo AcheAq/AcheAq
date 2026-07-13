@@ -14,6 +14,11 @@ const createItemSchema = z.object({
   occurrenceDate: z.coerce.date(),
 
   type: z.enum(["LOST", "FOUND"]).optional(),
+
+  allowContact: z.preprocess(
+    (val) => val === "true" || val === true,
+    z.boolean()
+  ).optional(),
 });
 
 const updateItemSchema = z
@@ -29,6 +34,11 @@ const updateItemSchema = z
     occurrenceDate: z.coerce.date().optional(),
 
     type: z.enum(["LOST", "FOUND"]).optional(),
+
+    allowContact: z.preprocess(
+      (val) => val === "true" || val === true,
+      z.boolean()
+    ).optional(),
   })
   .strict()
   .refine((data) => Object.keys(data).length > 0, {
@@ -47,6 +57,12 @@ const itemQuerySchema = z.object({
   status: z.enum(["OPEN", "RESOLVED"]).optional(),
 
   search: z.string().trim().optional(),
+
+  date: z.string().optional(),
+
+  sort: z.enum(["occurrenceDate", "title"]).optional(),
+
+  order: z.enum(["asc", "desc"]).optional(),
 });
 
 module.exports = {

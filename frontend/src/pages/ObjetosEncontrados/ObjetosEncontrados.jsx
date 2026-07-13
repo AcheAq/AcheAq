@@ -84,13 +84,22 @@ function ObjetosEncontrados() {
       params.categoryId = filters.category;
     }
 
+    if (filters.date) {
+      params.date = filters.date;
+    }
+
     if (searchQuery.trim()) {
       params.search = searchQuery.trim();
     }
 
-    if (filters.sortBy === "antigos") {
+    if (filters.sortBy === "alfabetica") {
+      params.sort = "title";
+      params.order = "asc";
+    } else if (filters.sortBy === "antigos") {
+      params.sort = "occurrenceDate";
       params.order = "asc";
     } else {
+      params.sort = "occurrenceDate";
       params.order = "desc";
     }
 
@@ -111,7 +120,7 @@ function ObjetosEncontrados() {
 
   useEffect(() => {
     loadItems();
-  }, [isAuthenticated, currentPage, filters.category, filters.sortBy, searchQuery]);
+  }, [isAuthenticated, currentPage, filters.category, filters.date, filters.sortBy, searchQuery]);
 
   const categoryLabels = Object.fromEntries(
     categoriesList.map((item) => [item.value, item.label])
@@ -162,9 +171,10 @@ function ObjetosEncontrados() {
       autor: item.user?.name || "Usuário",
       email: item.user?.email || "-",
       telefone: item.user?.phone || "-",
-      instituicao: "Comunidade Acadêmica",
-      membroDesde: item.user?.createdAt ? new Date(item.user.createdAt).getFullYear() : "2026",
-      dataPublicacao: item.createdAt ? formatDate(item.createdAt) : "-"
+      instituicao: [item.user?.institution, item.user?.course].filter(Boolean).join(" / ") || "Instituição / Curso",
+      membroDesde: item.user?.createdAt ? new Date(item.user.createdAt).toLocaleDateString("pt-BR", { month: "short", year: "numeric" }) : "-",
+      dataPublicacao: item.createdAt ? formatDate(item.createdAt) : "-",
+      allowContact: item.allowContact !== undefined ? item.allowContact : true
     };
     setSelectedItem(mapped);
     setIsDetailsOpen(true);

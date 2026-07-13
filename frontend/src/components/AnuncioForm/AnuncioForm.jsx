@@ -67,6 +67,7 @@ export default function AnuncioForm({
     setPreview(item?.photoUrl ? imageUrl(item.photoUrl) : null);
     setFile(null);
     setErrors({});
+    setAllowContact(item?.allowContact !== undefined ? item.allowContact : true);
   }, [item]);
 
   function set(name, value) {
@@ -140,6 +141,7 @@ export default function AnuncioForm({
     fd.append("description", form.description);
     fd.append("location", form.location);
     fd.append("occurrenceDate", occurrenceDate);
+    fd.append("allowContact", allowContact);
     if (form.observations) fd.append("observations", form.observations);
     if (file) fd.append("image", file);
 
@@ -363,22 +365,19 @@ export default function AnuncioForm({
             <FormInput
               label="Responsável"
               value={currentUser?.name || ""}
-              readOnly
-              disabled={lockContact}
+              disabled
               placeholder="Nome responsável"
             />
             <FormInput
               label="Email"
               value={currentUser?.email || ""}
-              readOnly
-              disabled={lockContact}
+              disabled
               placeholder="exemplo@email.com"
             />
             <FormInput
               label="Telefone"
-              helperText="Opcional"
               value={currentUser?.phone || ""}
-              readOnly
+              disabled
               placeholder="(00) 00000-0000"
             />
 

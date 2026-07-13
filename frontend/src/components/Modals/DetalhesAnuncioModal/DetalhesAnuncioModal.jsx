@@ -94,27 +94,45 @@ function DetalhesAnuncioModal({
               Contato
             </h3>
 
-            <section
-              className="contato-input-fake"
-              aria-label="E-mail de contato"
-            >
-              {anunciante.email}
-            </section>
+            {item?.allowContact !== false ? (
+              <>
+                <section
+                  className="contato-input-fake"
+                  aria-label="E-mail de contato"
+                >
+                  {anunciante.email}
+                </section>
 
-            <section
-              className="contato-input-fake"
-              aria-label="Telefone de contato"
-            >
-              {anunciante.telefone}
-            </section>
+                <section
+                  className="contato-input-fake"
+                  aria-label="Telefone de contato"
+                >
+                  {anunciante.telefone}
+                </section>
 
-            <button
-              type="button"
-              className="btn-entrar-contato"
-              onClick={() => onContact?.(item)}
-            >
-              Entrar em Contato
-            </button>
+                <button
+                  type="button"
+                  className="btn-entrar-contato"
+                  onClick={() => onContact?.(item)}
+                >
+                  Entrar em Contato
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                className="btn-entrar-contato"
+                disabled
+                style={{
+                  backgroundColor: "#cbd5e1",
+                  color: "#64748b",
+                  cursor: "not-allowed",
+                  boxShadow: "none"
+                }}
+              >
+                Usuário não permitiu mostrar contato
+              </button>
+            )}
           </section>
         </section>
 

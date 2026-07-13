@@ -79,7 +79,7 @@ async function update(req, res) {
     const item = await itemService.updateItem(
       req.user,
       req.params.id,
-      req.body,
+      updateItemValidate.data,
     );
     return res.json(item);
   } catch (err) {

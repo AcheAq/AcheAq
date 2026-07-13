@@ -36,7 +36,22 @@ export default function EditarPerfilModal({ isOpen, onClose, user, onUpdated }) 
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    if (name === "phone") {
+      const cleanValue = value.replace(/\D/g, "");
+      let formattedValue = "";
+      if (cleanValue.length > 0) {
+        formattedValue = `(${cleanValue.substring(0, 2)}`;
+        if (cleanValue.length > 2) {
+          formattedValue += `) ${cleanValue.substring(2, 7)}`;
+        }
+        if (cleanValue.length > 7) {
+          formattedValue += `-${cleanValue.substring(7, 11)}`;
+        }
+      }
+      setForm((prev) => ({ ...prev, [name]: formattedValue }));
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }));
+    }
   }
 
   function handlePhotoPick(event) {
@@ -183,6 +198,7 @@ export default function EditarPerfilModal({ isOpen, onClose, user, onUpdated }) 
             value={form.phone}
             onChange={handleChange}
             error={errors.phone}
+            maxLength={15}
           />
         </div>
 

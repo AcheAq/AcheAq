@@ -59,6 +59,10 @@ const itemRoute = express.Router();
  *                 type: string
  *                 enum: [LOST, FOUND]
  *                 example: LOST
+ *               allowContact:
+ *                 type: boolean
+ *                 description: Permitir contato direto.
+ *                 example: true
  *     responses:
  *       201:
  *         description: Objeto cadastrado com sucesso.
@@ -126,6 +130,14 @@ itemRoute.post(
  *         description: Filtrar pelo local onde o objeto foi perdido ou encontrado
  *
  *       - in: query
+ *         name: date
+ *         required: false
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: Filtrar por data da ocorrência (formato YYYY-MM-DD)
+ *
+ *       - in: query
  *         name: sort
  *         required: false
  *         schema:
@@ -185,6 +197,17 @@ itemRoute.post(
  *                         type: string
  *                       name:
  *                         type: string
+ *                       email:
+ *                         type: string
+ *                       phone:
+ *                         type: string
+ *                       institution:
+ *                         type: string
+ *                       course:
+ *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
  *       401:
  *         description: Token inválido ou não informado.
  *       500:
@@ -308,6 +331,17 @@ itemRoute.get(
  *                       type: string
  *                     name:
  *                       type: string
+ *                     email:
+ *                       type: string
+ *                     phone:
+ *                       type: string
+ *                     institution:
+ *                       type: string
+ *                     course:
+ *                       type: string
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
  *       401:
  *         description: Token inválido ou não informado.
  *       404:

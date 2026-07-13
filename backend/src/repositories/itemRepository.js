@@ -16,6 +16,10 @@ async function findItemById(id) {
           id: true,
           name: true,
           email: true,
+          phone: true,
+          institution: true,
+          course: true,
+          createdAt: true,
         },
       },
     },
@@ -29,6 +33,8 @@ async function findItemAll(filters = {}) {
     status,
     type,
     location,
+    date,
+    sort,
     order,
     page,
     limit,
@@ -73,6 +79,17 @@ async function findItemAll(filters = {}) {
     };
   }
 
+  if (date) {
+    const start = new Date(date);
+    start.setUTCHours(0, 0, 0, 0);
+    const end = new Date(date);
+    end.setUTCHours(23, 59, 59, 999);
+    where.occurrenceDate = {
+      gte: start,
+      lte: end,
+    };
+  }
+
   const [items, total] = await prisma.$transaction([
     prisma.item.findMany({
       where,
@@ -90,12 +107,17 @@ async function findItemAll(filters = {}) {
             id: true,
             name: true,
             email: true,
+            phone: true,
+            institution: true,
+            course: true,
+            createdAt: true,
           },
         },
       },
-      orderBy: {
-        occurrenceDate: order === "asc" ? "asc" : "desc",
-      },
+      orderBy:
+        sort === "title"
+          ? { title: order === "desc" ? "desc" : "asc" }
+          : { occurrenceDate: order === "asc" ? "asc" : "desc" },
     }),
     prisma.item.count({
       where,
@@ -139,6 +161,10 @@ async function findItemsByUserId(userId, pagination) {
             id: true,
             name: true,
             email: true,
+            phone: true,
+            institution: true,
+            course: true,
+            createdAt: true,
           },
         },
       },

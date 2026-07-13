@@ -292,11 +292,33 @@
   cursor: pointer;
 }
 .af-check input {
-  width: 18px;
-  height: 18px;
-  margin-top: 1px;
-  accent-color: var(--aq-blue);
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 19px;
+  background: #FFFFFF;
+  border: 1px solid var(--aq-border);
+  border-radius: 20px;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
   flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.af-check input:checked {
+  background-color: var(--aq-blue);
+  border-color: var(--aq-border);
+}
+
+.af-check input:checked::after {
+  content: '✓';
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
 }
 
 .af-tips {

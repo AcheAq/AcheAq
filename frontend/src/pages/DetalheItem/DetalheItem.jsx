@@ -32,6 +32,7 @@ function toModalItem(item) {
     email: item.user?.email || "-",
     telefone: item.user?.phone || "-",
     dataPublicacao: formatDateTime(item.createdAt),
+    allowContact: item.allowContact !== undefined ? item.allowContact : true,
   };
 }
 

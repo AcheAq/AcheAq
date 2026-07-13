@@ -17,6 +17,7 @@ import NovoAnuncio from "../pages/NovoAnuncio/NovoAnuncio";
 import MeusAnuncios from "../pages/MeusAnuncios/MeusAnuncios";
 import DetalheItem from "../pages/DetalheItem/DetalheItem";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import Inicio from "../pages/Inicio/Inicio";
 
 export default function AppRoutes() {
   return (
@@ -28,6 +29,7 @@ export default function AppRoutes() {
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/objetos-perdidos" element={<ObjetosPerdidos />} />
           <Route path="/objetos-encontrados" element={<ObjetosEncontrados />} />
+          <Route path="/teste/inicio" element={<Inicio />} />
 
           <Route
             path="/perfil"

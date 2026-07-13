@@ -65,7 +65,11 @@ function Header() {
                             Início
                         </NavLink>
                         <li>
-                            <NavLink to="/objetos-perdidos" onClick={closeMenu}>
+                            <NavLink
+                                to="/objetos-perdidos"
+                                className={({ isActive }) => isActive ? 'active-link' : ''}
+                                onClick={closeMenu}
+                            >
                                 Objetos Perdidos
                             </NavLink>
                         </li>

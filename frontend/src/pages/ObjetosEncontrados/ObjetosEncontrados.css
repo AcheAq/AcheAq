@@ -95,3 +95,90 @@
     width: 100%;
   }
 }
+
+/* ==========================================================================
+   Novos Estilos de Blur de Autenticação, Status e Loading
+   ========================================================================== */
+
+.found-items-content-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.found-items-loading,
+.found-items-status {
+  text-align: center;
+  padding: 40px;
+  color: #64748b;
+  font-size: 16px;
+}
+
+.found-items-status.error {
+  color: #ef4444;
+}
+
+.found-items-empty {
+  text-align: center;
+  padding: 80px 24px;
+  background: #ffffff;
+  border: 1px dashed #e2e8f0;
+  border-radius: 12px;
+  color: #64748b;
+}
+
+.auth-blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 120px;
+  z-index: 10;
+}
+
+.auth-blur-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 36px;
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 0 16px;
+}
+
+.auth-blur-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.auth-blur-desc {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.auth-blur-buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.auth-blur-buttons button {
+  flex: 1;
+}

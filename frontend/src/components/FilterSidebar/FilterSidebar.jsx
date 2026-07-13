@@ -58,17 +58,7 @@ function FilterSidebar({
                     />
                 </section>
 
-                <section className="filter-field-group">
-                    <label htmlFor="filter-location" className="filter-label">
-                        Local
-                    </label>
-                    <CustomSelect
-                        options={locations}
-                        value={filters.location || ''}
-                        onChange={(val) => onFilterChange?.('location', val)}
-                        placeholder="Selecione um local"
-                    />
-                </section>
+
 
                 <section className="filter-field-group">
                     <label htmlFor="filter-date" className="filter-label">

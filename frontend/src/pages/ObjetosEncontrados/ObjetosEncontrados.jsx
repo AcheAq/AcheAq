@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
@@ -10,35 +10,111 @@ import ActiveFilters from "../../components/ActiveFilters/ActiveFilters";
 import Pagination from "../../components/Pagination/Pagination";
 import DetalhesAnuncioModal from "../../components/Modals/DetalhesAnuncioModal/DetalhesAnuncioModal";
 
-import { categories, locations, sortOptions } from "../../utils/constants/filterOptions";
+import { sortOptions } from "../../utils/constants/filterOptions";
 import { objetosEncontradosMock } from "../../utils/mocks/objetosEncontradosMock";
+
+import { useAuth } from "../../contexts/AuthContext";
+import itemService from "../../services/itemService";
+import categoryService from "../../services/categoryService";
+import { imageUrl } from "../../utils/imageUrl";
+import { formatDate } from "../../utils/format";
 
 import "./ObjetosEncontrados.css";
 
 function ObjetosEncontrados() {
   const navigate = useNavigate();
+  const { isAuthenticated, user: currentUser, loading: authLoading } = useAuth();
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [filters, setFilters] = useState({
     category: "todas",
-    location: "todos",
     date: "",
     sortBy: "recentes"
   });
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [items, setItems] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   // Controle do modal de detalhes
   const [selectedItem, setSelectedItem] = useState(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
-  const categoryLabels = Object.fromEntries(
-    categories.map((item) => [item.value, item.label])
-  );
+  // Buscar categorias da API caso autenticado
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setCategoriesList([
+        { value: "todas", label: "Todas as categorias" },
+        { value: "mochilas", label: "Mochilas e Bolsas" },
+        { value: "eletronicos", label: "Eletrônicos" },
+        { value: "documentos", label: "Documentos e Cartões" }
+      ]);
+      return;
+    }
 
-  const locationLabels = Object.fromEntries(
-    locations.map((item) => [item.value, item.label])
+    categoryService.getAll()
+      .then((res) => {
+        setCategoriesList([
+          { value: "todas", label: "Todas as categorias" },
+          ...res.map((c) => ({ value: c.id, label: c.name }))
+        ]);
+      })
+      .catch((err) => console.error("Erro ao carregar categorias:", err));
+  }, [isAuthenticated]);
+
+  // Carregar itens da API caso autenticado
+  const loadItems = () => {
+    if (!isAuthenticated) return;
+    setLoading(true);
+    setError("");
+
+    const params = {
+      type: "FOUND",
+      page: currentPage,
+      limit: 6,
+    };
+
+    if (filters.category && filters.category !== "todas") {
+      params.categoryId = filters.category;
+    }
+
+    if (searchQuery.trim()) {
+      params.search = searchQuery.trim();
+    }
+
+    if (filters.sortBy === "antigos") {
+      params.order = "asc";
+    } else {
+      params.order = "desc";
+    }
+
+    itemService.getAll(params)
+      .then((res) => {
+        setItems(res.data || []);
+        setTotalPages(res.pagination?.totalPages || 1);
+        setTotalCount(res.pagination?.total || 0);
+      })
+      .catch((err) => {
+        console.error("Erro ao carregar objetos encontrados:", err);
+        setError("Não foi possível carregar os objetos encontrados.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    loadItems();
+  }, [isAuthenticated, currentPage, filters.category, filters.sortBy, searchQuery]);
+
+  const categoryLabels = Object.fromEntries(
+    categoriesList.map((item) => [item.value, item.label])
   );
 
   const sortLabels = Object.fromEntries(
@@ -50,30 +126,47 @@ function ObjetosEncontrados() {
       ...prev,
       [name]: value
     }));
+    setCurrentPage(1);
   };
 
   const handleClearFilters = () => {
     setFilters({
       category: "todas",
-      location: "todos",
       date: "",
       sortBy: "recentes"
     });
-
     setSearchTerm("");
+    setSearchQuery("");
+    setCurrentPage(1);
   };
 
   const handleApplyFilters = () => {
-    alert("Filtros aplicados. Futuramente será feita busca na API.");
+    setCurrentPage(1);
+    loadItems();
   };
 
   const handleSearch = (term) => {
-    alert(`Buscando por: "${term}"`);
+    setSearchQuery(term);
+    setCurrentPage(1);
   };
 
   // Abrir detalhes do anúncio
   const handleOpenDetails = (item) => {
-    setSelectedItem(item);
+    if (!isAuthenticated) return;
+    const mapped = {
+      ...item,
+      status: item.type?.toLowerCase() || "found",
+      imagem: item.photoUrl ? imageUrl(item.photoUrl) : null,
+      date: item.occurrenceDate ? formatDate(item.occurrenceDate) : "-",
+      category: item.category?.name || "Sem categoria",
+      autor: item.user?.name || "Usuário",
+      email: item.user?.email || "-",
+      telefone: item.user?.phone || "-",
+      instituicao: "Comunidade Acadêmica",
+      membroDesde: item.user?.createdAt ? new Date(item.user.createdAt).getFullYear() : "2026",
+      dataPublicacao: item.createdAt ? formatDate(item.createdAt) : "-"
+    };
+    setSelectedItem(mapped);
     setIsDetailsOpen(true);
   };
 
@@ -82,6 +175,19 @@ function ObjetosEncontrados() {
     setSelectedItem(null);
     setIsDetailsOpen(false);
   };
+
+  if (authLoading) {
+    return (
+      <div className="found-items-loading">
+        <p>Verificando autenticação...</p>
+      </div>
+    );
+  }
+
+  const displayedItems = isAuthenticated ? items : objetosEncontradosMock;
+  const countMessage = isAuthenticated
+    ? `Foram encontrados <strong>${totalCount}</strong> anúncios de objetos encontrados.`
+    : `Foram encontrados <strong>${objetosEncontradosMock.length}</strong> anúncios de objetos encontrados.`;
 
   return (
     <main className="found-items-main">
@@ -94,74 +200,122 @@ function ObjetosEncontrados() {
           onChange={(e) => setSearchTerm(e.target.value)}
           onSearch={handleSearch}
           placeholder="Pesquise por nome do objeto..."
+          disabled={!isAuthenticated}
         />
       </HeroBanner>
 
-      <section className="found-items-content">
-        <FilterSidebar
-          filters={filters}
-          categories={categories}
-          locations={locations}
-          sortOptions={sortOptions}
-          onFilterChange={handleFilterChange}
-          onClearFilters={handleClearFilters}
-          onApplyFilters={handleApplyFilters}
-        />
-
-        <section
-          className="results-column"
-          aria-label="Listagem de objetos encontrados"
-        >
-          <header className="results-header">
-            <section className="results-info">
-              <p className="results-count">
-                Foram encontrados <strong>48</strong> anúncios de objetos encontrados.
-              </p>
-
-              <ActiveFilters
-                filters={filters}
-                onFilterChange={handleFilterChange}
-                categoryLabels={categoryLabels}
-                locationLabels={locationLabels}
-                sortLabels={sortLabels}
-              />
-            </section>
-
-            <Button
-              variant="primary"
-              onClick={() => navigate("/novo-anuncio")}
-            >
-              Novo Anúncio
-            </Button>
-          </header>
-
-          <section className="items-grid">
-            {objetosEncontradosMock.map((item) => (
-              <CardAnuncio
-                key={item.id}
-                title={item.title}
-                image={item.image}
-                status={item.status}
-                description={item.description}
-                category={item.category}
-                location={item.location}
-                date={item.date}
-                onDetails={() => handleOpenDetails(item)}
-              />
-            ))}
-          </section>
-
-          <Pagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+      <div className="found-items-content-wrapper">
+        <section className="found-items-content">
+          <FilterSidebar
+            filters={filters}
+            categories={categoriesList}
+            sortOptions={sortOptions}
+            onFilterChange={handleFilterChange}
+            onClearFilters={handleClearFilters}
+            onApplyFilters={handleApplyFilters}
+            disabled={!isAuthenticated}
           />
+
+          <section className="results-column" aria-label="Listagem de objetos encontrados">
+            <header className="results-header">
+              <section className="results-info">
+                <p className="results-count" dangerouslySetInnerHTML={{ __html: countMessage }} />
+
+                {isAuthenticated && (
+                  <ActiveFilters
+                    filters={filters}
+                    onFilterChange={handleFilterChange}
+                    categoryLabels={categoryLabels}
+                    sortLabels={sortLabels}
+                  />
+                )}
+              </section>
+
+              <Button
+                variant="primary"
+                onClick={() => navigate(isAuthenticated ? "/novo-anuncio" : "/login")}
+              >
+                Novo Anúncio
+              </Button>
+            </header>
+
+            {loading && <p className="found-items-status">Carregando anúncios...</p>}
+            {error && !loading && (
+              <p className="found-items-status error" role="alert">
+                {error}
+              </p>
+            )}
+
+            {!loading && !error && (
+              <>
+                {displayedItems.length === 0 ? (
+                  <div className="found-items-empty">
+                    <p>Nenhum objeto encontrado cadastrado.</p>
+                  </div>
+                ) : (
+                  <section className="items-grid">
+                    {displayedItems.map((item) => {
+                      const imageSrc = isAuthenticated
+                        ? (item.photoUrl ? imageUrl(item.photoUrl) : null)
+                        : item.image;
+                      const displayDate = isAuthenticated
+                        ? formatDate(item.occurrenceDate)
+                        : item.date;
+
+                      return (
+                        <CardAnuncio
+                          key={item.id}
+                          title={item.title}
+                          image={imageSrc}
+                          status={isAuthenticated ? item.type?.toLowerCase() : item.status}
+                          description={item.description}
+                          category={isAuthenticated ? (item.category?.name || "Sem categoria") : item.category}
+                          location={item.location}
+                          date={displayDate}
+                          onDetails={() => handleOpenDetails(item)}
+                        />
+                      );
+                    })}
+                  </section>
+                )}
+
+                {isAuthenticated && totalPages > 1 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    setCurrentPage={setCurrentPage}
+                  />
+                )}
+              </>
+            )}
+          </section>
         </section>
-      </section>
+
+        {!isAuthenticated && (
+          <div className="auth-blur-overlay">
+            <div className="auth-blur-card">
+              <h3 className="auth-blur-title">Acesso Restrito</h3>
+              <p className="auth-blur-desc">
+                Você precisa estar logado na plataforma para pesquisar e visualizar os detalhes dos objetos encontrados.
+              </p>
+              <div className="auth-blur-buttons">
+                <Button variant="outline" onClick={() => navigate("/login")}>
+                  Entrar
+                </Button>
+                <Button variant="primary" onClick={() => navigate("/cadastro")}>
+                  Criar Conta
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
       <DetalhesAnuncioModal
         isOpen={isDetailsOpen}
         onClose={handleCloseDetails}
         item={selectedItem}
+        currentUser={currentUser}
       />
     </main>
   );

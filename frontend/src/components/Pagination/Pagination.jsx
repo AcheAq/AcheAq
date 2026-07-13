@@ -1,7 +1,9 @@
 import "./Pagination.css";
 
-function Pagination({ currentPage, setCurrentPage }) {
-  const pages = [1, 2, 3, 4, 5];
+function Pagination({ currentPage, totalPages = 1, setCurrentPage }) {
+  if (totalPages <= 1) return null;
+
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <nav className="pagination-nav" aria-label="Navegação por páginas">
@@ -25,25 +27,17 @@ function Pagination({ currentPage, setCurrentPage }) {
         </button>
       ))}
 
-      <span className="page-dots">...</span>
-
       <button
         type="button"
         className="page-btn"
-        onClick={() => setCurrentPage(16)}
-      >
-        16
-      </button>
-
-      <button
-        type="button"
-        className="page-btn"
-        onClick={() => setCurrentPage((prev) => prev + 1)}
+        disabled={currentPage === totalPages}
+        onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
       >
         ›
       </button>
     </nav>
   );
 }
+
 
 export default Pagination;

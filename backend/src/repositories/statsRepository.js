@@ -59,6 +59,25 @@ async function itemsByMonth() {
   `;
 }
 
+async function averageResolutionDays() {
+  const result = await prisma.$queryRaw`
+    SELECT AVG(EXTRACT(EPOCH FROM ("returnedAt" - "createdAt")) / 86400)::float AS days
+    FROM "Item"
+    WHERE status = 'RESOLVED' AND "returnedAt" IS NOT NULL;
+  `;
+  return result[0]?.days ?? null;
+}
+
+async function countStaleOpenItems(days = 30) {
+  const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+  return prisma.item.count({
+    where: {
+      status: "OPEN",
+      createdAt: { lt: cutoff },
+    },
+  });
+}
+
 async function findAllItemsForExport() {
   return prisma.item.findMany({
     include: {
@@ -79,5 +98,7 @@ module.exports = {
   findCategoriesByIds,
   groupItemsByLocation,
   itemsByMonth,
+  averageResolutionDays,
+  countStaleOpenItems,
   findAllItemsForExport,
 };

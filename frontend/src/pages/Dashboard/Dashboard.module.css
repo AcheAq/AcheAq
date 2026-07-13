@@ -53,9 +53,15 @@
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 28px;
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .charts {
@@ -81,6 +87,26 @@
   font-weight: 700;
   color: #0f172a;
   margin: 0 0 16px;
+}
+
+.exportError {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+.empty {
+  text-align: center;
+  color: #64748b;
+  background-color: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 48px 20px;
+  font-size: 15px;
 }
 
 .state {

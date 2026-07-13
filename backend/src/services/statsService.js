@@ -6,6 +6,35 @@ function pickCount(rows, field, value) {
   return row ? row._count._all : 0;
 }
 
+function fillMonthGaps(rows) {
+  if (rows.length === 0) return [];
+
+  const sorted = [...rows].sort((a, b) => a.month.localeCompare(b.month));
+  const values = Object.fromEntries(sorted.map((r) => [r.month, r.value]));
+
+  const [startYear, startMonth] = sorted[0].month.split("-").map(Number);
+  const [endYear, endMonth] = sorted[sorted.length - 1].month
+    .split("-")
+    .map(Number);
+
+  const result = [];
+  let year = startYear;
+  let month = startMonth;
+
+  while (year < endYear || (year === endYear && month <= endMonth)) {
+    const key = `${year}-${String(month).padStart(2, "0")}`;
+    result.push({ month: key, value: values[key] || 0 });
+
+    month += 1;
+    if (month > 12) {
+      month = 1;
+      year += 1;
+    }
+  }
+
+  return result;
+}
+
 async function getStats() {
   const [
     totalItems,
@@ -16,6 +45,8 @@ async function getStats() {
     byCategory,
     byLocation,
     byMonth,
+    avgResolutionDays,
+    staleOpenItems,
   ] = await Promise.all([
     statsRepository.countItems(),
     statsRepository.countUsers(),
@@ -25,6 +56,8 @@ async function getStats() {
     statsRepository.groupItemsByCategory(),
     statsRepository.groupItemsByLocation(),
     statsRepository.itemsByMonth(),
+    statsRepository.averageResolutionDays(),
+    statsRepository.countStaleOpenItems(30),
   ]);
 
   const categoryIds = byCategory.map((c) => c.categoryId);
@@ -51,6 +84,9 @@ async function getStats() {
       open,
       resolved,
       resolutionRate,
+      avgResolutionDays:
+        avgResolutionDays !== null ? Math.round(avgResolutionDays * 10) / 10 : null,
+      staleOpenItems,
     },
     byType: [
       { name: "Perdidos", value: lost },
@@ -70,7 +106,9 @@ async function getStats() {
       name: l.location,
       value: l._count._all,
     })),
-    byMonth: byMonth.map((m) => ({ month: m.month, value: m.total })),
+    byMonth: fillMonthGaps(
+      byMonth.map((m) => ({ month: m.month, value: m.total })),
+    ),
   };
 }
 
@@ -109,6 +147,11 @@ async function buildStatsWorkbook() {
     { metric: "Em aberto", value: stats.summary.open },
     { metric: "Devolvidos", value: stats.summary.resolved },
     { metric: "Taxa de devolução (%)", value: stats.summary.resolutionRate },
+    {
+      metric: "Tempo médio até devolução (dias)",
+      value: stats.summary.avgResolutionDays ?? "-",
+    },
+    { metric: "Itens parados (+30 dias)", value: stats.summary.staleOpenItems },
     { metric: "Usuários cadastrados", value: stats.summary.totalUsers },
     { metric: "Categorias", value: stats.summary.totalCategories },
   ]);

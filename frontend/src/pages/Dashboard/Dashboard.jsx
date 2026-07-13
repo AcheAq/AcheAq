@@ -17,10 +17,13 @@ import {
 import {
   Package,
   Search,
+  PackageCheck,
   CheckCircle,
   TrendingUp,
   Users,
   Download,
+  Clock,
+  AlertTriangle,
 } from "lucide-react";
 
 import StatCard from "../../components/StatCard/StatCard";
@@ -30,10 +33,36 @@ import styles from "./Dashboard.module.css";
 const PIE_COLORS = ["#426ABC", "#ea7c3f"];
 const STATUS_COLORS = ["#f59e0b", "#22c55e"];
 
+const MONTH_LABELS = [
+  "jan",
+  "fev",
+  "mar",
+  "abr",
+  "mai",
+  "jun",
+  "jul",
+  "ago",
+  "set",
+  "out",
+  "nov",
+  "dez",
+];
+
+function formatMonth(value) {
+  const [year, month] = String(value).split("-");
+  const label = MONTH_LABELS[Number(month) - 1];
+  return label ? `${label}/${year.slice(2)}` : value;
+}
+
+function renderPieLabel({ name, percent }) {
+  return `${name} ${(percent * 100).toFixed(0)}%`;
+}
+
 function Dashboard() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [exportError, setExportError] = useState("");
   const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
@@ -54,6 +83,7 @@ function Dashboard() {
 
   const handleExport = async () => {
     setExporting(true);
+    setExportError("");
     try {
       const blob = await statsService.exportExcel();
       const url = window.URL.createObjectURL(blob);
@@ -67,7 +97,7 @@ function Dashboard() {
       link.remove();
       window.URL.revokeObjectURL(url);
     } catch (err) {
-      setError("Não foi possível gerar a planilha.");
+      setExportError("Não foi possível gerar a planilha. Tente novamente.");
     } finally {
       setExporting(false);
     }
@@ -81,7 +111,7 @@ function Dashboard() {
     return <p className={styles.stateError}>{error}</p>;
   }
 
-  const { summary, byType, byStatus, byCategory, byMonth } = stats;
+  const { summary, byType, byStatus, byCategory, byLocation, byMonth } = stats;
 
   return (
     <div className={styles.page}>
@@ -103,6 +133,14 @@ function Dashboard() {
         </button>
       </header>
 
+      {exportError && <p className={styles.exportError}>{exportError}</p>}
+
+      {summary.totalItems === 0 ? (
+        <p className={styles.empty}>
+          Ainda não há itens cadastrados para exibir estatísticas.
+        </p>
+      ) : (
+        <>
       <section className={styles.cards}>
         <StatCard
           icon={Package}
@@ -117,6 +155,12 @@ function Dashboard() {
           variant="orange"
         />
         <StatCard
+          icon={PackageCheck}
+          value={summary.found}
+          label="Encontrados"
+          variant="primary"
+        />
+        <StatCard
           icon={CheckCircle}
           value={summary.resolved}
           label="Devolvidos"
@@ -127,6 +171,22 @@ function Dashboard() {
           value={`${summary.resolutionRate}%`}
           label="Taxa de devolução"
           variant="info"
+        />
+        <StatCard
+          icon={Clock}
+          value={
+            summary.avgResolutionDays !== null
+              ? `${summary.avgResolutionDays} dias`
+              : "—"
+          }
+          label="Tempo médio de devolução"
+          variant="info"
+        />
+        <StatCard
+          icon={AlertTriangle}
+          value={summary.staleOpenItems}
+          label="Parados +30 dias"
+          variant="orange"
         />
         <StatCard
           icon={Users}
@@ -148,7 +208,7 @@ function Dashboard() {
                 cx="50%"
                 cy="50%"
                 outerRadius={90}
-                label
+                label={renderPieLabel}
               >
                 {byType.map((entry, index) => (
                   <Cell key={index} fill={PIE_COLORS[index % PIE_COLORS.length]} />
@@ -172,7 +232,7 @@ function Dashboard() {
                 cy="50%"
                 innerRadius={55}
                 outerRadius={90}
-                label
+                label={renderPieLabel}
               >
                 {byStatus.map((entry, index) => (
                   <Cell
@@ -201,13 +261,26 @@ function Dashboard() {
         </div>
 
         <div className={`${styles.chartCard} ${styles.chartWide}`}>
+          <h3 className={styles.chartTitle}>Locais com mais ocorrências</h3>
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={byLocation} layout="vertical" margin={{ left: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+              <XAxis type="number" allowDecimals={false} fontSize={12} />
+              <YAxis type="category" dataKey="name" width={140} fontSize={12} />
+              <Tooltip />
+              <Bar name="Itens" dataKey="value" fill="#ea7c3f" radius={[0, 6, 6, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className={`${styles.chartCard} ${styles.chartWide}`}>
           <h3 className={styles.chartTitle}>Itens por mês</h3>
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={byMonth}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="month" fontSize={12} />
+              <XAxis dataKey="month" fontSize={12} tickFormatter={formatMonth} />
               <YAxis allowDecimals={false} fontSize={12} />
-              <Tooltip />
+              <Tooltip labelFormatter={formatMonth} />
               <Line
                 name="Itens"
                 type="monotone"
@@ -220,6 +293,8 @@ function Dashboard() {
           </ResponsiveContainer>
         </div>
       </section>
+        </>
+      )}
     </div>
   );
 }

@@ -10,6 +10,7 @@ const authRoutes = require("./routes/authRoute");
 const userRoute = require("./routes/userRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const itemRoute = require("./routes/itemRoute");
+const statsRoute = require("./routes/statsRoute");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 
 const app = express();
@@ -31,6 +32,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoute);
 app.use("/category", categoryRoute);
 app.use("/item", itemRoute);
+app.use("/stats", statsRoute);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(errorMiddleware);

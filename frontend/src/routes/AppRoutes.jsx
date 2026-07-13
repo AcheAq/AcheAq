@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import AdminRoute from "./AdminRoute";
 
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
@@ -15,6 +16,7 @@ import ObjetosEncontrados from "../pages/ObjetosEncontrados/ObjetosEncontrados";
 import NovoAnuncio from "../pages/NovoAnuncio/NovoAnuncio";
 import MeusAnuncios from "../pages/MeusAnuncios/MeusAnuncios";
 import DetalheItem from "../pages/DetalheItem/DetalheItem";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
 export default function AppRoutes() {
   return (
@@ -57,6 +59,14 @@ export default function AppRoutes() {
               <ProtectedRoute>
                 <DetalheItem />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <AdminRoute>
+                <Dashboard />
+              </AdminRoute>
             }
           />
         </Route>

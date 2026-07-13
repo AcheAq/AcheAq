@@ -138,6 +138,11 @@ function Header() {
 
                                 {dropdownOpen && (
                                     <div className="user-dropdown animate-fade-in">
+                                        {user?.role === "ADMIN" && (
+                                            <Link to="/admin/dashboard" className="user-dropdown-item" onClick={() => setDropdownOpen(false)}>
+                                                Dashboard
+                                            </Link>
+                                        )}
                                         <Link to="/perfil" className="user-dropdown-item" onClick={() => setDropdownOpen(false)}>
                                             Meu Perfil
                                         </Link>
@@ -202,6 +207,11 @@ function Header() {
                             <NavLink to="/meus-anuncios" onClick={closeMenu}>
                                 Meus Anúncios
                             </NavLink>
+                            {user?.role === "ADMIN" && (
+                                <NavLink to="/admin/dashboard" onClick={closeMenu}>
+                                    Dashboard
+                                </NavLink>
+                            )}
                             <NavLink to="/perfil" onClick={closeMenu}>
                                 Perfil
                             </NavLink>
